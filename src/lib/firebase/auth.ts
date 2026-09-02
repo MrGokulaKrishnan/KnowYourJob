@@ -24,7 +24,7 @@ googleProvider.setCustomParameters({
 
 // Setup action code settings for Passwordless Email Link Auth
 export const getEmailLinkActionCodeSettings = (): ActionCodeSettings => {
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173';
+  const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : 'https://knowyourjob.web.app';
   return {
     url: `${origin}/auth/auth-action`,
     handleCodeInApp: true,
