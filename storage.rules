@@ -1,0 +1,34 @@
+﻿rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Authenticated user helper
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Verify user folder ownership
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User resumes directory: users/{uid}/resumes/{resumeId}/{fileName}
+    match /users/{userId}/resumes/{resumeId}/{fileName} {
+      // Must be authenticated and the folder must match user's UID
+      allow read: if isOwner(userId);
+      // File upload constraints: under 10MB, PDF or Word documents only
+      allow write: if isOwner(userId)
+                   && request.resource.size < 10 * 1024 * 1024
+                   && (request.resource.contentType == 'application/pdf'
+                       || request.resource.contentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                       || request.resource.contentType == 'application/msword');
+      allow delete: if isOwner(userId);
+    }
+
+    // Default deny
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

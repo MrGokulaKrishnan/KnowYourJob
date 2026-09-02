@@ -1,0 +1,136 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-base: #07090e;
+    --bg-surface: #0d121c;
+    --bg-glass: rgba(13, 18, 28, 0.72);
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --border-glass-hover: rgba(245, 158, 11, 0.35);
+    --gold-primary: #f59e0b;
+    --gold-glow: rgba(245, 158, 11, 0.3);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+    background-color: #07090e;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    background-color: #07090e;
+    color: #f8fafc;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    background-image: 
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245, 158, 11, 0.12), transparent 70%),
+      radial-gradient(circle at 90% 80%, rgba(217, 119, 6, 0.06), transparent 45%),
+      radial-gradient(circle at 10% 40%, rgba(251, 191, 36, 0.04), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(7, 9, 14, 0.8);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(245, 158, 11, 0.2);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(245, 158, 11, 0.45);
+  }
+}
+
+@layer components {
+  /* Liquid Glass Panels */
+  .liquid-glass {
+    background: rgba(13, 18, 28, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .liquid-glass-elevated {
+    background: rgba(17, 24, 39, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(245, 158, 11, 0.18);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.55), 0 0 25px rgba(245, 158, 11, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .liquid-glass-interactive {
+    background: rgba(13, 18, 28, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.35);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .liquid-glass-interactive:hover {
+    border-color: rgba(245, 158, 11, 0.35);
+    background: rgba(17, 24, 39, 0.85);
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.15);
+    transform: translateY(-2px);
+  }
+
+  /* Yellow Gradient Buttons */
+  .btn-yellow-gradient {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+    color: #07090e;
+    font-weight: 600;
+    border: 1px solid rgba(253, 230, 138, 0.4);
+    box-shadow: 0 4px 18px rgba(245, 158, 11, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-yellow-gradient:hover:not(:disabled) {
+    background: linear-gradient(135deg, #fde68a 0%, #fbbf24 50%, #f59e0b 100%);
+    box-shadow: 0 6px 26px rgba(245, 158, 11, 0.55), 0 0 30px rgba(251, 191, 36, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .btn-yellow-gradient:active:not(:disabled) {
+    transform: translateY(0px);
+    box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
+  }
+
+  .btn-glass-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #f1f5f9;
+    transition: all 0.2s ease;
+  }
+
+  .btn-glass-secondary:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #fbbf24;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+  }
+
+  /* Text Gradients */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 45%, #f59e0b 80%, #d97706 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-silver {
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 60%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
