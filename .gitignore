@@ -1,21 +1,44 @@
+﻿# Secrets and environment files
+.env
 .env.local
 .env.*.local
-node_modules
-dist
-dist-ssr
-*.local
-.firebase
-firebase-debug.log
-firestore-debug.log
-ui-debug.log
-storage-debug.log
-functions/node_modules
-functions/lib
+*.env
+*.pem
+*.key
+*serviceAccountKey*.json
+*service-account*.json
+credentials.json
+token.json
+
+# Dependencies
+node_modules/
+
+# Production build outputs
+dist/
+dist-ssr/
+
+# TypeScript build info cache
+*.tsbuildinfo
+
+# Firebase debug logs and cache
+.firebase/
+*-debug.log
+firebase-debug*.log
+firestore-debug*.log
+ui-debug*.log
+storage-debug*.log
+
+# Functions artifacts
+functions/node_modules/
+functions/lib/
 functions/.env
+
+# Editor & OS files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj
