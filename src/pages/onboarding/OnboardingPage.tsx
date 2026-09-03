@@ -160,8 +160,8 @@ export function OnboardingPage() {
   const [roles, setRoles] = useState<string[]>([]);
   const [newRoleInput, setNewRoleInput] = useState('');
   const [remotePref, setRemotePref] = useState<'remote' | 'hybrid' | 'onsite' | 'any'>('remote');
-  const [minSalary, setMinSalary] = useState(120000);
-  const [maxSalary, setMaxSalary] = useState(180000);
+  const [minSalary, setMinSalary] = useState(1200000);
+  const [maxSalary, setMaxSalary] = useState(2500000);
 
   // Automation Mode
   const [automationMode, setAutomationMode] = useState<'manual' | 'assisted' | 'automated'>('assisted');
@@ -246,49 +246,53 @@ export function OnboardingPage() {
     try {
       if (user?.uid) {
         // 1. Construct and save candidate profile
-        const nameParts = fullName.trim().split(' ');
-        const firstName = nameParts[0] || (user.displayName ? user.displayName.split(' ')[0] : 'Candidate');
+        const nameParts = (fullName || user.displayName || 'Candidate').trim().split(' ');
+        const firstName = nameParts[0] || 'Candidate';
         const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+
+        const experienceItems = (extractedProfile?.experience || []).map((exp, idx) => ({
+          id: `exp_${idx}`,
+          title: exp.title || 'Software Developer',
+          company: exp.company || 'TechCorp',
+          location: location || 'Remote, India',
+          startDate: (exp.period && exp.period.split('-')[0]?.trim()) || '2022',
+          endDate: (exp.period && !exp.period.toLowerCase().includes('present')) ? (exp.period.split('-')[1]?.trim() || '') : '',
+          isCurrent: exp.period ? exp.period.toLowerCase().includes('present') : false,
+          description: exp.description || '',
+        }));
+
+        const educationItems = (extractedProfile?.education || []).map((edu, idx) => ({
+          id: `edu_${idx}`,
+          degree: edu.degree || 'Bachelor of Technology',
+          fieldOfStudy: edu.degree || 'Computer Science',
+          institution: edu.institution || 'University',
+          graduationYear: parseInt((edu.year || '').replace(/\D/g, '')) || 2022,
+        }));
 
         await profileService.saveFullProfile(user.uid, {
           basicInfo: {
             firstName,
             lastName,
             phone: phone || '',
-            location: location || '',
+            location: location || 'India',
           },
           professional: {
             headline: extractedProfile?.headline || roles[0] || 'Software Professional',
             summary: extractedProfile?.summary || '',
-            yearsOfExperience: extractedProfile?.experience?.length ? extractedProfile.experience.length * 2 : 3,
-            currentRole: extractedProfile?.experience?.[0]?.title || roles[0] || '',
-            currentCompany: extractedProfile?.experience?.[0]?.company || '',
+            yearsOfExperience: experienceItems.length ? experienceItems.length * 2 : 3,
+            currentRole: experienceItems[0]?.title || roles[0] || 'Software Developer',
+            currentCompany: experienceItems[0]?.company || '',
           },
           skills: skills.length > 0 ? skills : ['React', 'TypeScript', 'Node.js', 'Python'],
-          experience: (extractedProfile?.experience || []).map((exp, idx) => ({
-            id: `exp_${idx}`,
-            title: exp.title,
-            company: exp.company,
-            location: location || 'Remote',
-            startDate: exp.period.split('-')[0]?.trim() || '2022',
-            endDate: exp.period.includes('Present') ? undefined : exp.period.split('-')[1]?.trim(),
-            isCurrent: exp.period.toLowerCase().includes('present'),
-            description: exp.description || '',
-          })),
-          education: (extractedProfile?.education || []).map((edu, idx) => ({
-            id: `edu_${idx}`,
-            degree: edu.degree,
-            fieldOfStudy: edu.degree,
-            institution: edu.institution,
-            graduationYear: parseInt(edu.year.replace(/\D/g, '')) || 2022,
-          })),
+          experience: experienceItems,
+          education: educationItems,
           projects: [],
           certifications: [],
           preferences: {
             roles: roles.length > 0 ? roles : ['Software Engineer'],
-            locations: location ? [location, 'Remote'] : ['Remote'],
+            locations: location ? [location, 'Remote'] : ['Remote, India'],
             remoteType: remotePref,
-            minimumSalary: minSalary,
+            minimumSalary: minSalary || 1200000,
             employmentTypes: ['full-time'],
           },
           createdAt: serverTimestamp(),
@@ -298,7 +302,7 @@ export function OnboardingPage() {
         // 2. Mark onboarding completed in user document
         await updateUserDoc(user.uid, {
           onboardingCompleted: true,
-          displayName: fullName || user.displayName,
+          displayName: fullName || user.displayName || 'Candidate',
         });
 
         // 3. Upload resume to storage & collection if file provided
@@ -309,7 +313,11 @@ export function OnboardingPage() {
         }
 
         if (reloadUser) {
-          await reloadUser();
+          try {
+            await reloadUser();
+          } catch {
+            // ignore
+          }
         }
       }
 
@@ -750,25 +758,65 @@ export function OnboardingPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-neutral-300 mb-2">
-                      Target Annual Salary ($USD)
-                    </label>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-sm font-medium text-neutral-300">
+                        Target Annual Salary (₹ INR / LPA)
+                      </label>
+                      <span className="text-xs text-yellow-400 font-mono font-bold">
+                        ₹{(minSalary / 100000).toFixed(1)}L – ₹{(maxSalary / 100000).toFixed(1)}L / yr
+                      </span>
+                    </div>
                     <div className="flex items-center gap-2">
-                      <input
-                        type="number"
-                        placeholder="Min"
-                        value={minSalary}
-                        onChange={(e) => setMinSalary(parseInt(e.target.value) || 0)}
-                        className="w-full glass-input px-4 py-2 rounded-lg text-white outline-none"
-                      />
+                      <div className="relative flex-1">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 text-sm font-bold">₹</span>
+                        <input
+                          type="number"
+                          step="50000"
+                          placeholder="Min (e.g. 1200000)"
+                          value={minSalary}
+                          onChange={(e) => setMinSalary(parseInt(e.target.value) || 0)}
+                          className="w-full glass-input pl-7 pr-3 py-2 rounded-lg text-white text-sm outline-none font-mono"
+                        />
+                      </div>
                       <span className="text-neutral-500">–</span>
-                      <input
-                        type="number"
-                        placeholder="Max"
-                        value={maxSalary}
-                        onChange={(e) => setMaxSalary(parseInt(e.target.value) || 0)}
-                        className="w-full glass-input px-4 py-2 rounded-lg text-white outline-none"
-                      />
+                      <div className="relative flex-1">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 text-sm font-bold">₹</span>
+                        <input
+                          type="number"
+                          step="50000"
+                          placeholder="Max (e.g. 2500000)"
+                          value={maxSalary}
+                          onChange={(e) => setMaxSalary(parseInt(e.target.value) || 0)}
+                          className="w-full glass-input pl-7 pr-3 py-2 rounded-lg text-white text-sm outline-none font-mono"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Quick INR presets for Indian engineers */}
+                    <div className="flex flex-wrap gap-1.5 mt-2.5">
+                      {[
+                        { label: '6 – 10 LPA', min: 600000, max: 1000000 },
+                        { label: '10 – 18 LPA', min: 1000000, max: 1800000 },
+                        { label: '18 – 30 LPA', min: 1800000, max: 3000000 },
+                        { label: '30 – 50+ LPA', min: 3000000, max: 5000000 },
+                      ].map((preset) => (
+                        <button
+                          key={preset.label}
+                          type="button"
+                          onClick={() => {
+                            setMinSalary(preset.min);
+                            setMaxSalary(preset.max);
+                          }}
+                          className={clsx(
+                            'px-2.5 py-1 text-xs rounded-md border font-mono transition-colors',
+                            minSalary === preset.min && maxSalary === preset.max
+                              ? 'bg-yellow-400/20 text-yellow-300 border-yellow-400/40'
+                              : 'bg-white/5 text-neutral-400 border-white/10 hover:border-white/20'
+                          )}
+                        >
+                          {preset.label}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>

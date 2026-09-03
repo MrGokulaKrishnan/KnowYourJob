@@ -1,4 +1,4 @@
-﻿import { 
+import { 
   doc, 
   getDoc, 
   setDoc, 
@@ -95,10 +95,10 @@ export const getUserDoc = async (uid: string): Promise<AppUser | null> => {
 
 export const updateUserDoc = async (uid: string, updates: Partial<AppUser>): Promise<void> => {
   const userRef = doc(db, 'users', uid);
-  await updateDoc(userRef, {
+  await setDoc(userRef, {
     ...updates,
     updatedAt: serverTimestamp(),
-  });
+  }, { merge: true });
 };
 
 export const deleteUserData = async (uid: string): Promise<void> => {

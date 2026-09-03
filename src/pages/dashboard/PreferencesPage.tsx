@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Sliders, Save, Plus, X, DollarSign } from 'lucide-react';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { GlassInput } from '../../components/ui/GlassInput';
@@ -20,7 +20,7 @@ export const PreferencesPage: React.FC = () => {
   const [locations, setLocations] = useState<string[]>([]);
   const [newLocation, setNewLocation] = useState('');
   const [remoteType, setRemoteType] = useState<'remote' | 'hybrid' | 'onsite' | 'any'>('remote');
-  const [minimumSalary, setMinimumSalary] = useState<number>(150000);
+  const [minimumSalary, setMinimumSalary] = useState<number>(1500000);
 
   useEffect(() => {
     const fetchPrefs = async () => {
@@ -31,7 +31,7 @@ export const PreferencesPage: React.FC = () => {
           setRoles(p.preferences.roles || []);
           setLocations(p.preferences.locations || []);
           setRemoteType(p.preferences.remoteType || 'remote');
-          setMinimumSalary(p.preferences.minimumSalary || 140000);
+          setMinimumSalary(p.preferences.minimumSalary || 1500000);
         }
       } catch (err) {
         console.warn('Preferences load error:', err);
@@ -178,14 +178,50 @@ export const PreferencesPage: React.FC = () => {
               </div>
             </div>
 
-            <GlassInput
-              label="Minimum Target Salary (USD / Year)"
-              type="number"
-              step="5000"
-              value={minimumSalary}
-              onChange={(e) => setMinimumSalary(Number(e.target.value))}
-              leftIcon={<DollarSign className="w-4 h-4" />}
-            />
+            <div>
+              <div className="flex justify-between items-center mb-1.5">
+                <label className="text-xs font-medium uppercase text-slate-300">
+                  Minimum Expected Salary (INR / LPA)
+                </label>
+                <span className="text-xs text-amber-400 font-mono font-bold">
+                  ₹{(Number(minimumSalary) / 100000).toFixed(1)} LPA
+                </span>
+              </div>
+              <div className="relative">
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
+                <input
+                  type="number"
+                  step="50000"
+                  value={minimumSalary}
+                  onChange={(e) => setMinimumSalary(Number(e.target.value))}
+                  placeholder="e.g. 1500000 (15 LPA)"
+                  className="w-full rounded-xl bg-slate-900/60 border border-white/10 pl-8 pr-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 font-mono"
+                />
+              </div>
+              {/* Quick LPA Presets for Indian Engineers */}
+              <div className="flex flex-wrap gap-2 mt-2.5">
+                {[
+                  { label: '8 LPA', val: 800000 },
+                  { label: '12 LPA', val: 1200000 },
+                  { label: '18 LPA', val: 1800000 },
+                  { label: '25 LPA', val: 2500000 },
+                  { label: '35 LPA', val: 3500000 },
+                ].map((preset) => (
+                  <button
+                    key={preset.label}
+                    type="button"
+                    onClick={() => setMinimumSalary(preset.val)}
+                    className={`px-2.5 py-1 rounded-md text-xs font-mono border transition ${
+                      Number(minimumSalary) === preset.val
+                        ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                        : 'bg-white/5 text-slate-400 border-white/10 hover:border-white/20'
+                    }`}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="flex justify-end">
