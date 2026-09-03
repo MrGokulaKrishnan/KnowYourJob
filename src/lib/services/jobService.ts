@@ -167,6 +167,8 @@ export const DEMO_JOBS: NormalizedJob[] = [
   }
 ]
 
+import { apifyJobService } from '@/services/jobs/apifyJobService'
+
 export interface JobSearchParams {
   searchTerm?: string
   remoteType?: string[] | string
@@ -175,26 +177,68 @@ export interface JobSearchParams {
   minMatchScore?: number
   limit?: number
   page?: number
+  portal?: string
+  last24HoursOnly?: boolean
+  onlyVerified?: boolean
 }
 
 export const jobService = {
   async searchJobs(params: JobSearchParams = {}): Promise<{ jobs: NormalizedJob[]; total: number }> {
     try {
-      // Check if Firestore has real jobs first
-      const jobsRef = collection(db, 'jobs')
-      const snap = await getDocs(query(jobsRef, limit(params.limit || 20)))
-      
-      let allJobs: NormalizedJob[] = []
-      if (!snap.empty) {
-        snap.forEach((d) => {
-          allJobs.push({ id: d.id, ...d.data() } as NormalizedJob)
-        })
-      } else {
-        allJobs = [...DEMO_JOBS]
+      // 1. Fetch verified jobs from Apify (with 24-hour auto-refresh cycle)
+      let verifiedJobs: NormalizedJob[] = []
+      try {
+        verifiedJobs = await apifyJobService.getVerifiedJobs()
+      } catch (apifyErr) {
+        console.warn('[jobService] Apify fetch note:', apifyErr)
+        verifiedJobs = apifyJobService.getCachedJobs()
       }
 
-      // Filter in memory for robust responsive UX
+      // 2. Fetch jobs from Firestore
+      const jobsRef = collection(db, 'jobs')
+      const snap = await getDocs(query(jobsRef, limit(params.limit || 40)))
+      
+      let firestoreJobs: NormalizedJob[] = []
+      if (!snap.empty) {
+        snap.forEach((d) => {
+          firestoreJobs.push({ id: d.id, ...d.data() } as NormalizedJob)
+        })
+      }
+
+      // 3. Merge: Verified Apify jobs first, then Firestore, then Demo
+      const jobMap = new Map<string, NormalizedJob>()
+      verifiedJobs.forEach((j) => jobMap.set(j.id, j))
+      firestoreJobs.forEach((j) => {
+        if (!jobMap.has(j.id)) jobMap.set(j.id, j)
+      })
+      DEMO_JOBS.forEach((j) => {
+        if (!jobMap.has(j.id)) jobMap.set(j.id, j)
+      })
+
+      let allJobs = Array.from(jobMap.values())
+
+      // 4. Filter in memory for instantaneous responsive UI
       let filtered = allJobs
+
+      // Portal source filter (LinkedIn, Naukri, Indeed, All)
+      if (params.portal && params.portal !== 'all' && params.portal !== 'All') {
+        const pLower = params.portal.toLowerCase()
+        filtered = filtered.filter((j) => (j.portal || j.source || '').toLowerCase().includes(pLower))
+      }
+
+      // Last 24 Hours filter
+      if (params.last24HoursOnly) {
+        const twentyFourHoursAgo = Date.now() - 24 * 3600 * 1000
+        filtered = filtered.filter((j) => {
+          const postedMs = new Date(j.postedAt).getTime()
+          return !isNaN(postedMs) && postedMs >= twentyFourHoursAgo
+        })
+      }
+
+      // Only Verified filter
+      if (params.onlyVerified) {
+        filtered = filtered.filter((j) => j.isVerified === true)
+      }
 
       if (params.searchTerm) {
         const term = params.searchTerm.toLowerCase()
@@ -202,6 +246,7 @@ export const jobService = {
           (j) =>
             j.title.toLowerCase().includes(term) ||
             j.company.toLowerCase().includes(term) ||
+            (j.location && j.location.toLowerCase().includes(term)) ||
             j.skills.some((s) => s.toLowerCase().includes(term))
         )
       }
@@ -228,6 +273,20 @@ export const jobService = {
       console.warn('[jobService] Falling back to offline demo jobs catalog:', e)
       return { jobs: DEMO_JOBS.slice(0, params.limit || 10), total: DEMO_JOBS.length }
     }
+  },
+
+  /**
+   * Forces a fresh scrape/sync of the verified job catalog via Apify.
+   */
+  async refreshVerifiedCatalog(): Promise<NormalizedJob[]> {
+    return apifyJobService.extractVerifiedJobs({ last24HoursOnly: true })
+  },
+
+  /**
+   * Gets Apify catalog synchronization and 24-hour cycle status.
+   */
+  getSyncStatus() {
+    return apifyJobService.getSyncStatus()
   },
 
   async getJob(id: string): Promise<NormalizedJob | null> {

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Building2, MapPin, DollarSign, Sparkles, ChevronRight } from 'lucide-react';
@@ -97,14 +97,48 @@ export const JobCard: React.FC<JobCardProps> = ({ job, matchScore, onView, onApp
             )}
           </div>
 
-          <div className="flex items-center justify-between mt-auto">
-            <span className="badge-demo text-[10px] px-1.5 py-0.5 rounded opacity-70">DEMO</span>
+          <div className="flex flex-wrap items-center justify-between gap-2 mt-auto pt-2 border-t border-white/5">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {job.isVerified && (
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                  ✓ Verified
+                </span>
+              )}
+
+              {job.portal === 'LinkedIn' ? (
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#0A66C2]/20 text-[#388bfd] border border-[#0A66C2]/40">
+                  LinkedIn
+                </span>
+              ) : job.portal === 'Naukri' ? (
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-400 border border-blue-500/30">
+                  Naukri
+                </span>
+              ) : job.portal === 'Indeed' ? (
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">
+                  Indeed
+                </span>
+              ) : !job.isVerified ? (
+                <span className="badge-demo text-[10px] px-1.5 py-0.5 rounded opacity-70">DEMO</span>
+              ) : null}
+
+              {job.postedAt && (
+                <span className="text-[10px] text-neutral-400">
+                  {(() => {
+                    const diffMs = Date.now() - new Date(job.postedAt).getTime();
+                    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                    if (diffHours < 1) return 'Just now';
+                    if (diffHours < 24) return `${diffHours}h ago`;
+                    return `${Math.floor(diffHours / 24)}d ago`;
+                  })()}
+                </span>
+              )}
+            </div>
             
             <div className="flex items-center gap-2">
               <Link to={`/jobs/${job.id}`} className="btn-glass text-xs py-1.5 px-3">
                 View Details
               </Link>
-              <button onClick={onApply} className="btn-primary text-xs py-1.5 px-3 shadow-glow">
+              <button onClick={onApply} className="btn-primary text-xs py-1.5 px-3 shadow-glow cursor-pointer">
                 Quick Apply
               </button>
             </div>

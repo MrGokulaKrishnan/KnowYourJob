@@ -1,4 +1,4 @@
-﻿// NormalizedJob
+// NormalizedJob
 export interface NormalizedJob {
   id: string;
   title: string;
@@ -28,6 +28,10 @@ export interface NormalizedJob {
   sourceUrl: string;
   postedAt: string;
   isDemo?: boolean;
+  portal?: 'LinkedIn' | 'Naukri' | 'Indeed' | 'Direct' | string;
+  isVerified?: boolean;
+  scrapedAt?: string;
+  applyUrl?: string;
   metadata?: Record<string, unknown>;
 }
 

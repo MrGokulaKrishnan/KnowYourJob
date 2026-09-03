@@ -18,25 +18,46 @@ export default function JobsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [applyingIds, setApplyingIds] = useState<Record<string, boolean>>({});
   const [appliedIds, setAppliedIds] = useState<Record<string, boolean>>({});
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [syncStatus, setSyncStatus] = useState<any>(null);
 
   // Filters state
   const [matchScore, setMatchScore] = useState(0);
   const [remoteType, setRemoteType] = useState<string[]>([]);
+  const [portal, setPortal] = useState<'all' | 'LinkedIn' | 'Naukri' | 'Indeed'>('all');
+  const [last24HoursOnly, setLast24HoursOnly] = useState(true);
+
+  const fetchJobs = async (force = false) => {
+    setLoading(true);
+    try {
+      if (force) {
+        setIsRefreshing(true);
+        showToast('Refreshing verified jobs from LinkedIn & Naukri (Apify)…', 'info', 'Apify Sync');
+        await jobService.refreshVerifiedCatalog();
+      }
+      const res = await jobService.searchJobs({
+        portal: portal !== 'all' ? portal : undefined,
+        last24HoursOnly,
+        remoteType: remoteType.length > 0 ? remoteType : undefined,
+        minMatchScore: matchScore > 0 ? matchScore : undefined,
+      });
+      setJobs(res.jobs);
+      setSyncStatus(jobService.getSyncStatus());
+      if (force) {
+        showToast(`Catalog refreshed! ${res.jobs.length} jobs available.`, 'success', '24h Sync Complete');
+      }
+    } catch (err: any) {
+      console.error(err);
+      showToast(err?.message || 'Failed to fetch jobs.', 'error');
+    } finally {
+      setLoading(false);
+      setIsRefreshing(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchJobs = async () => {
-      setLoading(true);
-      try {
-        const res = await jobService.searchJobs({});
-        setJobs(res.jobs);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchJobs();
-  }, []);
+  }, [portal, last24HoursOnly, remoteType, matchScore]);
 
   const handleRemoteToggle = (val: string) => {
     setRemoteType(prev => prev.includes(val) ? prev.filter(x => x !== val) : [...prev, val]);
@@ -88,15 +109,80 @@ export default function JobsPage() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 h-full flex flex-col">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 h-full flex flex-col gap-6">
+
+      {/* Verified Catalog Status Banner */}
+      <div className="glass p-5 rounded-2xl border border-yellow-400/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-400 shrink-0">
+            <Sparkles size={24} />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-lg font-bold text-white">Verified Job Catalog</h1>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                24h Auto-Refresh
+              </span>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#0A66C2]/20 text-[#388bfd] border border-[#0A66C2]/40">
+                LinkedIn Scraper Active
+              </span>
+            </div>
+            <p className="text-xs text-neutral-400 mt-1">
+              {syncStatus?.lastSyncedAt
+                ? `Last synced: ${syncStatus.hoursSinceSync}h ago · Next refresh in ~${syncStatus.hoursUntilNextSync}h`
+                : 'Scraped and verified via Apify across LinkedIn & Naukri'}
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => fetchJobs(true)}
+          disabled={isRefreshing}
+          className="btn-primary text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 cursor-pointer disabled:opacity-50"
+        >
+          <span className={isRefreshing ? 'animate-spin' : ''}>↻</span>
+          <span>{isRefreshing ? 'Scraping Apify…' : 'Refresh Catalog (24h)'}</span>
+        </button>
+      </div>
+
+      {/* Portal Selection Tabs */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+        {(['all', 'LinkedIn', 'Naukri', 'Indeed'] as const).map((p) => (
+          <button
+            key={p}
+            onClick={() => setPortal(p)}
+            className={`px-4 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer shrink-0 ${
+              portal === p
+                ? 'bg-yellow-400/20 text-yellow-300 border border-yellow-400/40 shadow-[0_0_15px_rgba(255,208,0,0.15)]'
+                : 'bg-white/5 text-neutral-400 hover:text-white border border-white/5'
+            }`}
+          >
+            {p === 'all' ? 'All Portals' : p}
+          </button>
+        ))}
+
+        <div className="w-px h-6 bg-white/10 mx-2" />
+
+        <button
+          onClick={() => setLast24HoursOnly(!last24HoursOnly)}
+          className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer shrink-0 ${
+            last24HoursOnly
+              ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+              : 'bg-white/5 text-neutral-400 hover:text-white border border-white/5'
+          }`}
+        >
+          <span>Last 24 Hours {last24HoursOnly ? '✓' : ''}</span>
+        </button>
+      </div>
+
       {/* Search Bar */}
-      <div className="glass-strong p-2 rounded-2xl mb-8 flex items-center gap-2 sticky top-4 z-20">
+      <div className="glass-strong p-2 rounded-2xl flex items-center gap-2 sticky top-4 z-20">
         <div className="flex-1 flex items-center gap-3 px-4">
           <Search className="text-muted" size={20} />
           <input 
             type="text" 
-            placeholder="Search jobs, skills or companies..." 
-            className="w-full bg-transparent border-none text-white focus:outline-none focus:ring-0 placeholder-muted py-3"
+            placeholder="Search verified jobs, skills or companies..." 
+            className="w-full bg-transparent border-none text-white focus:outline-none focus:ring-0 placeholder-muted py-3 text-sm"
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
           />
@@ -104,7 +190,7 @@ export default function JobsPage() {
         <div className="w-px h-8 bg-white/10 mx-2"></div>
         <button className="btn-glass p-3 rounded-xl flex items-center gap-2">
           <Filter size={18} />
-          <span className="hidden sm:inline">Filters</span>
+          <span className="hidden sm:inline text-xs">Filters</span>
         </button>
       </div>
 
