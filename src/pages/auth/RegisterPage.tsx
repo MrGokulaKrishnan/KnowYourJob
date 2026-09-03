@@ -1,6 +1,7 @@
 ﻿import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { Mail, Lock, User as UserIcon, ArrowRight } from 'lucide-react';
+import { Mail, Lock, User as UserIcon, ArrowRight, AlertCircle } from 'lucide-react';
+import { getAuthErrorMessage } from '../../utils/authErrorMapper';
 import { AuthLayout } from '../../components/layout/AuthLayout';
 import { GlassInput } from '../../components/ui/GlassInput';
 import { LiquidButton } from '../../components/ui/LiquidButton';
@@ -21,6 +22,7 @@ export const RegisterPage: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -198,3 +200,4 @@ export const RegisterPage: React.FC = () => {
     </AuthLayout>
   );
 };
+

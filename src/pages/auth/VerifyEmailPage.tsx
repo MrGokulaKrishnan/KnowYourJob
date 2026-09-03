@@ -119,3 +119,4 @@ export const VerifyEmailPage: React.FC = () => {
     </AuthLayout>
   );
 };
+
