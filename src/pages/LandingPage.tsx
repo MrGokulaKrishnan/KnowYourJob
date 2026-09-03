@@ -65,7 +65,7 @@ export const LandingPage: React.FC = () => {
         {/* Release tag */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-6 shadow-[0_0_20px_rgba(245,158,11,0.15)]">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>PRODUCTION-READY FIREBASE BACKEND FOUNDATION</span>
+          <span>AI-POWERED AUTONOMOUS CAREER PLATFORM</span>
         </div>
 
         {/* Hero title */}
@@ -75,7 +75,7 @@ export const LandingPage: React.FC = () => {
         </h1>
 
         <p className="mt-6 text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed">
-          The next-generation AI career discovery platform. Automated role alignment, ATS-optimized resumes, and vetted applications powered by enterprise Firebase Authentication & Firestore.
+          The next-generation AI career discovery platform. Automated role alignment, ATS-optimized resumes, and tailored applications designed to help you land top engineering roles faster.
         </p>
 
         {/* Action Buttons */}
@@ -96,15 +96,15 @@ export const LandingPage: React.FC = () => {
         <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400 font-mono">
           <div className="flex items-center gap-1.5">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span>Strict Firestore Security Rules</span>
+            <span>Enterprise Data Security</span>
           </div>
           <div className="flex items-center gap-1.5">
             <Lock className="w-4 h-4 text-amber-400" />
-            <span>Passwordless Magic Link & Google Auth</span>
+            <span>1-Click Google & Magic Link Sign-In</span>
           </div>
           <div className="flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4 text-amber-400" />
-            <span>Encrypted Resume Cloud Storage</span>
+            <span>Private Resume Cloud Vault</span>
           </div>
         </div>
       </section>
@@ -113,10 +113,10 @@ export const LandingPage: React.FC = () => {
       <section className="relative z-10 px-6 py-16 max-w-7xl mx-auto w-full">
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Engineered for Security & Speed
+            Engineered to Accelerate Your Career
           </h2>
           <p className="text-xs sm:text-sm text-slate-400 mt-2">
-            A real full-stack architecture connecting React 19 to Firebase services.
+            AI precision matching, real-time ATS optimization, and autonomous application workflows.
           </p>
         </div>
 
@@ -125,15 +125,15 @@ export const LandingPage: React.FC = () => {
           <div className="liquid-glass-elevated rounded-2xl p-7 border border-white/5 flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-5">
-                <ShieldCheck className="w-6 h-6" />
+                <Sparkles className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white">Three Auth Channels</h3>
+              <h3 className="text-lg font-bold text-white">Instant AI Profile Extraction</h3>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
-                Standard Email & Password with automatic verification, zero-password magic email links, and official Google Sign-In with idempotent profile sync.
+                Upload your resume in PDF or DOCX format. Gemini AI extracts your verified experience, technical skills, and career timeline in seconds.
               </p>
             </div>
             <div className="mt-6 pt-4 border-t border-white/5 text-xs text-amber-400 font-mono">
-              Firebase Auth v12 Ready
+              Gemini 3.6 Flash Powered
             </div>
           </div>
 
@@ -143,13 +143,13 @@ export const LandingPage: React.FC = () => {
               <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-5">
                 <Search className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white">Cloud Firestore Database</h3>
+              <h3 className="text-lg font-bold text-white">Precision ATS Match Engine</h3>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
-                Production Firestore rules ensure users can only ever access their own applications, resumes, and automation preferences. Zero cross-tenant data leakage.
+                Compare your background against verified engineering openings. Identify skill gaps, calculate compatibility scores, and discover high-probability roles.
               </p>
             </div>
             <div className="mt-6 pt-4 border-t border-white/5 text-xs text-amber-400 font-mono">
-              Role Isolation & Compound Indexes
+              Semantic Match Scoring
             </div>
           </div>
 
@@ -159,13 +159,13 @@ export const LandingPage: React.FC = () => {
               <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-5">
                 <Bot className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white">Safe Autonomous Controls</h3>
+              <h3 className="text-lg font-bold text-white">Autonomous Application Suite</h3>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
-                Configurable daily application caps, match thresholds, and immutable audit logs ensure users remain in full control of their job hunt.
+                Tailor applications, generate customized cover letters, and track your pipeline across every stage with complete user oversight and safety.
               </p>
             </div>
             <div className="mt-6 pt-4 border-t border-white/5 text-xs text-amber-400 font-mono">
-              Default-Disabled Safety Boundary
+              User-Controlled Automation
             </div>
           </div>
         </div>
