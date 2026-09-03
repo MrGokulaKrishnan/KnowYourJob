@@ -14,7 +14,7 @@ export { db } from './firebase/firestore'
 // Set values in .env.local — never hardcode secrets in source files.
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyC5gPrPoR7HB3hgVfRRa75HakHC6ynHM1c',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'knowyourjob.firebaseapp.com',
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'knowyourjob17.firebaseapp.com',
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'knowyourjob17',
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'knowyourjob17.firebasestorage.app',
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '92777178236',
