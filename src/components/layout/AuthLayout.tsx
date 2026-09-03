@@ -1,6 +1,6 @@
-﻿import React, { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, ShieldCheck } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -16,16 +16,21 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitl
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-600/10 blur-[100px] pointer-events-none rounded-full" />
 
       {/* Brand Header */}
-      <div className="mb-8 text-center z-10">
-        <Link to="/" className="inline-flex items-center gap-2.5 group focus:outline-none">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/30 group-hover:shadow-amber-500/50 transition-all">
-            <Zap className="w-5 h-5 text-slate-950 fill-current" />
+      <div className="mb-6 text-center z-10 flex flex-col items-center">
+        <Link to="/" className="inline-flex flex-col items-center gap-3 group focus:outline-none">
+          <div className="relative group-hover:scale-105 transition-transform duration-300">
+            <div className="absolute -inset-1.5 bg-gradient-to-r from-amber-500 to-yellow-400 rounded-2xl blur-md opacity-30 group-hover:opacity-60 transition duration-300" />
+            <img
+              src="/kyj-logo.jpg"
+              alt="KnowYourJob Logo"
+              className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-contain shadow-2xl border border-amber-500/30 bg-black"
+            />
           </div>
-          <span className="text-2xl font-bold tracking-tight text-white flex items-center gap-1">
+          <span className="text-2xl sm:text-3xl font-bold tracking-tight text-white flex items-center gap-1">
             KnowYour<span className="text-gradient-gold">Job</span>
           </span>
         </Link>
-        <p className="text-xs tracking-widest text-amber-400/80 font-mono mt-1.5 uppercase">
+        <p className="text-xs tracking-widest text-amber-400/80 font-mono mt-1 uppercase">
           AI Autonomous Career Platform
         </p>
       </div>

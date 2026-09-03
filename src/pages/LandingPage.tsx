@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Zap, 
@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { LiquidButton } from '../components/ui/LiquidButton';
 import { useAuth } from '../hooks/useAuth';
+import { KYJLogo } from '../components/ui/KYJLogo';
 
 export const LandingPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
@@ -27,10 +28,8 @@ export const LandingPage: React.FC = () => {
       {/* Navigation Header */}
       <header className="relative z-20 border-b border-white/5 bg-[#090d14]/60 backdrop-blur-xl sticky top-0 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/30">
-              <Zap className="w-5 h-5 text-slate-950 fill-current" />
-            </div>
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <KYJLogo size={36} glow className="group-hover:scale-105 transition-transform" />
             <span className="text-xl font-bold tracking-tight text-white flex items-center">
               KnowYour<span className="text-gradient-gold">Job</span>
             </span>
@@ -176,7 +175,7 @@ export const LandingPage: React.FC = () => {
       <footer className="relative z-10 border-t border-white/5 mt-auto py-8 px-6 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-amber-400" />
+            <KYJLogo size={22} />
             <span className="text-slate-300 font-semibold">KnowYourJob</span>
             <span>— AI Autonomous Career Platform</span>
           </div>

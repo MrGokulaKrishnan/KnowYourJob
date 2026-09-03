@@ -1,9 +1,10 @@
-﻿import React, { useState, useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { useDropzone } from 'react-dropzone';
 import { Upload, CheckCircle2, ChevronRight, Briefcase, MapPin, DollarSign, Building, Sparkles, User, Settings, ShieldCheck, FileText, Zap } from 'lucide-react';
 import clsx from 'clsx';
+import { KYJLogo } from '../../components/ui/KYJLogo';
 
 const AIProcessing = ({ steps, onComplete }: { steps: string[], onComplete: () => void }) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -93,7 +94,14 @@ function OnboardingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white flex flex-col items-center py-12 px-4 sm:px-6">
+    <div className="min-h-screen bg-[#050505] text-white flex flex-col items-center py-10 px-4 sm:px-6">
+      <Link to="/" className="mb-8 flex items-center gap-2.5 group">
+        <KYJLogo size={32} glow className="group-hover:scale-105 transition-transform" />
+        <span className="font-bold text-lg tracking-tight text-white">
+          KnowYour<span className="text-gradient-gold">Job</span>
+        </span>
+      </Link>
+
       <div className="w-full max-w-4xl mb-12 flex items-center justify-between relative">
         <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-neutral-800 -z-10"></div>
         <div className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] bg-yellow-400 -z-10 transition-all duration-500" style={{ width: `${((step - 1) / 4) * 100}%` }}></div>

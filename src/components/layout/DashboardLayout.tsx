@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Zap,
@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../context/ToastContext';
+import { KYJLogo } from '../ui/KYJLogo';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -70,9 +71,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
         {/* Brand */}
         <div className="p-6 border-b border-white/5 flex items-center justify-between">
           <Link to="/dashboard" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-md shadow-amber-500/20">
-              <Zap className="w-4 h-4 text-slate-950 fill-current" />
-            </div>
+            <KYJLogo size={34} glow className="group-hover:scale-105 transition-transform" />
             <span className="font-bold tracking-tight text-white flex items-center">
               KnowYour<span className="text-gradient-gold">Job</span>
             </span>
@@ -128,9 +127,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       {/* Mobile Top Header */}
       <header className="md:hidden flex items-center justify-between p-4 border-b border-white/10 bg-[#090d14]/90 backdrop-blur-lg sticky top-0 z-30">
         <Link to="/dashboard" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
-            <Zap className="w-3.5 h-3.5 text-slate-950 fill-current" />
-          </div>
+          <KYJLogo size={28} />
           <span className="font-bold text-sm text-white">
             KnowYour<span className="text-amber-400">Job</span>
           </span>
