@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Search, Filter, SlidersHorizontal, MapPin, Briefcase } from 'lucide-react';
+import { Search, Filter, SlidersHorizontal, Sparkles, Check } from 'lucide-react';
+import { serverTimestamp } from 'firebase/firestore';
 import { jobService } from '@/lib/services/jobService';
+import { applicationService } from '@/services/firebase/applicationService';
 import type { NormalizedJob } from '@/types/job';
 import { JobCard } from '@/components/jobs/JobCard';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/context/ToastContext';
 
 export default function JobsPage() {
+  const { user } = useAuth();
+  const { showToast } = useToast();
+
   const [jobs, setJobs] = useState<NormalizedJob[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  
+  const [applyingIds, setApplyingIds] = useState<Record<string, boolean>>({});
+  const [appliedIds, setAppliedIds] = useState<Record<string, boolean>>({});
+
   // Filters state
   const [matchScore, setMatchScore] = useState(0);
   const [remoteType, setRemoteType] = useState<string[]>([]);
-  const [employmentType, setEmploymentType] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -34,11 +42,48 @@ export default function JobsPage() {
     setRemoteType(prev => prev.includes(val) ? prev.filter(x => x !== val) : [...prev, val]);
   };
 
+  const handleApply = async (job: NormalizedJob) => {
+    if (!user) {
+      showToast('Please sign in to apply.', 'warning');
+      return;
+    }
+    if (appliedIds[job.id]) return;
+
+    setApplyingIds(prev => ({ ...prev, [job.id]: true }));
+    try {
+      await applicationService.createApplication({
+        userId: user.uid,
+        jobId: job.id,
+        company: job.company,
+        jobTitle: job.title,
+        location: job.location,
+        source: job.source,
+        sourceUrl: job.sourceUrl,
+        matchScore: job.matchScore ?? 80,
+        status: 'applied',
+        automationMode: 'manual',
+        appliedAt: serverTimestamp(),
+      });
+      setAppliedIds(prev => ({ ...prev, [job.id]: true }));
+      showToast(`Application tracked for ${job.title} at ${job.company}!`, 'success', 'Application Recorded');
+    } catch (err) {
+      console.error(err);
+      showToast('Failed to record application. Please try again.', 'error');
+    } finally {
+      setApplyingIds(prev => ({ ...prev, [job.id]: false }));
+    }
+  };
+
   const filteredJobs = jobs.filter(job => {
     if (searchTerm && !job.title.toLowerCase().includes(searchTerm.toLowerCase()) && !job.company.toLowerCase().includes(searchTerm.toLowerCase())) {
       return false;
     }
-    // simple local filtering logic placeholder
+    if (remoteType.length > 0 && !remoteType.some(r => r.toLowerCase() === job.remoteType.toLowerCase())) {
+      return false;
+    }
+    if (matchScore > 0 && (job.matchScore ?? 0) < matchScore) {
+      return false;
+    }
     return true;
   });
 
@@ -75,18 +120,23 @@ export default function JobsPage() {
               <h2 className="text-lg font-semibold flex items-center gap-2 text-white">
                 <SlidersHorizontal size={18} /> Filters
               </h2>
-              <button className="text-xs text-secondary hover:text-primary transition-colors">Clear All</button>
+              <button
+                className="text-xs text-secondary hover:text-primary transition-colors"
+                onClick={() => { setRemoteType([]); setMatchScore(0); }}
+              >
+                Clear All
+              </button>
             </div>
 
             {/* Remote Type */}
             <div className="space-y-3">
               <h3 className="text-sm font-medium text-white">Remote Type</h3>
-              {['Remote', 'Hybrid', 'On-site'].map(type => (
-                <label key={type} className="flex items-center gap-3 cursor-pointer group">
+              {['remote', 'hybrid', 'onsite'].map(type => (
+                <label key={type} className="flex items-center gap-3 cursor-pointer group" onClick={() => handleRemoteToggle(type)}>
                   <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${remoteType.includes(type) ? 'bg-primary border-primary' : 'border-white/20 group-hover:border-primary/50'}`}>
                     {remoteType.includes(type) && <div className="w-2.5 h-2.5 bg-black rounded-sm" />}
                   </div>
-                  <span className="text-sm text-secondary group-hover:text-white transition-colors">{type}</span>
+                  <span className="text-sm text-secondary group-hover:text-white transition-colors capitalize">{type}</span>
                 </label>
               ))}
             </div>
@@ -105,31 +155,6 @@ export default function JobsPage() {
                 onChange={(e) => setMatchScore(parseInt(e.target.value))}
                 className="w-full accent-primary h-1 bg-white/10 rounded-full appearance-none cursor-pointer"
               />
-            </div>
-
-            {/* Employment Type */}
-            <div className="space-y-3">
-              <h3 className="text-sm font-medium text-white">Employment Type</h3>
-              {['Full-time', 'Contract', 'Part-time'].map(type => (
-                <label key={type} className="flex items-center gap-3 cursor-pointer group">
-                  <div className="w-5 h-5 rounded border border-white/20 flex items-center justify-center group-hover:border-primary/50 transition-colors">
-                  </div>
-                  <span className="text-sm text-secondary group-hover:text-white transition-colors">{type}</span>
-                </label>
-              ))}
-            </div>
-
-            {/* Posted Date */}
-            <div className="space-y-3">
-              <h3 className="text-sm font-medium text-white">Posted</h3>
-              {['Any time', 'Past week', 'Past month'].map((type, i) => (
-                <label key={type} className="flex items-center gap-3 cursor-pointer group">
-                  <div className="w-5 h-5 rounded-full border border-white/20 flex items-center justify-center group-hover:border-primary/50 transition-colors">
-                    {i === 0 && <div className="w-2.5 h-2.5 bg-primary rounded-full" />}
-                  </div>
-                  <span className="text-sm text-secondary group-hover:text-white transition-colors">{type}</span>
-                </label>
-              ))}
             </div>
 
             <button className="btn-primary w-full py-3 rounded-xl shadow-glow">
@@ -175,7 +200,8 @@ export default function JobsPage() {
                   }}>
                     <JobCard 
                       job={job} 
-                      matchScore={Math.floor(Math.random() * 20) + 75} 
+                      matchScore={job.matchScore}
+                      onApply={() => handleApply(job)}
                     />
                   </motion.div>
                 ))}

@@ -1,20 +1,20 @@
-﻿import React, { useEffect, useState } from 'react';
-import { Search, MapPin, DollarSign, Briefcase, Check, Sparkles, ExternalLink } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Search, Sparkles, Check, ExternalLink } from 'lucide-react';
 import { serverTimestamp } from 'firebase/firestore';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { LiquidButton } from '../../components/ui/LiquidButton';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../context/ToastContext';
-import { jobService } from '../../services/firebase/jobService';
+import { jobService } from '@/lib/services/jobService';
 import { applicationService } from '../../services/firebase/applicationService';
-import { Job } from '../../types/job';
+import type { NormalizedJob } from '@/types/job';
 
 export const JobsPage: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
 
-  const [jobs, setJobs] = useState<Job[]>([]);
+  const [jobs, setJobs] = useState<NormalizedJob[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [remoteFilter, setRemoteFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,9 +24,9 @@ export const JobsPage: React.FC = () => {
     setIsLoading(true);
     try {
       await jobService.seedInitialJobsIfEmpty();
-      const res = await jobService.getJobs({
+      const res = await jobService.searchJobs({
         remoteType: remoteFilter !== 'All' ? remoteFilter : undefined,
-        limitCount: 20,
+        limit: 20,
       });
       setJobs(res.jobs);
     } catch (err) {
@@ -40,7 +40,7 @@ export const JobsPage: React.FC = () => {
     loadJobs();
   }, [remoteFilter]);
 
-  const handleApply = async (job: Job) => {
+  const handleApply = async (job: NormalizedJob) => {
     if (!user) return;
     try {
       await applicationService.createApplication({
@@ -51,7 +51,7 @@ export const JobsPage: React.FC = () => {
         location: job.location,
         source: job.source,
         sourceUrl: job.sourceUrl,
-        matchScore: Math.floor(Math.random() * 15) + 85,
+        matchScore: job.matchScore ?? 80,
         status: 'applied',
         automationMode: 'manual',
         appliedAt: serverTimestamp(),
@@ -71,6 +71,7 @@ export const JobsPage: React.FC = () => {
       j.skills.some((s) => s.toLowerCase().includes(searchTerm.toLowerCase()))
     );
   });
+
 
   return (
     <DashboardLayout
@@ -133,7 +134,9 @@ export const JobsPage: React.FC = () => {
                         {job.employmentType}
                       </span>
                       <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400">
-                        ${job.salary.min.toLocaleString()} - ${job.salary.max.toLocaleString()} / {job.salary.period}
+                        {job.salary.currency === 'INR'
+                          ? `₹${Math.round(job.salary.min / 100000)}L – ₹${Math.round(job.salary.max / 100000)}L / yr`
+                          : `$${Math.round(job.salary.min / 1000)}k – $${Math.round(job.salary.max / 1000)}k / yr`}
                       </span>
                     </div>
 

@@ -261,7 +261,31 @@ export const jobService = {
     } catch (e) {
       console.warn('[jobService] Seeding skipped (offline/security):', e)
     }
-  }
+  },
+
+  /**
+   * Returns up to `count` jobs that share skills with the given job,
+   * sorted by number of overlapping skills (highest first).
+   */
+  async getSimilarJobs(currentJobId: string, skills: string[], count = 3): Promise<NormalizedJob[]> {
+    try {
+      const { jobs } = await this.searchJobs({})
+      const lowerSkills = skills.map((s) => s.toLowerCase())
+      return jobs
+        .filter((j) => j.id !== currentJobId)
+        .map((j) => ({
+          job: j,
+          overlap: j.skills.filter((s) => lowerSkills.includes(s.toLowerCase())).length,
+        }))
+        .filter(({ overlap }) => overlap > 0)
+        .sort((a, b) => b.overlap - a.overlap)
+        .slice(0, count)
+        .map(({ job }) => job)
+    } catch {
+      return []
+    }
+  },
 }
 
 export default jobService
+

@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Sparkles, Check, ExternalLink } from 'lucide-react';
 import { serverTimestamp } from 'firebase/firestore';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
@@ -6,15 +6,15 @@ import { LiquidButton } from '../../components/ui/LiquidButton';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../context/ToastContext';
-import { jobService } from '../../services/firebase/jobService';
+import { jobService } from '@/lib/services/jobService';
 import { applicationService } from '../../services/firebase/applicationService';
-import { Job } from '../../types/job';
+import type { NormalizedJob } from '@/types/job';
 
 export const RecommendedJobsPage: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
 
-  const [jobs, setJobs] = useState<Job[]>([]);
+  const [jobs, setJobs] = useState<NormalizedJob[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [appliedIds, setAppliedIds] = useState<Record<string, boolean>>({});
 
@@ -23,7 +23,7 @@ export const RecommendedJobsPage: React.FC = () => {
       setIsLoading(true);
       try {
         await jobService.seedInitialJobsIfEmpty();
-        const res = await jobService.getJobs({ limitCount: 10 });
+        const res = await jobService.searchJobs({ limit: 10 });
         setJobs(res.jobs);
       } catch (err) {
         console.warn('Recs load error:', err);
@@ -35,8 +35,9 @@ export const RecommendedJobsPage: React.FC = () => {
     loadRecs();
   }, []);
 
-  const handleApply = async (job: Job, score: number) => {
+  const handleApply = async (job: NormalizedJob) => {
     if (!user) return;
+    const score = job.matchScore ?? 80;
     try {
       await applicationService.createApplication({
         userId: user.uid,
@@ -58,6 +59,7 @@ export const RecommendedJobsPage: React.FC = () => {
     }
   };
 
+
   return (
     <DashboardLayout
       pageTitle="AI Recommended Matches"
@@ -72,8 +74,8 @@ export const RecommendedJobsPage: React.FC = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-4">
-            {jobs.map((job, idx) => {
-              const score = 96 - idx * 3;
+            {jobs.map((job) => {
+              const score = job.matchScore ?? 80;
               const isApplied = appliedIds[job.id];
               return (
                 <div
@@ -102,7 +104,8 @@ export const RecommendedJobsPage: React.FC = () => {
                     <LiquidButton
                       variant={isApplied ? 'glass' : 'yellow'}
                       disabled={isApplied}
-                      onClick={() => handleApply(job, score)}
+                      onClick={() => handleApply(job)}
+
                       leftIcon={isApplied ? <Check className="w-4 h-4 text-emerald-400" /> : <Sparkles className="w-4 h-4" />}
                     >
                       {isApplied ? 'Application Logged' : 'Auto-Draft & Apply'}

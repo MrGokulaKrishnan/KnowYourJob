@@ -1,11 +1,18 @@
-﻿import { 
-  getFirestore, 
-  connectFirestoreEmulator, 
-  Firestore 
+import {
+  initializeFirestore,
+  connectFirestoreEmulator,
+  persistentLocalCache,
+  persistentMultipleTabManager,
+  Firestore,
 } from 'firebase/firestore';
 import { app, isEmulatorEnabled } from './config';
 
-export const db: Firestore = getFirestore(app);
+// Modern Firebase v10 persistent cache (replaces deprecated enableIndexedDbPersistence)
+export const db: Firestore = initializeFirestore(app, {
+  localCache: persistentLocalCache({
+    tabManager: persistentMultipleTabManager(),
+  }),
+});
 
 // Connect to Firestore Emulator if enabled
 if (isEmulatorEnabled && typeof window !== 'undefined') {
