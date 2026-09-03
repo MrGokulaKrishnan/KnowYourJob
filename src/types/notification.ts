@@ -1,4 +1,5 @@
-﻿import { Timestamp, FieldValue } from 'firebase/firestore';
+import { Timestamp, FieldValue } from 'firebase/firestore';
+import type { ResumeAnalysis } from './normalizedJob';
 
 export type NotificationType = 'match' | 'application' | 'automation' | 'system' | 'security';
 
@@ -24,6 +25,8 @@ export interface ResumeMetadata {
   isPrimary: boolean;
   analysisStatus: 'pending' | 'analyzed' | 'failed';
   atsScore?: number;
+  /** Full AI analysis result from the analyzeResume Cloud Function */
+  analysisResult?: ResumeAnalysis;
   uploadedAt: Timestamp | FieldValue;
   updatedAt: Timestamp | FieldValue;
 }
