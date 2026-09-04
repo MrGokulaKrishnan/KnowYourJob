@@ -1,14 +1,14 @@
 ﻿import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 
-// Centralized Firebase web configuration for knowyourjob-17
+// Centralized Firebase web configuration for knowyourjob17
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyDUQDgvxI5aCDewo_UIpmjR87-eU-WNVyg',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'knowyourjob-17.firebaseapp.com',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'knowyourjob-17',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'knowyourjob-17.firebasestorage.app',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '673034453640',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:673034453640:web:bdc28f838ca6e59a5c953d',
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || 'G-EHSL3D00RZ',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyC5gPrPoR7HB3hgVfRRa75HakHC6ynHM1c',
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'knowyourjob17.firebaseapp.com',
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'knowyourjob17',
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'knowyourjob17.firebasestorage.app',
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '92777178236',
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:92777178236:web:18a1e1580d15efcfebd5f9',
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || 'G-RFE9FH4Z7Z',
 };
 
 // Singleton initialization to prevent multiple instances
