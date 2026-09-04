@@ -19,7 +19,7 @@
                       }
                   ],
     "hosting":  {
-                    "site":  "knowyourjob-17",
+                    "site":  "knowyourjob-app",
                     "public":  "dist",
                     "ignore":  [
                                    "firebase.json",
