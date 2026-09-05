@@ -774,7 +774,11 @@ export function OnboardingPage() {
                           step="50000"
                           placeholder="Min (e.g. 1200000)"
                           value={minSalary}
-                          onChange={(e) => setMinSalary(parseInt(e.target.value) || 0)}
+                          onChange={(e) => {
+                            const val = parseInt(e.target.value) || 0;
+                            setMinSalary(val);
+                            if (val > maxSalary) setMaxSalary(val);
+                          }}
                           className="w-full glass-input pl-7 pr-3 py-2 rounded-lg text-white text-sm outline-none font-mono"
                         />
                       </div>
@@ -786,7 +790,11 @@ export function OnboardingPage() {
                           step="50000"
                           placeholder="Max (e.g. 2500000)"
                           value={maxSalary}
-                          onChange={(e) => setMaxSalary(parseInt(e.target.value) || 0)}
+                          onChange={(e) => {
+                            const val = parseInt(e.target.value) || 0;
+                            setMaxSalary(val);
+                            if (val < minSalary) setMinSalary(val);
+                          }}
                           className="w-full glass-input pl-7 pr-3 py-2 rounded-lg text-white text-sm outline-none font-mono"
                         />
                       </div>

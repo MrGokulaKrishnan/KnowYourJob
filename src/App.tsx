@@ -180,7 +180,7 @@ export const App: React.FC = () => {
       <Route
         path="/dashboard/admin"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute adminOnly>
             <AdminPage />
           </ProtectedRoute>
         }

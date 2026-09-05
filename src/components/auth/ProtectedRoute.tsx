@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
@@ -7,12 +7,14 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
   requireOnboarding?: boolean;
   requireEmailVerification?: boolean;
+  adminOnly?: boolean;
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requireOnboarding = true,
   requireEmailVerification = false,
+  adminOnly = false,
 }) => {
   const { user, userDoc, loading, isAuthenticated } = useAuth();
   const location = useLocation();
@@ -46,6 +48,14 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   // 4. Onboarding guard: if not completed, steer to onboarding
   if (requireOnboarding && userDoc && userDoc.onboardingCompleted === false && location.pathname !== '/onboarding') {
     return <Navigate to="/onboarding" replace />;
+  }
+
+  // 5. Admin role guard: strictly verify administrator privileges
+  if (adminOnly) {
+    const isAdmin = userDoc?.role === 'admin' || (userDoc as any)?.isAdmin === true;
+    if (!isAdmin) {
+      return <Navigate to="/dashboard" replace />;
+    }
   }
 
   return <>{children}</>;
