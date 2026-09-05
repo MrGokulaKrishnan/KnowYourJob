@@ -1,6 +1,6 @@
-﻿// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+﻿// ─────────────────────────────────────────────────────────────────────────────
 // Firebase Client SDK Initialization
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─────────────────────────────────────────────────────────────────────────────
 
 import { initializeApp, getApps, type FirebaseApp } from 'firebase/app'
 import { getAuth, connectAuthEmulator } from 'firebase/auth'
@@ -11,15 +11,15 @@ import { getFunctions, connectFunctionsEmulator } from 'firebase/functions'
 export { db } from './firebase/firestore'
 
 // Configuration loaded exclusively from environment variables.
-// Set values in .env.local â€” never hardcode secrets in source files.
+// Set values in .env or .env.local — never hardcode secrets in source files.
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyC5gPrPoR7HB3hgVfRRa75HakHC6ynHM1c',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'knowyourjob17.firebaseapp.com',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'knowyourjob17',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'knowyourjob17.firebasestorage.app',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '92777178236',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:92777178236:web:18a1e1580d15efcfebd5f9',
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || 'G-RFE9FH4Z7Z',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || '',
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || '',
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || '',
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || '',
 }
 
 // Initialize once (handles HMR re-imports)
@@ -34,7 +34,7 @@ export const auth      = getAuth(app)
 export const storage   = getStorage(app)
 export const functions = getFunctions(app)
 
-// â”€â”€ Emulator support (development only) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Emulator support (development only) ───────────────────────────────────────
 if (import.meta.env.DEV && import.meta.env.VITE_USE_EMULATORS === 'true') {
   connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true })
   connectStorageEmulator(storage, 'localhost', 9199)
@@ -44,5 +44,3 @@ if (import.meta.env.DEV && import.meta.env.VITE_USE_EMULATORS === 'true') {
 
 export { app }
 export default app
-
-

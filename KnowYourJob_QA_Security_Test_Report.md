@@ -1,4 +1,4 @@
-# KnowYourJob — QA & Security Test Report
+﻿# KnowYourJob â€” QA & Security Test Report
 
 **Target:** `https://knowyourjob.web.app/#dashboard`  
 **Assessment Date:** 2026-09-05  
@@ -30,15 +30,15 @@ Several areas require immediate engineering hardening before broad public releas
 | **Overall Quality Rating** | **88 / 100** |
 | **Security Posture** | **Good (Hardening Required for Production)** |
 | **Total Findings** | **14** |
-| • Critical | 0 |
-| • High | 1 (Dependency CVE) |
-| • Medium | 2 (Client API Key Pattern, Missing Headers) |
-| • Low | 3 (Admin Route Guard, Storage Initialization, Error Fallback) |
-| • Informational | 2 (Firebase Config Context, Console Telemetry) |
-| • Functional QA Issues | 2 |
-| • UI/UX Defects | 2 |
-| • Accessibility Issues | 2 |
-| • Performance Observations | 2 |
+| â€¢ Critical | 0 |
+| â€¢ High | 1 (Dependency CVE) |
+| â€¢ Medium | 2 (Client API Key Pattern, Missing Headers) |
+| â€¢ Low | 3 (Admin Route Guard, Storage Initialization, Error Fallback) |
+| â€¢ Informational | 2 (Firebase Config Context, Console Telemetry) |
+| â€¢ Functional QA Issues | 2 |
+| â€¢ UI/UX Defects | 2 |
+| â€¢ Accessibility Issues | 2 |
+| â€¢ Performance Observations | 2 |
 
 ---
 
@@ -81,7 +81,7 @@ The assessment adhered to the **OWASP Web Security Testing Guide (WSTG v4.2)** a
 | **Client PDF Text Parsing** | `extractTextFromPDF` | Yes | **FAIL** | Functions correctly, but relies on vulnerable `pdfjs-dist` package. |
 | **Candidate Profile Parsing** | `aiService.extractCandidateProfile` | Yes | **PASS** | Structured JSON schema extracts real name, skills, jobs, degrees. |
 | **Profile Verification Screen** | `/onboarding` Step 3 | Yes | **PASS** | Displays real parsed candidate data with inline editing capabilities. |
-| **INR Salary Localization** | `/onboarding` Step 4 & `/preferences` | Yes | **PASS** | Formatted in Indian Rupees (₹ LPA) with 1-click presets. |
+| **INR Salary Localization** | `/onboarding` Step 4 & `/preferences` | Yes | **PASS** | Formatted in Indian Rupees (â‚¹ LPA) with 1-click presets. |
 | **Firestore Profile Persistence** | `profileService.saveFullProfile` | Yes | **PASS** | Deep sanitization strips `undefined` values; saves cleanly. |
 | **Job Search & Text Filter** | `/dashboard/jobs` | Yes | **PASS** | Case-insensitive substring search across titles, skills, and companies. |
 | **Job Details & AI Match** | `/dashboard/jobs/:id` | Yes | **PASS** | Lazy-loaded match breakdown computes skills and experience scores. |
@@ -105,7 +105,7 @@ The highest-severity issue discovered is **FINDING-001 (High Severity)** regardi
 
 ---
 
-### FINDING-001 — High-Severity Code Execution CVE in Client-Side PDF Parser (`pdfjs-dist`)
+### FINDING-001 â€” High-Severity Code Execution CVE in Client-Side PDF Parser (`pdfjs-dist`)
 **Severity:** High (CVSS: 7.8 / CWE-79 / GHSA-hq66-cqwq-w95j)  
 **Category:** Vulnerable & Outdated Components (OWASP A06:2021)  
 **Affected Area:** `src/services/firebase/resumeService.ts` (`extractTextFromPDF`)  
@@ -160,7 +160,7 @@ Run `npm audit` and confirm zero vulnerabilities reported for `pdfjs-dist`. Veri
 
 ---
 
-### FINDING-002 — Insecure Architectural Pattern: Client-Side LLM & Scraper API Key Ingestion
+### FINDING-002 â€” Insecure Architectural Pattern: Client-Side LLM & Scraper API Key Ingestion
 **Severity:** Medium (CWE-200 / CWE-798)  
 **Category:** Insecure Design & Information Exposure (OWASP A04:2021)  
 **Affected Area:** [`src/lib/services/aiService.ts`](file:///c:/KnowYourJob/src/lib/services/aiService.ts#L88) and [`src/services/jobs/apifyJobService.ts`](file:///c:/KnowYourJob/src/services/jobs/apifyJobService.ts#L195)  
@@ -183,9 +183,9 @@ In Vite applications, any variable prefixed with `VITE_` is statically embedded 
 A production build is compiled with `VITE_GEMINI_API_KEY` or `VITE_APIFY_API_KEY` present in the build environment.
 
 #### Reproduction Steps
-1. Add a test key to `.env`: `VITE_GEMINI_API_KEY=AIzaSyFakeKey...`.
+1. Add a test key to `.env`: `VITE_GEMINI_API_KEY=EXAMPLE_KEY_FOR_TESTING_ONLY`.
 2. Run `npm run build`.
-3. Search in `dist/assets/index-*.js` for `AIzaSyFakeKey`.
+3. Search in `dist/assets/index-*.js` for `EXAMPLE_KEY_FOR_TESTING_ONLY`.
 4. The key is found in plain text in the compiled bundle.
 
 #### Expected Result
@@ -206,7 +206,7 @@ Verify that no `VITE_GEMINI_API_KEY` or `VITE_APIFY_API_KEY` variables are refer
 
 ---
 
-### FINDING-003 — Missing Security Headers on Firebase Hosting
+### FINDING-003 â€” Missing Security Headers on Firebase Hosting
 **Severity:** Medium (CWE-1021 / CWE-693)  
 **Category:** Security Misconfiguration (OWASP A05:2021)  
 **Affected Area:** `firebase.json` (Hosting configuration)  
@@ -272,7 +272,7 @@ Run `curl -I https://knowyourjob.web.app/` after deployment and verify that all 
 
 ---
 
-### FINDING-004 — Missing Role Guard on Admin Route (Broken Access Control)
+### FINDING-004 â€” Missing Role Guard on Admin Route (Broken Access Control)
 **Severity:** Low (CVSS: 4.3 / CWE-285)  
 **Category:** Broken Access Control (OWASP A01:2021)  
 **Affected Area:** `src/components/auth/ProtectedRoute.tsx` and `src/pages/admin/AdminPage.tsx`  
@@ -340,7 +340,7 @@ Sign in as a standard user, attempt to navigate to `/dashboard/admin`, and confi
 
 | ID | Severity | Area | Issue Description | Recommendation |
 |---|---|---|---|---|
-| **UX-001** | Cosmetic (P4) | Onboarding Salary Range | In Step 4, entering a Min Salary greater than Max Salary displays an inverted range (e.g. `25L – 12L`) | Add auto-adjustment logic: if `minSalary > maxSalary`, set `maxSalary = minSalary`. |
+| **UX-001** | Cosmetic (P4) | Onboarding Salary Range | In Step 4, entering a Min Salary greater than Max Salary displays an inverted range (e.g. `25L â€“ 12L`) | Add auto-adjustment logic: if `minSalary > maxSalary`, set `maxSalary = minSalary`. |
 | **UX-002** | Cosmetic (P4) | Job Card Long Titles | Extremely long job titles (>60 chars) wrap onto three lines on 320px screens | Apply Tailwind `line-clamp-2` to maintain uniform job card heights on extra-small mobile viewports. |
 
 ---
@@ -415,19 +415,19 @@ Sign in as a standard user, attempt to navigate to `/dashboard/admin`, and confi
 
 ## 13. Recommended Fix Priority
 
-### P0 — Immediate Action
+### P0 â€” Immediate Action
 *No immediate blockers identified.*
 
-### P1 — High Priority (Address Before Public Marketing Launch)
+### P1 â€” High Priority (Address Before Public Marketing Launch)
 1. **Upgrade `pdfjs-dist`**: Eliminate the arbitrary code execution CVE (GHSA-hq66-cqwq-w95j) by updating to the latest patched release.
 2. **Add Security Headers in `firebase.json`**: Implement `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, and `Content-Security-Policy`.
 
-### P2 — Normal Priority (Next Sprint)
+### P2 â€” Normal Priority (Next Sprint)
 3. **Add Admin Role Guard**: Restrict `/dashboard/admin` in `ProtectedRoute` to users with `isAdmin: true`.
 4. **Remove Client-Side Secret References**: Ensure all LLM calls route through serverless proxies rather than client-side `VITE_*` keys.
 5. **Initialize Firebase Storage Bucket**: Provision the storage bucket in Firebase Console to enable permanent resume binary archiving.
 
-### P3 — Improvements & Polish
+### P3 â€” Improvements & Polish
 6. **Code Splitting**: Configure Rollup `manualChunks` in `vite.config.ts` to reduce initial bundle size below 500kB.
 7. **Salary Range Bounds Guard**: Auto-sync Min and Max salary inputs if an inverted range is entered.
 8. **Contrast Enhancement**: Elevate secondary text contrast from `text-slate-500` to `text-slate-400`.
@@ -452,7 +452,7 @@ The application demonstrates high architectural maturity, rock-solid Firestore m
 
 ## 15. Release Recommendation
 
-# ⚠️ READY WITH MINOR FIXES
+# âš ï¸ READY WITH MINOR FIXES
 
 The application is functionally sound, highly stable, and ready for deployment upon completing the two high-priority hardening steps:
 1. Updating `pdfjs-dist` to the patched version.
@@ -469,7 +469,7 @@ The application is functionally sound, highly stable, and ready for deployment u
 - [x] Passwordless email sign-in links function without infinite loops.
 - [x] Onboarding Gemini candidate profile extraction parses real resume text.
 - [x] Onboarding "Finish Setup" saves candidate profile without `undefined` Firestore errors.
-- [x] INR salary preferences display formatted ₹ LPA and save to Firestore.
+- [x] INR salary preferences display formatted â‚¹ LPA and save to Firestore.
 - [x] Job search filters update result sets in real time.
 - [x] Responsive layout displays cleanly across 320px, 375px, 768px, and 1440px viewports.
 - [ ] `pdfjs-dist` upgraded to patched version (Post-Audit).
@@ -492,3 +492,4 @@ Ranked in order of highest engineering, security, and user-experience value:
 8. **Increase Secondary Text Contrast for WCAG 2.1 AA Compliance**: Adjust muted slate colors from `text-slate-500` to `text-slate-400` across dark glass backgrounds.
 9. **Integrate Centralized Error Telemetry (e.g. Sentry / Firebase Crashlytics)**: Replace silent `console.warn` handlers with real-time error reporting to monitor client-side failures and unhandled promise rejections.
 10. **Implement Explicit Label Associations for Assistive Technologies**: Add `id` and `htmlFor` pairings to all inline filter, search, and slider inputs to provide a seamless screen-reader experience.
+
