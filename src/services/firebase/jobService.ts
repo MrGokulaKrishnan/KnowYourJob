@@ -1,4 +1,4 @@
-﻿import { 
+import { 
   collection, 
   getDocs, 
   doc, 
@@ -73,8 +73,8 @@ export const jobService = {
             description: 'Lead modern AI interface and agentic workflow application architecture utilizing React, Next.js, and LLM backends.',
             requirements: ['5+ years React & TypeScript', 'Experience integrating LLMs', 'Deep knowledge of distributed systems'],
             skills: ['React', 'TypeScript', 'Firebase', 'Python', 'LLM Agents'],
-            source: 'Direct Platform',
-            sourceUrl: 'https://knowyourjob.ai/jobs/demo-1',
+            source: 'LinkedIn',
+            sourceUrl: 'https://www.linkedin.com/jobs/search/?keywords=Senior+Full+Stack+AI+Engineer',
             postedAt: new Date().toISOString(),
             createdAt: serverTimestamp(),
           },
@@ -88,8 +88,8 @@ export const jobService = {
             description: 'Spearhead liquid glass design systems, performance monitoring, and real-time state synchronization.',
             requirements: ['Expert in CSS modern glassmorphism', 'Deep React 19 architecture knowledge', 'State caching and offline engines'],
             skills: ['React 19', 'Tailwind CSS', 'Vite', 'UI/UX Architecture'],
-            source: 'Direct Platform',
-            sourceUrl: 'https://knowyourjob.ai/jobs/demo-2',
+            source: 'LinkedIn',
+            sourceUrl: 'https://www.linkedin.com/jobs/search/?keywords=Lead+Frontend+Systems+Architect',
             postedAt: new Date().toISOString(),
             createdAt: serverTimestamp(),
           },
@@ -103,8 +103,8 @@ export const jobService = {
             description: 'Build robust background job orchestrators, headless automation runners, and event-driven architectures.',
             requirements: ['Experience with cloud task runners', 'Strong TypeScript and Node skills', 'Security rule authoring'],
             skills: ['Node.js', 'Docker', 'Firebase Cloud Functions', 'TypeScript'],
-            source: 'Direct Platform',
-            sourceUrl: 'https://knowyourjob.ai/jobs/demo-3',
+            source: 'Indeed',
+            sourceUrl: 'https://www.indeed.com/jobs?q=Autonomous+Workflow+DevOps+Engineer',
             postedAt: new Date().toISOString(),
             createdAt: serverTimestamp(),
           }

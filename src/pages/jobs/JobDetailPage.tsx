@@ -3,16 +3,17 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import {
   Building2, MapPin, Clock, ChevronLeft, Sparkles, CheckCircle2,
-  AlertCircle, Share2, Bookmark, FileText, PenTool, Loader2,
+  AlertCircle, Share2, Bookmark, FileText, PenTool, Loader2, ExternalLink
 } from 'lucide-react';
 import { serverTimestamp } from 'firebase/firestore';
 import { jobService } from '@/lib/services/jobService';
 import { aiService, getUserCandidateProfile, type MatchScoreResult } from '@/lib/services/aiService';
 import { applicationService } from '@/services/firebase/applicationService';
-import type { NormalizedJob } from '@/types/job';
+import type { NormalizedJob } from '@/types/normalizedJob';
 import { JobCard } from '@/components/jobs/JobCard';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/context/ToastContext';
+import { getOfficialJobPortalUrl, getPortalDisplayName } from '@/lib/utils/jobPortalUrl';
 
 // ── Match Score Circle ────────────────────────────────────────────────────────
 
@@ -326,13 +327,25 @@ export default function JobDetailPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 w-full md:w-auto">
+          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
             <button className="btn-glass p-3 flex-shrink-0" title="Save Job">
               <Bookmark size={20} />
             </button>
             <button className="btn-glass p-3 flex-shrink-0" title="Share">
               <Share2 size={20} />
             </button>
+
+            <a
+              href={getOfficialJobPortalUrl(job)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-glass py-3 px-5 flex items-center justify-center gap-2 text-white hover:text-amber-300 border border-white/10 hover:border-amber-400/40 transition shrink-0 font-medium"
+              title={`Open official job listing on ${getPortalDisplayName(job)}`}
+            >
+              <span>Apply on {getPortalDisplayName(job)}</span>
+              <ExternalLink size={16} />
+            </a>
+
             <button
               onClick={handleApplyWithAI}
               disabled={applyingWithAI || applied}
@@ -548,12 +561,12 @@ export default function JobDetailPage() {
                   <h3 className="text-lg font-bold text-white mb-2">{job.company}</h3>
                   <p className="text-sm">Company information and culture details coming soon.</p>
                   <a
-                    href={job.sourceUrl}
+                    href={getOfficialJobPortalUrl(job)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 mt-4 text-primary text-sm hover:underline"
+                    className="inline-flex items-center gap-2 mt-4 text-primary text-sm hover:underline font-semibold"
                   >
-                    View original job post →
+                    View official listing on {getPortalDisplayName(job)} →
                   </a>
                 </div>
               </div>
@@ -582,6 +595,16 @@ export default function JobDetailPage() {
                 <><Sparkles size={18} /> Apply with AI</>
               )}
             </button>
+
+            <a
+              href={getOfficialJobPortalUrl(job)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-glass w-full py-2.5 mt-3 flex items-center justify-center gap-2 text-white hover:text-amber-300 border border-white/10 hover:border-amber-400/40 transition text-xs font-semibold"
+            >
+              <span>Apply on {getPortalDisplayName(job)}</span>
+              <ExternalLink size={14} />
+            </a>
 
             <div className="mt-6 space-y-3 border-t border-white/10 pt-6">
               <div className="flex items-center gap-3 text-sm text-white">

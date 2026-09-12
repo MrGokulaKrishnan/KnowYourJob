@@ -40,6 +40,7 @@ export interface NormalizedJob {
   applyUrl?: string;
   canonicalUrl?: string;
   tags?: string[];
+  postedBy?: string;
   metadata?: Record<string, unknown>;
 }
 

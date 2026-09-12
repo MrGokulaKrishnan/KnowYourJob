@@ -37,10 +37,11 @@ service cloud.firestore {
       allow update: if isAuthenticated() && (resource.data.userId == request.auth.uid) && (request.resource.data.userId == request.auth.uid);
     }
 
-    // 4. Jobs: Publicly readable; strictly read-only for normal users
+    // 4. Jobs: Publicly readable; authenticated users can post jobs; creators can manage their posts
     match /jobs/{jobId} {
       allow read: if true;
-      allow write: if false; // Only manageable by admin / backend cloud functions
+      allow create: if isAuthenticated() && request.resource.data.postedBy == request.auth.uid;
+      allow update, delete: if isAuthenticated() && resource.data.postedBy == request.auth.uid;
     }
 
     // 5. Job Matches: user-scoped

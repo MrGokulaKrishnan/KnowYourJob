@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Search, Filter, SlidersHorizontal, Sparkles, Check } from 'lucide-react';
+import { Search, Filter, SlidersHorizontal, Sparkles, Check, Plus, Building2 } from 'lucide-react';
 import { serverTimestamp } from 'firebase/firestore';
 import { jobService } from '@/lib/services/jobService';
 import { applicationService } from '@/services/firebase/applicationService';
-import type { NormalizedJob } from '@/types/job';
+import type { NormalizedJob } from '@/types/normalizedJob';
 import { JobCard } from '@/components/jobs/JobCard';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/context/ToastContext';
+import { PostJobModal } from '@/components/jobs/PostJobModal';
 
 export default function JobsPage() {
   const { user } = useAuth();
@@ -20,11 +21,12 @@ export default function JobsPage() {
   const [appliedIds, setAppliedIds] = useState<Record<string, boolean>>({});
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [syncStatus, setSyncStatus] = useState<any>(null);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   // Filters state
   const [matchScore, setMatchScore] = useState(0);
   const [remoteType, setRemoteType] = useState<string[]>([]);
-  const [portal, setPortal] = useState<'all' | 'LinkedIn' | 'Naukri' | 'Indeed'>('all');
+  const [portal, setPortal] = useState<'all' | 'LinkedIn' | 'Naukri' | 'Indeed' | 'Direct Employer'>('all');
   const [last24HoursOnly, setLast24HoursOnly] = useState(true);
 
   const fetchJobs = async (force = false) => {
@@ -136,19 +138,31 @@ export default function JobsPage() {
           </div>
         </div>
 
-        <button
-          onClick={() => fetchJobs(true)}
-          disabled={isRefreshing}
-          className="btn-primary text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 cursor-pointer disabled:opacity-50"
-        >
-          <span className={isRefreshing ? 'animate-spin' : ''}>↻</span>
-          <span>{isRefreshing ? 'Scraping Apify…' : 'Refresh Catalog (24h)'}</span>
-        </button>
+        <div className="flex items-center gap-2.5 w-full md:w-auto justify-end">
+          <button
+            onClick={() => setIsPostModalOpen(true)}
+            className="px-4 py-2 rounded-xl text-xs font-bold bg-amber-400 text-black hover:bg-amber-300 flex items-center gap-1.5 cursor-pointer shadow-lg shadow-amber-400/20 transition active:scale-95 shrink-0"
+            title="Post a job vacancy directly to the catalog"
+          >
+            <Plus size={16} className="stroke-[3]" />
+            <span>Post a Job</span>
+          </button>
+
+          <button
+            onClick={() => fetchJobs(true)}
+            disabled={isRefreshing}
+            className="btn-glass text-xs py-2 px-4 flex items-center gap-2 disabled:opacity-50 shrink-0"
+            title="Refresh verified job catalog from Apify"
+          >
+            <span className={`w-3.5 h-3.5 border-2 border-yellow-400 border-t-transparent rounded-full ${isRefreshing ? 'animate-spin' : ''}`} />
+            <span>{isRefreshing ? 'Scraping Apify…' : 'Refresh (24h)'}</span>
+          </button>
+        </div>
       </div>
 
       {/* Portal Selection Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1">
-        {(['all', 'LinkedIn', 'Naukri', 'Indeed'] as const).map((p) => (
+        {(['all', 'LinkedIn', 'Naukri', 'Indeed', 'Direct Employer'] as const).map((p) => (
           <button
             key={p}
             onClick={() => setPortal(p)}
@@ -306,6 +320,15 @@ export default function JobsPage() {
           </div>
         </div>
       </div>
+
+      {/* Post Job Modal */}
+      <PostJobModal
+        isOpen={isPostModalOpen}
+        onClose={() => setIsPostModalOpen(false)}
+        onJobPosted={(newJob) => {
+          setJobs((prev) => [newJob, ...prev]);
+        }}
+      />
     </div>
   );
 }

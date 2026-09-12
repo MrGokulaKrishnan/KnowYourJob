@@ -1,9 +1,10 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { Building2, MapPin, DollarSign, Sparkles, ChevronRight } from 'lucide-react';
-import type { NormalizedJob } from '@/types/job';
+import { Building2, MapPin, DollarSign, Sparkles, ChevronRight, ExternalLink } from 'lucide-react';
+import type { NormalizedJob } from '@/types/normalizedJob';
 import clsx from 'clsx';
+import { getOfficialJobPortalUrl, getPortalDisplayName } from '@/lib/utils/jobPortalUrl';
 
 interface JobCardProps {
   job: NormalizedJob;
@@ -117,6 +118,10 @@ export const JobCard: React.FC<JobCardProps> = ({ job, matchScore, onView, onApp
                 <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">
                   Indeed
                 </span>
+              ) : job.postedBy || job.portal === 'Direct Employer' ? (
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                  Direct Employer
+                </span>
               ) : !job.isVerified ? (
                 <span className="badge-demo text-[10px] px-1.5 py-0.5 rounded opacity-70">DEMO</span>
               ) : null}
@@ -135,6 +140,15 @@ export const JobCard: React.FC<JobCardProps> = ({ job, matchScore, onView, onApp
             </div>
             
             <div className="flex items-center gap-2">
+              <a
+                href={getOfficialJobPortalUrl(job)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-xl bg-white/5 hover:bg-amber-500/15 text-slate-400 hover:text-amber-400 border border-white/10 hover:border-amber-500/30 transition flex items-center justify-center"
+                title={`Open official listing on ${getPortalDisplayName(job)}`}
+              >
+                <ExternalLink size={14} />
+              </a>
               <Link to={`/jobs/${job.id}`} className="btn-glass text-xs py-1.5 px-3">
                 View Details
               </Link>

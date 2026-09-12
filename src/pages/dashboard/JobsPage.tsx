@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Search, Sparkles, Check, ExternalLink, RefreshCw, ShieldCheck, Clock, Globe, Briefcase, Filter } from 'lucide-react';
+import { ShieldCheck, RefreshCw, Clock, ExternalLink, Sparkles, Check, Search, Filter, Plus, Building2, Briefcase } from 'lucide-react';
 import { serverTimestamp } from 'firebase/firestore';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { LiquidButton } from '../../components/ui/LiquidButton';
@@ -7,8 +7,10 @@ import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../context/ToastContext';
 import { jobService } from '@/lib/services/jobService';
-import { applicationService } from '../../services/firebase/applicationService';
-import type { NormalizedJob } from '@/types/job';
+import { applicationService } from '@/services/firebase/applicationService';
+import type { NormalizedJob } from '@/types/normalizedJob';
+import { getOfficialJobPortalUrl, getPortalDisplayName } from '@/lib/utils/jobPortalUrl';
+import { PostJobModal } from '@/components/jobs/PostJobModal';
 
 export const JobsPage: React.FC = () => {
   const { user } = useAuth();
@@ -18,11 +20,12 @@ export const JobsPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [remoteFilter, setRemoteFilter] = useState('All');
-  const [portalFilter, setPortalFilter] = useState<'all' | 'LinkedIn' | 'Naukri' | 'Indeed'>('all');
+  const [portalFilter, setPortalFilter] = useState<'all' | 'LinkedIn' | 'Naukri' | 'Indeed' | 'Direct Employer' | 'My Posts'>('all');
   const [last24HoursOnly, setLast24HoursOnly] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [appliedJobIds, setAppliedJobIds] = useState<Record<string, boolean>>({});
   const [syncStatus, setSyncStatus] = useState<any>(null);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   const loadJobs = async (forceRefresh = false) => {
     setIsLoading(true);
@@ -37,7 +40,9 @@ export const JobsPage: React.FC = () => {
 
       const res = await jobService.searchJobs({
         remoteType: remoteFilter !== 'All' ? remoteFilter : undefined,
-        portal: portalFilter !== 'all' ? portalFilter : undefined,
+        portal: portalFilter !== 'all' && portalFilter !== 'My Posts' ? portalFilter : undefined,
+        myPostedJobs: portalFilter === 'My Posts',
+        userId: user?.uid,
         last24HoursOnly: last24HoursOnly,
         limit: 50,
       });
@@ -128,14 +133,23 @@ export const JobsPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 w-full md:w-auto justify-end">
+          <div className="flex items-center gap-2.5 w-full md:w-auto justify-end">
+            <button
+              onClick={() => setIsPostModalOpen(true)}
+              className="px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-400 to-yellow-400 text-black hover:from-amber-300 hover:to-yellow-300 flex items-center gap-1.5 cursor-pointer shadow-lg shadow-amber-500/20 transition active:scale-95 shrink-0"
+              title="Post a job vacancy directly to the catalog"
+            >
+              <Plus className="w-4 h-4 stroke-[3]" />
+              <span>Post a Job</span>
+            </button>
+
             <button
               onClick={() => loadJobs(true)}
               disabled={isRefreshing}
-              className="btn-yellow-gradient px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 cursor-pointer disabled:opacity-50 transition shadow-lg shadow-amber-500/20"
+              className="btn-glass px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 cursor-pointer disabled:opacity-50 transition border border-white/10 hover:border-amber-400/40 text-slate-200 shrink-0"
               title="Trigger Apify scraper to refresh catalog"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-amber-400' : ''}`} />
               <span>{isRefreshing ? 'Scraping Apify…' : 'Refresh Catalog (24h)'}</span>
             </button>
           </div>
@@ -144,8 +158,8 @@ export const JobsPage: React.FC = () => {
         {/* Portal Filter Tabs & Time Window */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-white/5 pb-3">
           {/* Portal Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto">
-            {(['all', 'LinkedIn', 'Naukri', 'Indeed'] as const).map((portal) => (
+          <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+            {(['all', 'LinkedIn', 'Naukri', 'Indeed', 'Direct Employer', 'My Posts'] as const).map((portal) => (
               <button
                 key={portal}
                 onClick={() => setPortalFilter(portal)}
@@ -258,6 +272,10 @@ export const JobsPage: React.FC = () => {
                         <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">
                           Indeed
                         </span>
+                      ) : job.postedBy || job.portal === 'Direct Employer' ? (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                          <Building2 className="w-2.5 h-2.5" /> Direct Employer
+                        </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 text-slate-400">
                           {job.source}
@@ -317,13 +335,13 @@ export const JobsPage: React.FC = () => {
                     </LiquidButton>
 
                     <a
-                      href={job.sourceUrl}
+                      href={getOfficialJobPortalUrl(job)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300 transition"
+                      className="inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 transition font-medium bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20 hover:border-amber-400/40"
                     >
-                      <span>View on {job.portal || 'Portal'}</span>
-                      <ExternalLink className="w-3 h-3" />
+                      <span>Apply on {getPortalDisplayName(job)}</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   </div>
                 </div>
@@ -331,6 +349,15 @@ export const JobsPage: React.FC = () => {
             })}
           </div>
         )}
+
+        {/* Job Posting Modal */}
+        <PostJobModal
+          isOpen={isPostModalOpen}
+          onClose={() => setIsPostModalOpen(false)}
+          onJobPosted={(newJob) => {
+            setJobs((prev) => [newJob, ...prev]);
+          }}
+        />
       </div>
     </DashboardLayout>
   );
