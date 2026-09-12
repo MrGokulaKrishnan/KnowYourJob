@@ -2,12 +2,65 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/jpeg" href="/kyj-logo.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/jpeg" href="/kyj-logo.jpg" />
     <title>KnowYourJob — AI-Powered Job Discovery & Automation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta name="description" content="Discover top AI jobs, Machine Learning Engineer roles, Generative AI careers, and Remote AI openings across India and worldwide with KnowYourJob. AI-powered ATS resume matching and automated role discovery." />
+    <meta name="keywords" content="AI jobs, Artificial Intelligence jobs, Machine Learning jobs, Generative AI jobs, AI engineer jobs, remote AI jobs, India AI jobs, LLM engineer, Prompt Engineer, MLOps, NLP Engineer, Computer Vision" />
+    <meta name="author" content="KnowYourJob" />
+    <link rel="canonical" href="https://knowyourjob.web.app/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://knowyourjob.web.app/" />
+    <meta property="og:title" content="KnowYourJob — AI-Powered Job Discovery & Automation" />
+    <meta property="og:description" content="Find and apply to top AI, ML, and Software Engineering jobs. Autonomous role matching, ATS resume scoring, and career intelligence." />
+    <meta property="og:image" content="https://knowyourjob.web.app/kyj-logo.jpg" />
+    <meta property="og:site_name" content="KnowYourJob" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://knowyourjob.web.app/" />
+    <meta name="twitter:title" content="KnowYourJob — AI-Powered Job Discovery & Automation" />
+    <meta name="twitter:description" content="Discover top AI, Generative AI, and Machine Learning engineering roles with precision ATS matching." />
+    <meta name="twitter:image" content="https://knowyourjob.web.app/kyj-logo.jpg" />
+
+    <!-- Structured Data (JSON-LD) for Organization & WebSite SearchAction -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://knowyourjob.web.app/#organization",
+          "name": "KnowYourJob",
+          "url": "https://knowyourjob.web.app",
+          "logo": "https://knowyourjob.web.app/kyj-logo.jpg",
+          "sameAs": [
+            "https://github.com/MrGokulaKrishnan/KnowYourJob"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://knowyourjob.web.app/#website",
+          "url": "https://knowyourjob.web.app",
+          "name": "KnowYourJob",
+          "description": "AI-Powered Job Discovery & Career Automation Platform",
+          "publisher": {
+            "@id": "https://knowyourjob.web.app/#organization"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://knowyourjob.web.app/jobs?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body class="bg-[#07090e] text-slate-100 min-h-screen selection:bg-amber-500/30 selection:text-amber-200 antialiased">
     <div id="root"></div>

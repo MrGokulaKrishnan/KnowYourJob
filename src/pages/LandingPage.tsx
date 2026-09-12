@@ -1,16 +1,18 @@
-import React from 'react';
+﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Zap, 
   Sparkles, 
   ArrowRight, 
   Bot, 
   ShieldCheck, 
-  FileText, 
   CheckCircle2, 
   Search,
   Lock,
-  ChevronRight
+  ChevronRight,
+  TrendingUp,
+  Cpu,
+  Layers,
+  Briefcase
 } from 'lucide-react';
 import { LiquidButton } from '../components/ui/LiquidButton';
 import { useAuth } from '../hooks/useAuth';
@@ -18,6 +20,15 @@ import { KYJLogo } from '../components/ui/KYJLogo';
 
 export const LandingPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
+
+  const aiCategories = [
+    { title: 'Generative AI Engineer', slug: 'generative-ai', count: '140+ Roles', salary: '₹24L – ₹50L' },
+    { title: 'LLM & Foundation Models', slug: 'llm', count: '95+ Roles', salary: '₹25L – ₹55L' },
+    { title: 'Machine Learning Engineer', slug: 'machine-learning', count: '210+ Roles', salary: '₹18L – ₹38L' },
+    { title: 'Remote AI Jobs', slug: 'remote-ai', count: '180+ Roles', salary: '₹20L – ₹55L' },
+    { title: 'India AI Hubs (BLR/HYD/PUN)', slug: 'india-ai', count: '320+ Roles', salary: '₹15L – ₹45L' },
+    { title: 'MLOps & AI Infrastructure', slug: 'mlops', count: '85+ Roles', salary: '₹22L – ₹45L' }
+  ];
 
   return (
     <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col overflow-x-hidden selection:bg-amber-500/30 selection:text-amber-200">
@@ -35,6 +46,22 @@ export const LandingPage: React.FC = () => {
             </span>
           </Link>
 
+          <nav className="hidden md:flex items-center gap-6 text-xs text-slate-300">
+            <Link to="/jobs" className="hover:text-amber-400 transition flex items-center gap-1">
+              <Search size={14} className="text-amber-400" />
+              <span>Explore AI Jobs</span>
+            </Link>
+            <Link to="/jobs/generative-ai" className="hover:text-amber-400 transition">
+              Generative AI
+            </Link>
+            <Link to="/jobs/remote-ai" className="hover:text-amber-400 transition">
+              Remote Roles
+            </Link>
+            <Link to="/support" className="hover:text-amber-400 transition">
+              Help Center
+            </Link>
+          </nav>
+
           <div className="flex items-center gap-3">
             {isAuthenticated ? (
               <Link to="/dashboard">
@@ -44,13 +71,18 @@ export const LandingPage: React.FC = () => {
               </Link>
             ) : (
               <>
+                <Link to="/jobs" className="hidden sm:inline-block">
+                  <LiquidButton variant="glass" className="text-xs py-2 px-3.5">
+                    Browse Jobs
+                  </LiquidButton>
+                </Link>
                 <Link to="/auth/login">
-                  <LiquidButton variant="glass">
+                  <LiquidButton variant="glass" className="text-xs py-2 px-3.5">
                     Sign In
                   </LiquidButton>
                 </Link>
                 <Link to="/auth/register" className="hidden sm:inline-block">
-                  <LiquidButton variant="yellow" rightIcon={<ChevronRight className="w-4 h-4" />}>
+                  <LiquidButton variant="yellow" className="text-xs py-2 px-3.5" rightIcon={<ChevronRight className="w-4 h-4" />}>
                     Get Started
                   </LiquidButton>
                 </Link>
@@ -75,19 +107,19 @@ export const LandingPage: React.FC = () => {
         </h1>
 
         <p className="mt-6 text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed">
-          The next-generation AI career discovery platform. Automated role alignment, ATS-optimized resumes, and tailored applications designed to help you land top engineering roles faster.
+          The premier AI career discovery portal. Automated role alignment, ATS-optimized resumes in INR benchmarks, and tailored applications designed to help you land top engineering roles.
         </p>
 
         {/* Action Buttons */}
         <div className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-          <Link to="/auth/register" className="w-full sm:w-auto">
-            <LiquidButton variant="yellow" className="w-full sm:w-auto text-base px-8 py-3.5" rightIcon={<ArrowRight className="w-5 h-5" />}>
-              Create Free Account
+          <Link to="/jobs" className="w-full sm:w-auto">
+            <LiquidButton variant="yellow" className="w-full sm:w-auto text-base px-8 py-3.5" rightIcon={<Search className="w-5 h-5" />}>
+              Search AI Jobs
             </LiquidButton>
           </Link>
-          <Link to="/auth/login" className="w-full sm:w-auto">
-            <LiquidButton variant="glass" className="w-full sm:w-auto text-base px-8 py-3.5">
-              Sign In with Google or Email
+          <Link to="/auth/register" className="w-full sm:w-auto">
+            <LiquidButton variant="glass" className="w-full sm:w-auto text-base px-8 py-3.5" rightIcon={<ArrowRight className="w-5 h-5" />}>
+              Create Free Account
             </LiquidButton>
           </Link>
         </div>
@@ -106,6 +138,52 @@ export const LandingPage: React.FC = () => {
             <CheckCircle2 className="w-4 h-4 text-amber-400" />
             <span>Private Resume Cloud Vault</span>
           </div>
+        </div>
+      </section>
+
+      {/* Featured AI Job Categories Grid (SEO Internal Linking) */}
+      <section className="relative z-10 px-6 py-12 max-w-7xl mx-auto w-full border-t border-white/5">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+          <div>
+            <div className="flex items-center gap-2 text-amber-400 text-xs font-mono mb-1">
+              <TrendingUp size={14} />
+              <span>MARKET DEMAND IN 2026</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              Top AI Specializations & Salary Benchmarks
+            </h2>
+          </div>
+          <Link to="/jobs" className="text-xs text-amber-400 hover:underline flex items-center gap-1">
+            Browse All 850+ Openings <ArrowRight size={12} />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {aiCategories.map((cat, i) => (
+            <Link
+              key={i}
+              to={`/jobs/${cat.slug}`}
+              className="liquid-glass-elevated p-6 rounded-2xl border border-white/5 hover:border-amber-500/30 hover:scale-[1.01] transition-all group flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                    {cat.count}
+                  </span>
+                  <span className="text-xs font-mono text-emerald-400">
+                    {cat.salary}
+                  </span>
+                </div>
+                <h3 className="text-base font-bold text-white group-hover:text-amber-300 transition">
+                  {cat.title}
+                </h3>
+              </div>
+              <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400 group-hover:text-white transition">
+                <span>View verified openings</span>
+                <ChevronRight size={14} className="text-amber-400" />
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -171,19 +249,73 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-white/5 mt-auto py-8 px-6 text-center text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <KYJLogo size={22} />
-            <span className="text-slate-300 font-semibold">KnowYourJob</span>
-            <span>— AI Autonomous Career Platform</span>
+      {/* Comprehensive 4-Column Footer */}
+      <footer className="relative z-10 border-t border-white/5 mt-auto pt-12 pb-8 px-6 bg-[#05070a]">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 mb-10 text-xs">
+          {/* Col 1 */}
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <KYJLogo size={24} />
+              <span className="text-white font-bold text-sm">KnowYourJob</span>
+            </div>
+            <p className="text-slate-400 leading-relaxed mb-4">
+              AI-powered career operating system. Autonomous role alignment, ATS scoring, and career intelligence.
+            </p>
+            <div className="text-[11px] text-slate-500 font-mono">
+              Hosted in Mumbai (BOM) CDN · TLS 1.3
+            </div>
           </div>
-          <div className="flex items-center gap-4 text-slate-400">
-            <Link to="/auth/login" className="hover:text-amber-400 transition">Sign In</Link>
-            <Link to="/auth/register" className="hover:text-amber-400 transition">Register</Link>
-            <Link to="/auth/email-link-sent" className="hover:text-amber-400 transition">Email Link</Link>
-            <Link to="/auth/forgot-password" className="hover:text-amber-400 transition">Password Reset</Link>
+
+          {/* Col 2 */}
+          <div>
+            <h4 className="text-white font-semibold uppercase tracking-wider font-mono mb-3">
+              AI Job Portals
+            </h4>
+            <ul className="space-y-2 text-slate-400">
+              <li><Link to="/jobs" className="hover:text-amber-400 transition">All Engineering Jobs</Link></li>
+              <li><Link to="/jobs/generative-ai" className="hover:text-amber-400 transition">Generative AI Engineer</Link></li>
+              <li><Link to="/jobs/llm" className="hover:text-amber-400 transition">LLM Engineers</Link></li>
+              <li><Link to="/jobs/machine-learning" className="hover:text-amber-400 transition">Machine Learning</Link></li>
+              <li><Link to="/jobs/remote-ai" className="hover:text-amber-400 transition">Remote AI Jobs</Link></li>
+              <li><Link to="/jobs/india-ai" className="hover:text-amber-400 transition">India AI Roles (INR)</Link></li>
+            </ul>
+          </div>
+
+          {/* Col 3 */}
+          <div>
+            <h4 className="text-white font-semibold uppercase tracking-wider font-mono mb-3">
+              Governance & Legal
+            </h4>
+            <ul className="space-y-2 text-slate-400">
+              <li><Link to="/privacy" className="hover:text-amber-400 transition">Privacy Policy (DPDP/GDPR)</Link></li>
+              <li><Link to="/terms" className="hover:text-amber-400 transition">Terms of Service</Link></li>
+              <li><Link to="/cookies" className="hover:text-amber-400 transition">Cookie Preferences</Link></li>
+              <li><Link to="/security-policy" className="hover:text-amber-400 transition">Security Policy</Link></li>
+              <li><Link to="/refund-policy" className="hover:text-amber-400 transition">Refund Policy (7-Day)</Link></li>
+              <li><Link to="/accessibility" className="hover:text-amber-400 transition">Accessibility (WCAG)</Link></li>
+              <li><Link to="/disclaimer" className="hover:text-amber-400 transition">Legal Disclaimer</Link></li>
+            </ul>
+          </div>
+
+          {/* Col 4 */}
+          <div>
+            <h4 className="text-white font-semibold uppercase tracking-wider font-mono mb-3">
+              Support & Lifecycle
+            </h4>
+            <ul className="space-y-2 text-slate-400">
+              <li><Link to="/support" className="hover:text-amber-400 transition">Help Center</Link></li>
+              <li><Link to="/auth/login" className="hover:text-amber-400 transition">Candidate Sign In</Link></li>
+              <li><Link to="/auth/register" className="hover:text-amber-400 transition">Create Account</Link></li>
+              <li><Link to="/auth/forgot-password" className="hover:text-amber-400 transition">Password Recovery</Link></li>
+              <li><Link to="/responsible-disclosure" className="hover:text-amber-400 transition">Responsible Disclosure</Link></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <p>© {new Date().getFullYear()} KnowYourJob. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <span>Built with React 19 & Tailwind CSS</span>
           </div>
         </div>
       </footer>

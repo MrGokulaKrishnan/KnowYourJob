@@ -56,6 +56,7 @@ export default function JobsPage() {
   };
 
   useEffect(() => {
+    document.title = 'AI Job Search & Discovery — KnowYourJob';
     fetchJobs();
   }, [portal, last24HoursOnly, remoteType, matchScore]);
 

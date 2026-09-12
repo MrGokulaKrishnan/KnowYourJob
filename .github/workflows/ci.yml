@@ -26,6 +26,12 @@ jobs:
       - name: Type check (TypeScript)
         run: npm run typecheck
 
+      - name: Run Automated Test Suite (Vitest)
+        run: npm test
+
+      - name: Security Vulnerability Audit
+        run: npm audit --audit-level=critical
+
       - name: Build production bundle
         run: npm run build
         env:

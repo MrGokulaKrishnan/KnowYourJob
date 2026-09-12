@@ -1,0 +1,26 @@
+﻿# KnowYourJob Robots Configuration
+# https://knowyourjob.web.app/
+
+User-agent: *
+Allow: /
+Allow: /jobs
+Allow: /jobs/*
+Allow: /privacy
+Allow: /terms
+Allow: /cookies
+Allow: /security-policy
+Allow: /accessibility
+Allow: /disclaimer
+Allow: /support
+Allow: /help
+
+# Disallow authenticated, dashboard, and administrative paths
+Disallow: /dashboard/
+Disallow: /dashboard
+Disallow: /onboarding
+Disallow: /auth/
+Disallow: /admin
+
+# Host and Sitemap Index
+Host: https://knowyourjob.web.app
+Sitemap: https://knowyourjob.web.app/sitemap.xml

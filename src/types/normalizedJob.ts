@@ -27,11 +27,19 @@ export interface NormalizedJob {
   source: string;
   sourceUrl: string;
   postedAt: string;
+  updatedAt?: string;
+  expiresAt?: string;
   isDemo?: boolean;
   portal?: 'LinkedIn' | 'Naukri' | 'Indeed' | 'Direct' | string;
+  sourceJobId?: string;
+  country?: string;
+  city?: string;
+  experienceLevel?: 'entry' | 'mid' | 'senior' | 'lead' | 'executive';
   isVerified?: boolean;
   scrapedAt?: string;
   applyUrl?: string;
+  canonicalUrl?: string;
+  tags?: string[];
   metadata?: Record<string, unknown>;
 }
 

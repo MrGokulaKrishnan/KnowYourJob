@@ -93,8 +93,58 @@ export default function JobDetailPage() {
 
   useEffect(() => {
     if (!job) return;
+    document.title = `${job.title} at ${job.company} — KnowYourJob`;
     jobService.getSimilarJobs(job.id, job.skills, 3).then(setSimilarJobs).catch(() => setSimilarJobs([]));
   }, [job]);
+
+  const jobPostingSchema = job ? {
+    '@context': 'https://schema.org',
+    '@type': 'JobPosting',
+    title: job.title,
+    description: job.description,
+    identifier: {
+      '@type': 'PropertyValue',
+      name: job.company,
+      value: job.id,
+    },
+    datePosted: job.postedAt,
+    validThrough: job.expiresAt || new Date(new Date(job.postedAt).getTime() + 60 * 24 * 3600 * 1000).toISOString(),
+    employmentType: (job.employmentType || 'full-time').toUpperCase().replace('-', '_'),
+    hiringOrganization: {
+      '@type': 'Organization',
+      name: job.company,
+      sameAs: job.sourceUrl || 'https://knowyourjob.web.app',
+      logo: job.companyLogo || 'https://knowyourjob.web.app/kyj-logo.jpg',
+    },
+    jobLocation: {
+      '@type': 'Place',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: job.location || 'India',
+        addressCountry: 'IN',
+      },
+    },
+    ...(job.remoteType === 'remote' ? {
+      jobLocationType: 'TELECOMMUTE',
+      applicantLocationRequirements: {
+        '@type': 'Country',
+        name: 'India',
+      },
+    } : {}),
+    ...(job.salary?.min ? {
+      baseSalary: {
+        '@type': 'MonetaryAmount',
+        currency: job.salary.currency || 'INR',
+        value: {
+          '@type': 'QuantitativeValue',
+          minValue: job.salary.min,
+          maxValue: job.salary.max || job.salary.min,
+          unitText: (job.salary.period || 'year').toUpperCase(),
+        },
+      },
+    } : {}),
+    directApply: true,
+  } : null;
 
   // ── Load Match Analysis (lazy, on tab click) ──────────────────────────────
 
@@ -225,6 +275,14 @@ export default function JobDetailPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Schema.org JobPosting Structured Data */}
+      {jobPostingSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
+        />
+      )}
+
       {/* Back link */}
       <Link to="/jobs" className="inline-flex items-center gap-2 text-sm text-secondary hover:text-white transition-colors mb-6">
         <ChevronLeft size={16} /> Back to jobs
