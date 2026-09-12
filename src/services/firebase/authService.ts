@@ -33,10 +33,18 @@ export const authService = {
     const cred = await createUserWithEmailAndPassword(auth, email.trim(), password);
     
     // Update Firebase Auth profile display name
-    await updateProfile(cred.user, { displayName: fullName.trim() });
+    try {
+      await updateProfile(cred.user, { displayName: fullName.trim() });
+    } catch (profErr) {
+      console.warn('Could not update profile displayName:', profErr);
+    }
     
     // Create initial user document in Firestore
-    await syncUserDocument(cred.user, 'password', fullName.trim());
+    try {
+      await syncUserDocument(cred.user, 'password', fullName.trim());
+    } catch (syncErr) {
+      console.warn('Could not sync initial user document:', syncErr);
+    }
     
     // Send email verification automatically
     try {
@@ -130,4 +138,5 @@ export const authService = {
     await signOut(auth);
   },
 };
+
 
