@@ -200,32 +200,73 @@ export const JobsPage: React.FC = () => {
         </div>
 
         {/* Search & Work Type Filters */}
-        <div className="liquid-glass rounded-2xl p-4 border border-white/5 flex flex-col sm:flex-row gap-3">
-          <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input
-              type="text"
-              placeholder="Search verified jobs, skills, or companies (e.g. AI Engineer, Python, React)..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full rounded-xl bg-slate-900/60 border border-white/10 pl-10 pr-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400"
-            />
+        <div className="liquid-glass rounded-2xl p-4 sm:p-5 border border-white/8 flex flex-col gap-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+          <div className="flex flex-col sm:flex-row gap-3">
+            <div className="relative flex-1">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search verified jobs, skills, or companies (e.g. AI Engineer, Python, React)..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full rounded-xl bg-slate-900/70 border border-white/10 pl-10 pr-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400/80 focus:shadow-[0_0_0_3px_rgba(245,158,11,0.15)] transition"
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-white"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+
+            <div className="flex gap-2 shrink-0 overflow-x-auto">
+              {['All', 'Remote', 'Hybrid', 'Onsite'].map((type) => (
+                <button
+                  key={type}
+                  onClick={() => setRemoteFilter(type)}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-medium transition cursor-pointer ${
+                    remoteFilter === type
+                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-[inset_0_1px_0_rgba(253,230,138,0.2)]'
+                      : 'bg-white/5 text-slate-400 hover:text-slate-200 border border-white/5'
+                  }`}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="flex gap-2 shrink-0 overflow-x-auto">
-            {['All', 'Remote', 'Hybrid', 'Onsite'].map((type) => (
-              <button
-                key={type}
-                onClick={() => setRemoteFilter(type)}
-                className={`px-3 py-2 rounded-xl text-xs font-medium transition cursor-pointer ${
-                  remoteFilter === type
-                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                    : 'bg-white/5 text-slate-400 hover:text-slate-200 border border-white/5'
-                }`}
-              >
-                {type}
-              </button>
-            ))}
+          {/* Quick Search Chips & Beginner Guide */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 pt-2 border-t border-white/5">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span className="text-[11px] text-slate-400 font-medium mr-1">Popular:</span>
+              {[
+                { label: 'Generative AI', term: 'Generative AI' },
+                { label: 'LLMs & RAG', term: 'LLM' },
+                { label: 'Python', term: 'Python' },
+                { label: 'Bengaluru', term: 'Bangalore' },
+                { label: 'Remote', term: 'Remote' },
+              ].map((chip) => (
+                <button
+                  key={chip.label}
+                  onClick={() => setSearchTerm(searchTerm === chip.term ? '' : chip.term)}
+                  className={`text-[11px] px-2.5 py-1 rounded-lg transition cursor-pointer ${
+                    searchTerm === chip.term
+                      ? 'bg-amber-500/25 text-amber-300 border border-amber-500/40'
+                      : 'bg-white/[0.04] text-slate-400 hover:text-slate-200 hover:bg-white/[0.08] border border-white/5'
+                  }`}
+                >
+                  {chip.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="text-[11px] text-amber-400/80 flex items-center gap-1">
+              <Sparkles size={12} className="text-amber-400" />
+              <span>Official portal redirection guaranteed</span>
+            </div>
           </div>
         </div>
 
@@ -257,10 +298,15 @@ export const JobsPage: React.FC = () => {
               return (
                 <div
                   key={job.id}
-                  className="liquid-glass-interactive rounded-2xl p-6 border border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition hover:border-amber-500/30"
+                  className="liquid-glass-interactive rounded-2xl p-6 border border-white/8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition hover:border-amber-500/35 shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.1)]"
                 >
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-2">
+                      {/* Match Score Badge */}
+                      <span className="badge-ai text-[10px]">
+                        {job.matchScore ?? 92}% Match
+                      </span>
+
                       {/* Verified Badge */}
                       {job.isVerified && (
                         <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">

@@ -30,7 +30,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job, matchScore, onView, onApp
     <motion.div 
       whileHover={{ y: -2 }}
       className={clsx(
-        "glass rounded-xl border border-white/5 hover:border-white/10 transition-all duration-300 relative overflow-hidden group",
+        "liquid-glass-interactive rounded-2xl border border-white/8 hover:border-amber-500/35 shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.12),0_6px_24px_rgba(0,0,0,0.3)] transition-all duration-300 relative overflow-hidden group",
         compact ? "p-4" : "p-6"
       )}
     >
@@ -69,18 +69,18 @@ export const JobCard: React.FC<JobCardProps> = ({ job, matchScore, onView, onApp
               <MapPin size={14} /> {job.location}
             </span>
             {job.salary ? (
-              <span className="flex items-center gap-1 text-yellow-400 font-medium">
-                {job.salary.currency === 'INR' ? 'â‚¹' : '$'}
+              <span className="flex items-center gap-1 text-amber-400 font-medium font-mono text-xs">
+                {job.salary.currency === 'INR' ? '₹' : '$'}
                 {job.salary.currency === 'INR'
-                  ? `${Math.round(job.salary.min / 100000)}L â€“ ${Math.round(job.salary.max / 100000)}L`
-                  : `${Math.round(job.salary.min / 1000)}k â€“ ${Math.round(job.salary.max / 1000)}k`}
+                  ? `${Math.round(job.salary.min / 100000)}L – ${Math.round(job.salary.max / 100000)}L`
+                  : `${Math.round(job.salary.min / 1000)}k – ${Math.round(job.salary.max / 1000)}k`}
               </span>
             ) : job.salaryRange ? (
-              <span className="flex items-center gap-1 text-yellow-400 font-medium">
-                {job.salaryRange.currency === 'INR' ? 'â‚¹' : '$'}
+              <span className="flex items-center gap-1 text-amber-400 font-medium font-mono text-xs">
+                {job.salaryRange.currency === 'INR' ? '₹' : '$'}
                 {job.salaryRange.currency === 'INR'
-                  ? `${Math.round(job.salaryRange.min / 100000)}L â€“ ${Math.round(job.salaryRange.max / 100000)}L`
-                  : `${Math.round(job.salaryRange.min / 1000)}k â€“ ${Math.round(job.salaryRange.max / 1000)}k`}
+                  ? `${Math.round(job.salaryRange.min / 100000)}L – ${Math.round(job.salaryRange.max / 100000)}L`
+                  : `${Math.round(job.salaryRange.min / 1000)}k – ${Math.round(job.salaryRange.max / 1000)}k`}
               </span>
             ) : null}
           </div>

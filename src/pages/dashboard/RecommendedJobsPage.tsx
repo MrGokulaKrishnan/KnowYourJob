@@ -9,6 +9,7 @@ import { useToast } from '../../context/ToastContext';
 import { jobService } from '@/lib/services/jobService';
 import { applicationService } from '../../services/firebase/applicationService';
 import type { NormalizedJob } from '@/types/job';
+import { getOfficialJobPortalUrl, getPortalDisplayName } from '@/lib/utils/jobPortalUrl';
 
 export const RecommendedJobsPage: React.FC = () => {
   const { user } = useAuth();
@@ -111,12 +112,12 @@ export const RecommendedJobsPage: React.FC = () => {
                       {isApplied ? 'Application Logged' : 'Auto-Draft & Apply'}
                     </LiquidButton>
                     <a
-                      href={job.sourceUrl}
+                      href={getOfficialJobPortalUrl(job)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-amber-300 transition"
+                      className="inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 transition font-medium bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20 hover:border-amber-400/40"
                     >
-                      <span>View Role</span>
+                      <span>Apply on {getPortalDisplayName(job)}</span>
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
