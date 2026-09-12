@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+﻿import React, { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { auth } from '../lib/firebase/auth';
 import { authService } from '../services/firebase/authService';
@@ -16,7 +16,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [loading, setLoading] = useState<boolean>(true);
   const { showToast } = useToast();
 
-  const fetchUserData = async (firebaseUser: FirebaseUser | null) => {
+  const fetchUserData = useCallback(async (firebaseUser: FirebaseUser | null) => {
     if (!firebaseUser) {
       setUser(null);
       setUserDoc(null);
@@ -24,8 +24,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return;
     }
 
+    setUser(firebaseUser);
     try {
-      setUser(firebaseUser);
       let doc = await getUserDoc(firebaseUser.uid);
 
       if (!doc) {
@@ -36,11 +36,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       setUserDoc(doc);
     } catch (err) {
-      console.error('Error synchronizing user data:', err);
+      console.warn('Error synchronizing user data, using session fallback:', err);
+      setUserDoc({
+        uid: firebaseUser.uid,
+        displayName: firebaseUser.displayName || null,
+        email: firebaseUser.email || null,
+        photoURL: firebaseUser.photoURL || null,
+        provider: (firebaseUser.providerData[0]?.providerId as any) || 'password',
+        onboardingCompleted: true,
+        accountStatus: 'active',
+        role: 'user',
+        createdAt: null as any,
+        updatedAt: null as any,
+      });
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     // Single centralized onAuthStateChanged listener
@@ -49,16 +61,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [fetchUserData]);
 
-  const reloadUser = async () => {
+  const reloadUser = useCallback(async () => {
     if (auth.currentUser) {
       await auth.currentUser.reload();
       await fetchUserData(auth.currentUser);
     }
-  };
+  }, [fetchUserData]);
 
-  const signInWithEmailPassword = async (email: string, pass: string) => {
+  const signInWithEmailPassword = useCallback(async (email: string, pass: string) => {
     setLoading(true);
     try {
       await authService.signInWithEmailPassword(email, pass);
@@ -70,9 +82,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } finally {
       setLoading(false);
     }
-  };
+  }, [showToast]);
 
-  const signUpWithEmailPassword = async (email: string, pass: string, fullName: string) => {
+  const signUpWithEmailPassword = useCallback(async (email: string, pass: string, fullName: string) => {
     setLoading(true);
     try {
       await authService.signUpWithEmailPassword(email, pass, fullName);
@@ -84,9 +96,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } finally {
       setLoading(false);
     }
-  };
+  }, [showToast]);
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = useCallback(async () => {
     setLoading(true);
     try {
       await authService.signInWithGoogle();
@@ -98,9 +110,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } finally {
       setLoading(false);
     }
-  };
+  }, [showToast]);
 
-  const sendEmailLink = async (email: string) => {
+  const sendEmailLink = useCallback(async (email: string) => {
     try {
       await authService.sendSignInLink(email);
       showToast(`We sent a secure sign-in link to ${email}.`, 'info', 'Check Your Inbox');
@@ -109,23 +121,27 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       showToast(msg, 'error', 'Dispatch Failed');
       throw error;
     }
-  };
+  }, [showToast]);
 
-  const completeEmailLinkSignIn = async (email: string, url: string) => {
+  const completeEmailLinkSignIn = useCallback(async (email: string, url: string) => {
     setLoading(true);
     try {
       await authService.completeEmailLinkSignIn(email, url);
       showToast('Passwordless sign-in confirmed! Welcome.', 'success', 'Authenticated');
     } catch (error) {
+      // If user is already authenticated in Firebase, suppress false-alarm error toast
+      if (auth.currentUser) {
+        return;
+      }
       const msg = getAuthErrorMessage(error);
       showToast(msg, 'error', 'Verification Failed');
       throw error;
     } finally {
       setLoading(false);
     }
-  };
+  }, [showToast]);
 
-  const sendPasswordReset = async (email: string) => {
+  const sendPasswordReset = useCallback(async (email: string) => {
     try {
       await authService.sendPasswordReset(email);
       showToast(`Password reset link sent to ${email}.`, 'info', 'Email Sent');
@@ -134,9 +150,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       showToast(msg, 'error', 'Reset Failed');
       throw error;
     }
-  };
+  }, [showToast]);
 
-  const sendEmailVerification = async () => {
+  const sendEmailVerification = useCallback(async () => {
     if (!auth.currentUser) throw new Error('No user is currently signed in.');
     try {
       await authService.sendVerificationEmail(auth.currentUser);
@@ -146,9 +162,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       showToast(msg, 'error', 'Verification Error');
       throw error;
     }
-  };
+  }, [showToast]);
 
-  const reauthenticate = async (password: string) => {
+  const reauthenticate = useCallback(async (password: string) => {
     try {
       await authService.reauthenticateUser(password);
       showToast('Identity verified.', 'success');
@@ -157,9 +173,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       showToast(msg, 'error', 'Authentication Failed');
       throw error;
     }
-  };
+  }, [showToast]);
 
-  const deleteAccount = async (password?: string) => {
+  const deleteAccount = useCallback(async (password?: string) => {
     try {
       await authService.deleteUserAccount(password);
       setUser(null);
@@ -170,9 +186,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       showToast(msg, 'error', 'Deletion Error');
       throw error;
     }
-  };
+  }, [showToast]);
 
-  const signOut = async () => {
+  const signOut = useCallback(async () => {
     try {
       await authService.signOutUser();
       setUser(null);
@@ -183,15 +199,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       showToast(msg, 'error', 'Sign Out Failed');
       throw error;
     }
-  };
+  }, [showToast]);
+
+  const isAuthenticated = !!user;
+  const isEmailVerified = !!user?.emailVerified;
+  const accountStatus = userDoc?.accountStatus || 'active';
 
   const value: AuthContextType = {
     user,
     userDoc,
     loading,
-    isAuthenticated: !!user,
-    isEmailVerified: !!user?.emailVerified,
-    accountStatus: userDoc?.accountStatus || 'active',
+    isAuthenticated,
+    isEmailVerified,
+    accountStatus,
     signInWithEmailPassword,
     signUpWithEmailPassword,
     signInWithGoogle,
@@ -208,8 +228,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error('useAuth must be used within an AuthProvider');
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
   return context;
 };

@@ -77,7 +77,11 @@ export const authService = {
       window.localStorage.removeItem(EMAIL_STORAGE_KEY);
     }
 
-    await syncUserDocument(cred.user, 'emailLink');
+    try {
+      await syncUserDocument(cred.user, 'emailLink');
+    } catch (syncErr) {
+      console.warn('User document sync deferred on email link:', syncErr);
+    }
     return cred;
   },
 
@@ -126,3 +130,4 @@ export const authService = {
     await signOut(auth);
   },
 };
+
