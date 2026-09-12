@@ -2,6 +2,7 @@ import { NormalizedJob } from '@/types/normalizedJob'
 import { db } from '@/lib/firebase/firestore'
 import { collection, getDocs, doc, getDoc, query, where, orderBy, limit, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore'
 import { getOfficialJobPortalUrl } from '@/lib/utils/jobPortalUrl'
+import { isAuthorizedJobPoster } from '@/lib/utils/jobPosterAuth'
 import { apifyJobService } from '@/services/jobs/apifyJobService'
 
 export const DEMO_JOBS: NormalizedJob[] = [
@@ -372,7 +373,11 @@ export const jobService = {
    * Creates and publishes a new job listing to Firestore jobs collection.
    * Enables employers and users to post verified opportunities with real application links.
    */
-  async postJob(input: PostJobInput, userId: string): Promise<NormalizedJob> {
+  async postJob(input: PostJobInput, userId: string, userEmail?: string): Promise<NormalizedJob> {
+    if (!isAuthorizedJobPoster(userEmail)) {
+      throw new Error('Unauthorized: Job posting is restricted strictly to authorized official recruiter email accounts.');
+    }
+
     const newId = `direct-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`
     const nowIso = new Date().toISOString()
 

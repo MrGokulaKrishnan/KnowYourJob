@@ -12,6 +12,16 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
 
+    function isAuthorizedJobPoster() {
+      return isAuthenticated() &&
+        request.auth.token.email != null &&
+        (
+          request.auth.token.email in ['gokulkrish7204@gmail.com', 'jobs@knowyourjob.com', 'careers@knowyourjob.com', 'admin@knowyourjob.com'] ||
+          request.auth.token.email.matches('.*@(knowyourjob\\.com|knowyourjob\\.ai)$') ||
+          !request.auth.token.email.matches('.*@(gmail\\.com|yahoo\\.com|hotmail\\.com|outlook\\.com|icloud\\.com|proton\\.me|protonmail\\.com)$')
+        );
+    }
+
 
     // 1. Users collection: users can only read & update their own record
     // Client cannot tamper with privileged fields: accountStatus, isAdmin, roles, subscriptionTier
@@ -37,11 +47,11 @@ service cloud.firestore {
       allow update: if isAuthenticated() && (resource.data.userId == request.auth.uid) && (request.resource.data.userId == request.auth.uid);
     }
 
-    // 4. Jobs: Publicly readable; authenticated users can post jobs; creators can manage their posts
+    // 4. Jobs: Publicly readable; strictly authorized official email IDs can post/manage jobs
     match /jobs/{jobId} {
       allow read: if true;
-      allow create: if isAuthenticated() && request.resource.data.postedBy == request.auth.uid;
-      allow update, delete: if isAuthenticated() && resource.data.postedBy == request.auth.uid;
+      allow create: if isAuthorizedJobPoster() && request.resource.data.postedBy == request.auth.uid;
+      allow update, delete: if isAuthorizedJobPoster() && resource.data.postedBy == request.auth.uid;
     }
 
     // 5. Job Matches: user-scoped

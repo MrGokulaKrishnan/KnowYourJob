@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Search, Filter, SlidersHorizontal, Sparkles, Check, Plus, Building2 } from 'lucide-react';
+import { Search, Filter, SlidersHorizontal, Sparkles, Check, Plus, Building2, Lock } from 'lucide-react';
 import { serverTimestamp } from 'firebase/firestore';
 import { jobService } from '@/lib/services/jobService';
 import { applicationService } from '@/services/firebase/applicationService';
@@ -9,6 +9,7 @@ import { JobCard } from '@/components/jobs/JobCard';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/context/ToastContext';
 import { PostJobModal } from '@/components/jobs/PostJobModal';
+import { isAuthorizedJobPoster } from '@/lib/utils/jobPosterAuth';
 
 export default function JobsPage() {
   const { user } = useAuth();
@@ -141,11 +142,19 @@ export default function JobsPage() {
         <div className="flex items-center gap-2.5 w-full md:w-auto justify-end">
           <button
             onClick={() => setIsPostModalOpen(true)}
-            className="px-4 py-2 rounded-xl text-xs font-bold bg-amber-400 text-black hover:bg-amber-300 flex items-center gap-1.5 cursor-pointer shadow-lg shadow-amber-400/20 transition active:scale-95 shrink-0"
-            title="Post a job vacancy directly to the catalog"
+            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-lg transition active:scale-95 shrink-0 ${
+              isAuthorizedJobPoster(user?.email, (user as any)?.role)
+                ? 'bg-amber-400 text-black hover:bg-amber-300 shadow-amber-400/20'
+                : 'bg-white/10 text-amber-300 hover:bg-white/15 border border-amber-500/30'
+            }`}
+            title={isAuthorizedJobPoster(user?.email, (user as any)?.role) ? "Post a verified job vacancy" : "Official recruiter email required"}
           >
-            <Plus size={16} className="stroke-[3]" />
-            <span>Post a Job</span>
+            {isAuthorizedJobPoster(user?.email, (user as any)?.role) ? (
+              <Plus size={16} className="stroke-[3]" />
+            ) : (
+              <Lock size={14} />
+            )}
+            <span>{isAuthorizedJobPoster(user?.email, (user as any)?.role) ? 'Post a Job' : 'Post a Job (Official Recruiter Only)'}</span>
           </button>
 
           <button
