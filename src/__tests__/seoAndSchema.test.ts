@@ -1,4 +1,4 @@
-﻿import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -39,7 +39,7 @@ describe('Technical SEO Assets & Meta Configuration', () => {
     const content = fs.readFileSync(indexHtmlPath, 'utf8');
 
     // Title & Canonical
-    expect(content).toContain('<title>KnowYourJob — AI-Powered Job Discovery & Automation</title>');
+    expect(content).toContain('<title>KnowYourJob - AI Powered Job Discovery & Automation</title>');
     expect(content).toContain('<link rel="canonical" href="https://knowyourjob.web.app/" />');
 
     // OpenGraph

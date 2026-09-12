@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { KYJLogo } from '@/components/ui/KYJLogo';
@@ -686,7 +686,7 @@ const Footer = () => (
       
       <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-[var(--color-secondary)] text-sm">
-          Â© 2026 KnowYourJob. Find Smarter. Match Better. Apply Faster.
+          © 2026 KnowYourJob. Find Smarter. Match Better. Apply Faster.
         </p>
       </div>
     </div>
@@ -694,6 +694,10 @@ const Footer = () => (
 );
 
 export default function LandingPage() {
+  useEffect(() => {
+    document.title = 'KnowYourJob - AI Powered Job Discovery & Automation';
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#050505] text-white page-enter selection:bg-[var(--color-primary)] selection:text-black font-sans overflow-x-hidden">
       <Navbar />

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Sparkles, 
@@ -20,6 +20,10 @@ import { KYJLogo } from '../components/ui/KYJLogo';
 
 export const LandingPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    document.title = 'KnowYourJob - AI Powered Job Discovery & Automation';
+  }, []);
 
   const aiCategories = [
     { title: 'Generative AI Engineer', slug: 'generative-ai', count: '140+ Roles', salary: '₹24L – ₹50L' },
