@@ -1,84 +1,426 @@
-﻿# KnowYourJob ⚡
+# KnowYourJob
 
 > **Find Smarter. Apply Faster.**
-> Next-generation AI autonomous career discovery, matching, ATS resume analysis, and application platform.
+
+**KnowYourJob** is an AI-powered career discovery and job application platform designed to help candidates discover relevant opportunities, evaluate job compatibility, analyze resumes, and manage their application workflow.
+
+Built with **React 19, TypeScript, Tailwind CSS, and Firebase**, the platform combines intelligent career workflows with a secure, user-isolated application architecture.
 
 ---
 
-## 🌟 Overview
+## Overview
 
-**KnowYourJob** is built with React 19, TypeScript, Tailwind CSS, and a complete Firebase v12 backend foundation. It features a futuristic **Liquid Glass + Yellow Gradient** aesthetic designed for speed, security, and high conversion.
+KnowYourJob is designed to simplify the modern job-search process by bringing job discovery, candidate profiles, resume analysis, job matching, and application management into a single platform.
 
-### Core Capabilities
+The application follows a structured career workflow:
 
-- **3 Authentication Channels**:
-  - 📧 **Email + Password**: Full validation, email verification enforcement, and password reset.
-  - 🔗 **Passwordless Email Link**: Magic sign-in links dispatched via Firebase Authentication without passwords.
-  - 🌐 **Google OAuth**: One-click Google sign-in with idempotent Firestore user synchronization.
-- **Strict Data Isolation**:
-  - User-scoped Firestore security rules (`users`, `profiles`, `applications`, `resumes`, `automationSettings`, `notifications`).
-  - Read-only shared public jobs catalog.
-  - Client tampering protection on privileged administrative and account status fields.
-- **Encrypted Cloud Storage**:
-  - Secure resume file storage under `users/{uid}/resumes/{resumeId}/{fileName}` with 10MB limits and PDF/DOCX MIME validation.
-- **Autonomous Application Pipeline**:
-  - Safety thresholds (minimum match score, daily submission caps).
-  - Immutable execution audit logs.
-- **Zero-Flicker Route Protection**:
-  - Preserves intended destinations (e.g. `/dashboard/applications`).
-  - Onboarding gate routing first-time candidates to profile setup.
-
----
-
-## 🏗️ Architecture
-
-```
-                            KnowYourJob Web App (React 19 + TS)
-                                          │
-                   ┌──────────────────────┴──────────────────────┐
-                   ▼                                             ▼
-          Firebase Authentication                         Cloud Firestore
-  ┌────────────────┼────────────────┐             ┌──────────────┼──────────────┐
-  ▼                ▼                ▼             ▼              ▼              ▼
-Email/Password   Google       Passwordless   users/{uid}    profiles/{uid}  applications
-+ Verification   OAuth        Email Link          │              │         & automation
-                                                  └──────────────┴──────────────┘
-                                                                 │
-                                                       Firebase Storage
-                                                                 │
-                                                   users/{uid}/resumes/{id}
+```text
+Discover
+   ↓
+Analyze
+   ↓
+Match
+   ↓
+Optimize
+   ↓
+Apply
+   ↓
+Track
 ```
 
+The user interface uses a modern **Liquid Glass and Yellow Gradient** visual system while maintaining a responsive experience across desktop, tablet, and mobile devices.
+
 ---
 
-## 🚀 Getting Started
+## Core Capabilities
 
-### Prerequisites
+### Authentication
 
-- **Node.js**: `v20+` or `v22+`
-- **npm**: `v10+`
-- **Firebase CLI**: `npm install -g firebase-tools`
+KnowYourJob supports three authentication methods through Firebase Authentication.
 
-### 1. Installation
+#### Email & Password
+
+* User registration
+* Email verification
+* Password validation
+* Password reset
+* Session persistence
+
+#### Passwordless Email Link
+
+* Password-free authentication
+* Secure email sign-in links
+* Firebase Authentication integration
+
+#### Google OAuth
+
+* One-click Google authentication
+* Firebase OAuth integration
+* Idempotent Firestore user synchronization
+
+---
+
+## Data Isolation
+
+User data is logically isolated using authenticated Firebase user identities.
+
+Protected user-specific resources include:
+
+```text
+users
+profiles
+applications
+resumes
+automationSettings
+notifications
+```
+
+Firestore security rules enforce user-level access boundaries.
+
+The application also protects privileged account and administrative fields from unauthorized client-side modification.
+
+The public jobs catalog is designed as a read-only shared resource.
+
+---
+
+## Resume Storage
+
+Resume documents are stored using Firebase Cloud Storage with user-scoped paths.
+
+```text
+users/{uid}/resumes/{resumeId}/{fileName}
+```
+
+### Storage Controls
+
+* Maximum file size: **10 MB**
+* PDF validation
+* DOCX validation
+* User-scoped storage paths
+* Firebase Storage security rules
+
+The storage architecture is designed to prevent users from accessing another user's protected resume files.
+
+---
+
+## Job Discovery & Matching
+
+KnowYourJob provides a structured workflow for discovering and evaluating job opportunities.
+
+The platform can use candidate profile information and job requirements to help identify relevant opportunities.
+
+### Matching Workflow
+
+```text
+Candidate Profile
+       ↓
+Job Requirements
+       ↓
+Requirement Analysis
+       ↓
+Compatibility Evaluation
+       ↓
+Relevant Opportunities
+```
+
+Matching results are intended to assist candidate decision-making and should not be interpreted as a guarantee of employment, interview selection, or recruiter response.
+
+---
+
+## ATS Resume Analysis
+
+Resume analysis can be incorporated into the job-search workflow to help candidates understand how their resume aligns with target opportunities.
+
+Typical analysis areas include:
+
+* Skills
+* Keywords
+* Experience
+* Job requirements
+* Resume completeness
+* Formatting compatibility
+* Role relevance
+
+ATS results should be treated as estimates because actual Applicant Tracking System implementations vary between vendors and employers.
+
+---
+
+## Autonomous Application Pipeline
+
+KnowYourJob provides an application automation architecture with configurable safety controls.
+
+### Safety Controls
+
+* Minimum match-score thresholds
+* Daily application submission limits
+* User-configurable automation settings
+* Execution tracking
+* Immutable audit records
+
+Conceptual workflow:
+
+```text
+Job Discovery
+     ↓
+Compatibility Check
+     ↓
+Safety Threshold
+     ↓
+Automation Rules
+     ↓
+Application Execution
+     ↓
+Audit Log
+```
+
+The safety layer is designed to prevent unrestricted automated application activity.
+
+---
+
+## Route Protection
+
+The application implements protected routing for authenticated areas.
+
+Route protection supports:
+
+* Authentication state validation
+* Intended destination preservation
+* Session-aware navigation
+* Onboarding enforcement
+* Protected dashboard access
+
+Example:
+
+```text
+Unauthenticated User
+        ↓
+Authentication
+        ↓
+Original Destination
+        ↓
+Dashboard
+```
+
+First-time users can be redirected through the onboarding flow before accessing the main application workspace.
+
+---
+
+## Architecture
+
+```text
+                         KnowYourJob
+                    React 19 + TypeScript
+                              |
+             +----------------+----------------+
+             |                                 |
+             v                                 v
+     Firebase Authentication             Cloud Firestore
+             |                                 |
+     +-------+--------+              +---------+---------+
+     |       |        |              |         |         |
+     v       v        v              v         v         v
+   Email   Google  Passwordless    Users    Profiles Applications
+   Auth    OAuth   Email Link        |         |          |
+                                     +---------+----------+
+                                               |
+                                               v
+                                      Automation Settings
+                                               |
+                                               v
+                                       Firebase Storage
+                                               |
+                                               v
+                                  users/{uid}/resumes/{id}
+```
+
+---
+
+# Technology Stack
+
+| Technology              | Purpose                                  |
+| ----------------------- | ---------------------------------------- |
+| React 19                | Frontend application                     |
+| TypeScript              | Type-safe development                    |
+| Tailwind CSS            | UI styling                               |
+| Vite                    | Development and production build tooling |
+| Firebase Authentication | User authentication                      |
+| Cloud Firestore         | Application and user data                |
+| Firebase Storage        | Resume document storage                  |
+| Firebase Hosting        | Production deployment                    |
+| Zod                     | Runtime input validation                 |
+| GitHub Actions          | Continuous integration                   |
+
+---
+
+# Security Architecture
+
+Security is a fundamental part of the application design.
+
+### Authentication Security
+
+* Firebase Authentication
+* Email verification
+* Password reset workflows
+* OAuth authentication
+* Passwordless authentication
+* Protected application routes
+
+### Firestore Security
+
+Firestore rules enforce user-level access to protected collections.
+
+Conceptually:
+
+```text
+Authenticated User
+       |
+       v
+Firebase UID
+       |
+       v
+User-Owned Resources
+       |
+       +--> Profile
+       +--> Resume
+       +--> Applications
+       +--> Automation Settings
+       +--> Notifications
+```
+
+A client must not be trusted to enforce authorization by itself. Security-critical access control is enforced through Firebase Security Rules.
+
+### Storage Security
+
+Resume files use user-scoped storage paths and Firebase Storage rules to restrict unauthorized access.
+
+### Client Security
+
+The application validates user input using schema-based validation and avoids relying solely on client-side checks for authorization.
+
+---
+
+# Project Structure
+
+```text
+KnowYourJob/
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+│
+├── src/
+│   │
+│   ├── components/
+│   │   ├── auth/
+│   │   │   └── ProtectedRoute
+│   │   │
+│   │   ├── glass/
+│   │   │   └── Liquid Glass components
+│   │   │
+│   │   ├── layout/
+│   │   │   ├── AuthLayout
+│   │   │   └── DashboardLayout
+│   │   │
+│   │   └── ui/
+│   │       ├── LiquidButton
+│   │       ├── GlassInput
+│   │       └── Loaders
+│   │
+│   ├── context/
+│   │   ├── AuthContext.tsx
+│   │   └── ToastContext.tsx
+│   │
+│   ├── hooks/
+│   │   └── useAuth.ts
+│   │
+│   ├── lib/
+│   │   └── firebase/
+│   │       └── Firebase singleton instances
+│   │
+│   ├── pages/
+│   │   ├── auth/
+│   │   │   ├── Login
+│   │   │   ├── Register
+│   │   │   ├── Verify
+│   │   │   └── Forgot Password
+│   │   │
+│   │   ├── dashboard/
+│   │   │   ├── Overview
+│   │   │   ├── Jobs
+│   │   │   ├── Applications
+│   │   │   ├── Resume
+│   │   │   └── Settings
+│   │   │
+│   │   ├── onboarding/
+│   │   │   └── Profile onboarding
+│   │   │
+│   │   └── LandingPage.tsx
+│   │
+│   ├── services/
+│   │   └── firebase/
+│   │       └── Firebase & Firestore services
+│   │
+│   ├── types/
+│   │   └── TypeScript domain models
+│   │
+│   └── utils/
+│       ├── Error mappers
+│       └── Zod validation
+│
+├── firestore.rules
+├── firestore.indexes.json
+├── storage.rules
+├── firebase.json
+├── package.json
+└── README.md
+```
+
+---
+
+# Getting Started
+
+## Prerequisites
+
+Ensure the following are installed:
+
+* **Node.js 20+**
+* **npm 10+**
+* **Firebase CLI**
+
+Install Firebase CLI globally:
 
 ```bash
-# Clone the repository
+npm install -g firebase-tools
+```
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
 git clone https://github.com/your-username/knowyourjob.git
 cd knowyourjob
+```
 
-# Install dependencies
+Install dependencies:
+
+```bash
 npm install
 ```
 
-### 2. Environment Configuration
+---
 
-Copy the example environment file:
+# Environment Configuration
+
+Create a local environment file from the example configuration:
 
 ```bash
 cp .env.example .env
 ```
 
-Fill in your Web App configuration keys from the [Firebase Console](https://console.firebase.google.com/):
+Configure the Firebase Web App credentials:
 
 ```ini
 VITE_FIREBASE_API_KEY=your_api_key
@@ -91,86 +433,278 @@ VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
 VITE_USE_FIREBASE_EMULATOR=false
 ```
 
-> ⚠️ **Security Notice**: Never commit `.env` or Firebase service account private keys to version control. Only commit `.env.example`.
+### Environment Security
 
-### 3. Local Development
+Never commit:
 
-```bash
-# Start local Vite development server
-npm run dev
+```text
+.env
 ```
 
-Visit `http://localhost:5173` to experience the app.
+or Firebase service-account private keys to the repository.
+
+Only the example configuration should be committed:
+
+```text
+.env.example
+```
 
 ---
 
-## 🧪 Testing & Verification
+# Local Development
+
+Start the Vite development server:
 
 ```bash
-# Verify TypeScript compilation (0 errors)
-npm run typecheck
+npm run dev
+```
 
-# Build production bundle
+The application will be available at:
+
+```text
+http://localhost:5173
+```
+
+---
+
+# Production Build
+
+Create a production build:
+
+```bash
 npm run build
+```
 
-# Preview production build locally
+Preview the production build locally:
+
+```bash
 npm run preview
 ```
 
 ---
 
-## 🛡️ Firebase Security Rules & Indexes
+# Type Checking
 
-Deploy Cloud Firestore security rules and compound indexes:
+Verify TypeScript compilation:
 
 ```bash
-# Deploy Firestore rules & indexes
-firebase deploy --only firestore:rules,firestore:indexes --project your-project-id
-
-# Deploy Storage rules (after enabling Storage in Console)
-firebase deploy --only storage --project your-project-id
+npm run typecheck
 ```
+
+The project should complete type checking without TypeScript errors before deployment.
 
 ---
 
-## 📁 Project Structure
+# Firebase Deployment
 
+Authenticate with Firebase:
+
+```bash
+firebase login
 ```
-KnowYourJob/
-├── .github/
-│   └── workflows/
-│       └── ci.yml                 # GitHub Actions CI workflow
-├── src/
-│   ├── components/
-│   │   ├── auth/                  # ProtectedRoute guards
-│   │   ├── glass/                 # Liquid glass component library
-│   │   ├── layout/                # AuthLayout, DashboardLayout
-│   │   └── ui/                    # LiquidButton, GlassInput, Loaders
-│   ├── context/
-│   │   ├── AuthContext.tsx        # Centralized auth state & methods
-│   │   └── ToastContext.tsx       # Liquid glass toast notifications
-│   ├── hooks/
-│   │   └── useAuth.ts             # Auth consumer hook
-│   ├── lib/
-│   │   └── firebase/              # Firebase singleton instances
-│   ├── pages/
-│   │   ├── auth/                  # Login, Register, Verify, Forgot Password
-│   │   ├── dashboard/             # Overview, Jobs, Apps, Resume, Settings
-│   │   ├── onboarding/            # Profile onboarding wizard
-│   │   └── LandingPage.tsx        # High-converting futuristic hero page
-│   ├── services/
-│   │   └── firebase/              # Pure Firebase & Firestore services
-│   ├── types/                     # TypeScript domain models
-│   └── utils/                     # Error mappers & Zod validation
-├── firestore.rules                # Production Firestore security rules
-├── firestore.indexes.json         # Compound indexes
-├── storage.rules                  # Firebase Storage security rules
-├── firebase.json                  # Firebase configuration
-└── package.json
+
+Select or configure the appropriate Firebase project.
+
+Deploy Firestore rules and indexes:
+
+```bash
+firebase deploy \
+  --only firestore:rules,firestore:indexes \
+  --project your-project-id
 ```
+
+Deploy Firebase Storage rules:
+
+```bash
+firebase deploy \
+  --only storage \
+  --project your-project-id
+```
+
+Deploy the application using the project's configured Firebase Hosting workflow.
 
 ---
 
-## 📄 License
+# Testing & Verification
 
-Private proprietary software. All rights reserved.
+Before production deployment, verify the following areas.
+
+## Authentication
+
+* Email/password registration
+* Email verification
+* Email/password login
+* Password reset
+* Passwordless email authentication
+* Google OAuth
+* Logout
+* Session persistence
+* Unauthorized route protection
+
+## User Data
+
+* Profile creation
+* Profile updates
+* User-specific Firestore access
+* Application data isolation
+* Resume data isolation
+* Notification isolation
+* Automation settings isolation
+
+## Resume Management
+
+* Resume creation
+* Resume upload
+* PDF validation
+* DOCX validation
+* File-size restrictions
+* Resume retrieval
+* Resume deletion
+* Unauthorized file-access prevention
+
+## Job Discovery
+
+* Job search
+* Search filters
+* Job details
+* Job matching
+* Empty-result handling
+* Invalid input handling
+* Duplicate job handling
+
+## Application Automation
+
+* Match-score threshold
+* Daily submission limits
+* Automation settings
+* Execution handling
+* Audit logging
+* Failure handling
+
+## Responsive UI
+
+Verify the application on:
+
+* Desktop
+* Laptop
+* Tablet
+* Mobile
+
+---
+
+# CI/CD
+
+The repository includes GitHub Actions infrastructure under:
+
+```text
+.github/workflows/
+```
+
+The CI pipeline can be used to automatically verify:
+
+```text
+Install Dependencies
+        ↓
+Type Check
+        ↓
+Build
+        ↓
+Validation
+        ↓
+Deployment
+```
+
+Production deployments should only be performed after successful validation.
+
+---
+
+# Design System
+
+KnowYourJob uses a custom visual system based on:
+
+* Liquid Glass components
+* Yellow gradient accents
+* Layered surfaces
+* Modern typography
+* Responsive layouts
+* Consistent component primitives
+* Accessible interactive states
+
+The visual system is intended to provide a distinctive product identity while maintaining usability across device sizes.
+
+---
+
+# Development Principles
+
+The project follows several engineering principles:
+
+### Security First
+
+Authorization must be enforced server-side through Firebase Security Rules rather than relying exclusively on frontend logic.
+
+### Type Safety
+
+TypeScript is used throughout the application to reduce runtime errors and improve maintainability.
+
+### Separation of Concerns
+
+Firebase operations are organized into dedicated service modules rather than being distributed throughout UI components.
+
+### Reusable Components
+
+Common UI patterns are implemented as reusable components to maintain consistency.
+
+### Validation
+
+User-controlled data is validated before being processed or persisted.
+
+### Fail-Safe Automation
+
+Automated workflows use configurable thresholds and limits to prevent unrestricted application activity.
+
+---
+
+# Roadmap
+
+Potential future improvements include:
+
+* Advanced AI job matching
+* Personalized job recommendations
+* Improved ATS analysis
+* Job-source integrations
+* Advanced application analytics
+* Automated job alerts
+* Resume-to-job compatibility scoring
+* Enhanced application automation controls
+* Interview preparation workflows
+* Skill-gap analysis
+* Career analytics
+* Resume optimization
+* Advanced notification workflows
+* Accessibility improvements
+* Performance optimization
+* Expanded mobile experience
+
+---
+
+# Live Application
+
+**KnowYourJob**
+
+https://knowyourjob.web.app/
+
+---
+
+# License
+
+**Private Proprietary Software — All Rights Reserved.**
+
+This project is proprietary software. Unauthorized copying, modification, distribution, sublicensing, or commercial use is prohibited unless explicitly authorized by the copyright holder.
+
+---
+
+<p align="center">
+  <strong>KnowYourJob</strong>
+  <br>
+  Find Smarter. Apply Faster.
+</p>
