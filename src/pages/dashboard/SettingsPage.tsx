@@ -11,11 +11,13 @@ import {
   X,
   Plug,
   Layers,
+  Bug
 } from 'lucide-react';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { GlassInput } from '../../components/ui/GlassInput';
 import { LiquidButton } from '../../components/ui/LiquidButton';
 import { UserAvatar, isGoogleUser, GoogleIcon } from '../../components/ui/UserAvatar';
+import { ReportBugModal } from '../../components/support/ReportBugModal';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../context/ToastContext';
 import { deleteUserData } from '../../services/firebase/userService';
@@ -28,6 +30,7 @@ export const SettingsPage: React.FC = () => {
 
   const [activeTab, setActiveTab] = useState<'profile' | 'security'>('profile');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isBugModalOpen, setIsBugModalOpen] = useState(false);
   const [deletePassword, setDeletePassword] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -184,6 +187,29 @@ export const SettingsPage: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Contact Support & Report Bug Card */}
+        <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-4">
+          <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <Bug className="w-5 h-5 text-rose-400" />
+            <span>Support & Developer Contact</span>
+          </h3>
+
+          <p className="text-xs text-slate-400">
+            Encountered a bug, UI defect, or have a feature request? Let us know! Your system diagnostics will be attached to help resolve it quickly.
+          </p>
+
+          <div className="flex justify-start">
+            <LiquidButton
+              variant="danger"
+              onClick={() => setIsBugModalOpen(true)}
+              className="!bg-rose-500 hover:!bg-rose-400 !text-white !border-rose-400/50"
+              leftIcon={<Bug className="w-4 h-4" />}
+            >
+              Report a Bug
+            </LiquidButton>
+          </div>
+        </div>
       </div>
     )}
 
@@ -282,6 +308,8 @@ export const SettingsPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      <ReportBugModal isOpen={isBugModalOpen} onClose={() => setIsBugModalOpen(false)} />
     </DashboardLayout>
   );
 };

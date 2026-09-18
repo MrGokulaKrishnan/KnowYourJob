@@ -25,6 +25,9 @@ import { KYJLogo } from '../ui/KYJLogo';
 import { UserAvatar } from '../ui/UserAvatar';
 
 import { isAuthorizedJobPoster } from '../../lib/utils/jobPosterAuth';
+import { SupportFAB } from '../support/SupportFAB';
+import { ReportBugModal } from '../support/ReportBugModal';
+import { Bug } from 'lucide-react';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -43,6 +46,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   const { showToast } = useToast();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isBugModalOpen, setIsBugModalOpen] = useState(false);
   const isRecruiter = isAuthorizedJobPoster(user?.email, (user as any)?.role);
 
   const navItems = [
@@ -137,6 +141,14 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           </Link>
 
           <button
+            onClick={() => setIsBugModalOpen(true)}
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 transition cursor-pointer"
+          >
+            <Bug className="w-3.5 h-3.5" />
+            <span>Report a Bug</span>
+          </button>
+          
+          <button
             onClick={handleSignOut}
             className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 transition cursor-pointer"
           >
@@ -221,13 +233,25 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
             </div>
           </div>
 
-          <button
-            onClick={handleSignOut}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-rose-300 bg-rose-500/10 border border-rose-500/20"
-          >
-            <LogOut className="w-4 h-4" />
-            <span>Sign Out</span>
-          </button>
+          <div className="flex flex-col gap-2 mt-4">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setIsBugModalOpen(true);
+              }}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-amber-300 bg-amber-500/10 border border-amber-500/20"
+            >
+              <Bug className="w-4 h-4" />
+              <span>Report a Bug</span>
+            </button>
+            <button
+              onClick={handleSignOut}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium text-rose-300 bg-rose-500/10 border border-rose-500/20"
+            >
+              <LogOut className="w-4 h-4" />
+              <span>Sign Out</span>
+            </button>
+          </div>
         </div>
       )}
 
@@ -288,6 +312,9 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           {children}
         </div>
       </main>
+
+      <SupportFAB onClick={() => setIsBugModalOpen(true)} />
+      <ReportBugModal isOpen={isBugModalOpen} onClose={() => setIsBugModalOpen(false)} />
     </div>
   );
 };

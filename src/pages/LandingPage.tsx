@@ -308,6 +308,7 @@ export const LandingPage: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-slate-400">
               <li><Link to="/support" className="hover:text-amber-400 transition">Help Center</Link></li>
+              <li><Link to="/support" className="hover:text-amber-400 transition">Report a Bug / Contact Us</Link></li>
               <li><Link to="/auth/login" className="hover:text-amber-400 transition">Candidate Sign In</Link></li>
               <li><Link to="/auth/register" className="hover:text-amber-400 transition">Create Account</Link></li>
               <li><Link to="/auth/forgot-password" className="hover:text-amber-400 transition">Password Recovery</Link></li>

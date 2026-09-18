@@ -9,10 +9,12 @@ import {
   CheckCircle2, 
   ExternalLink,
   ChevronRight,
-  Send
+  Send,
+  Bug
 } from 'lucide-react';
 import { KYJLogo } from '@/components/ui/KYJLogo';
 import { useToast } from '@/context/ToastContext';
+import { ReportBugModal } from '@/components/support/ReportBugModal';
 
 export const SupportPage: React.FC = () => {
   const { showToast } = useToast();
@@ -22,6 +24,7 @@ export const SupportPage: React.FC = () => {
   const [ticketEmail, setTicketEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isBugModalOpen, setIsBugModalOpen] = useState(false);
 
   const helpTopics = [
     {
@@ -159,8 +162,28 @@ export const SupportPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Developer Direct Report Card */}
+      <section className="max-w-3xl mx-auto px-6 pb-6 w-full">
+        <div className="liquid-glass-elevated p-8 rounded-2xl border border-rose-500/20 bg-rose-500/5 text-center flex flex-col items-center">
+          <div className="w-12 h-12 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 mb-4 shadow-[0_0_15px_rgba(244,63,94,0.1)]">
+            <Bug size={24} />
+          </div>
+          <h2 className="text-xl font-bold text-white">Found a technical bug?</h2>
+          <p className="text-xs text-slate-400 mt-2 max-w-md">
+            If you've encountered a UI defect, an error, or a security issue, you can send a technical report directly to the developer. Telemetry is auto-attached to help fix it.
+          </p>
+          <button
+            onClick={() => setIsBugModalOpen(true)}
+            className="mt-6 px-6 py-3 rounded-xl bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-400 hover:to-red-500 text-white text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-rose-500/20"
+          >
+            <Bug size={16} />
+            <span>Report a Bug to Developer</span>
+          </button>
+        </div>
+      </section>
+
       {/* Direct Contact & Ticket Form */}
-      <section className="max-w-3xl mx-auto px-6 py-12 w-full">
+      <section className="max-w-3xl mx-auto px-6 py-6 w-full">
         <div className="liquid-glass-elevated p-8 rounded-2xl border border-white/10">
           <div className="text-center mb-6">
             <h2 className="text-xl font-bold text-white">Can't find what you're looking for?</h2>
@@ -238,6 +261,8 @@ export const SupportPage: React.FC = () => {
       <footer className="border-t border-white/5 mt-auto py-8 px-6 text-xs text-slate-500 text-center">
         <p>© {new Date().getFullYear()} KnowYourJob Support & Help Center. All rights reserved.</p>
       </footer>
+
+      <ReportBugModal isOpen={isBugModalOpen} onClose={() => setIsBugModalOpen(false)} />
     </div>
   );
 };
