@@ -138,7 +138,7 @@ export const PostJobModal: React.FC<PostJobModalProps> = ({ isOpen, onClose, onJ
             initial={{ opacity: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
-            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto liquid-glass-elevated rounded-2xl border border-amber-500/30 p-6 sm:p-8 bg-[#0a0d14] shadow-2xl z-10 text-slate-100"
+            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto liquid-glass-elevated rounded-2xl border border-amber-500/30 p-6 sm:p-8 bg-[#08080a] shadow-2xl z-10 text-slate-100"
           >
             {/* Header */}
             <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">

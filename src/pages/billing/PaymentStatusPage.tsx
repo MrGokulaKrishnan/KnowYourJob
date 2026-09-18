@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { CheckCircle2, XCircle, Clock, ArrowRight, RefreshCcw } from 'lucide-react';
 import { KYJLogo } from '@/components/ui/KYJLogo';
@@ -12,7 +12,7 @@ export const PaymentStatusPage: React.FC = () => {
   else if (path.includes('pending')) status = 'pending';
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col justify-center items-center px-4 selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="min-h-screen bg-[#000000] text-slate-100 flex flex-col justify-center items-center px-4 selection:bg-amber-500/30 selection:text-amber-200">
       <div className="w-full max-w-md text-center">
         <Link to="/" className="inline-flex items-center gap-2 mb-8">
           <KYJLogo size={36} glow />

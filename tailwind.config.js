@@ -1,4 +1,4 @@
-﻿/** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
@@ -9,12 +9,13 @@ export default {
     extend: {
       colors: {
         bg: {
-          primary: '#07090e',
-          secondary: '#0c1017',
-          card: 'rgba(15, 20, 31, 0.75)',
-          elevated: '#141b27',
+          primary: '#000000',
+          secondary: '#050505',
+          card: 'rgba(8, 8, 10, 0.82)',
+          elevated: '#0e0e11',
           border: 'rgba(255, 255, 255, 0.08)',
-          'border-hover': 'rgba(245, 158, 11, 0.35)',
+          'border-hover': 'rgba(245, 158, 11, 0.40)',
+          amoled: '#000000',
         },
         gold: {
           300: '#fde68a',

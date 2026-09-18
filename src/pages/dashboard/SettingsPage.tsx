@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Settings as SettingsIcon, 
@@ -8,11 +8,14 @@ import {
   AlertTriangle,
   User,
   CheckCircle2,
-  X
+  X,
+  Plug,
+  Layers,
 } from 'lucide-react';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { GlassInput } from '../../components/ui/GlassInput';
 import { LiquidButton } from '../../components/ui/LiquidButton';
+import { UserAvatar, isGoogleUser, GoogleIcon } from '../../components/ui/UserAvatar';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../context/ToastContext';
 import { deleteUserData } from '../../services/firebase/userService';
@@ -21,7 +24,9 @@ export const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
   const { user, userDoc, deleteAccount, sendPasswordReset } = useAuth();
   const { showToast } = useToast();
+  const isGoogle = isGoogleUser(user, userDoc);
 
+  const [activeTab, setActiveTab] = useState<'profile' | 'security'>('profile');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletePassword, setDeletePassword] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -57,15 +62,94 @@ export const SettingsPage: React.FC = () => {
   return (
     <DashboardLayout
       pageTitle="Account & Security"
-      pageSubtitle="Manage identity providers, credentials, and data residency."
+      pageSubtitle="Manage identity, authentication security, credentials, and data residency."
     >
       <div className="flex flex-col gap-6 max-w-3xl">
-        {/* Account Details Card */}
-        <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-5">
-          <h3 className="text-base font-bold text-white flex items-center gap-2">
-            <User className="w-5 h-5 text-amber-400" />
-            <span>Account Profile</span>
-          </h3>
+        {/* Navigation Tabs */}
+        <div className="flex items-center gap-2 p-1.5 rounded-2xl liquid-glass border border-white/5 w-fit">
+          <button
+            onClick={() => setActiveTab('profile')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+              activeTab === 'profile'
+                ? 'bg-amber-400/15 text-amber-300 border border-amber-400/30 shadow-[0_0_15px_rgba(255,208,0,0.1)]'
+                : 'text-slate-400 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <User className="w-3.5 h-3.5" />
+            <span>Profile</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('security')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+              activeTab === 'security'
+                ? 'bg-amber-400/15 text-amber-300 border border-amber-400/30 shadow-[0_0_15px_rgba(255,208,0,0.1)]'
+                : 'text-slate-400 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <KeyRound className="w-3.5 h-3.5" />
+            <span>Security & Data</span>
+          </button>
+        </div>
+
+        {/* Tab 1: Profile */}
+        {activeTab === 'profile' && (
+          <div className="flex flex-col gap-6">
+            {/* Account Profile Header with Google Avatar in Square Rounded Corners */}
+            <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+              <UserAvatar
+                user={user}
+                userDoc={userDoc}
+                size="2xl"
+                showGoogleBadge={true}
+                border={true}
+                className="shrink-0"
+              />
+
+              <div className="flex-1 min-w-0 flex flex-col gap-1.5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-lg font-bold text-white tracking-tight truncate">
+                    {userDoc?.displayName || user?.displayName || 'User Profile'}
+                  </h3>
+
+                  {isGoogle ? (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xl bg-white/[0.06] border border-white/12 text-xs font-semibold text-white">
+                      <GoogleIcon size={13} />
+                      <span>Google Account</span>
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs font-semibold text-amber-300">
+                      <span>Standard Account</span>
+                    </span>
+                  )}
+                </div>
+
+                <p className="text-xs text-slate-300 truncate">
+                  {user?.email || 'No email registered'}
+                </p>
+
+                <div className="text-[11px] text-slate-400 mt-0.5 flex items-center gap-1.5">
+                  {isGoogle ? (
+                    <>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                      <span>Google account profile picture synced in square rounded corners.</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+                      <span>Account avatar displayed in square rounded corners.</span>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Account Details Card */}
+            <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-5">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <User className="w-5 h-5 text-amber-400" />
+                <span>Account Profile</span>
+              </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
             <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
@@ -100,7 +184,12 @@ export const SettingsPage: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
+    )}
 
+    {/* Tab 3: Security & Danger Zone */}
+    {activeTab === 'security' && (
+      <div className="flex flex-col gap-6">
         {/* Security & Password Reset */}
         <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-4">
           <h3 className="text-base font-bold text-white flex items-center gap-2">
@@ -145,10 +234,12 @@ export const SettingsPage: React.FC = () => {
           </div>
         </div>
       </div>
+    )}
+  </div>
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 z-50 bg-[#07090e]/80 backdrop-blur-xl flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-[#000000]/85 backdrop-blur-xl flex items-center justify-center p-4">
           <div className="liquid-glass-elevated max-w-md w-full rounded-2xl p-6 border border-rose-500/30 flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">

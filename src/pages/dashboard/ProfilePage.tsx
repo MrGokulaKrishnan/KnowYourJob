@@ -1,17 +1,19 @@
-﻿import React, { useEffect, useState } from 'react';
-import { UserCircle2, Save, Sparkles, Plus, X } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { UserCircle2, Save, Sparkles, Plus, X, CheckCircle2 } from 'lucide-react';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { GlassInput } from '../../components/ui/GlassInput';
 import { LiquidButton } from '../../components/ui/LiquidButton';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
+import { UserAvatar, isGoogleUser, GoogleIcon } from '../../components/ui/UserAvatar';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../context/ToastContext';
 import { profileService } from '../../services/firebase/profileService';
 import { CandidateProfile } from '../../types/profile';
 
 export const ProfilePage: React.FC = () => {
-  const { user } = useAuth();
+  const { user, userDoc } = useAuth();
   const { showToast } = useToast();
+  const isGoogle = isGoogleUser(user, userDoc);
 
   const [profile, setProfile] = useState<CandidateProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -102,6 +104,60 @@ export const ProfilePage: React.FC = () => {
         <LoadingSpinner label="Loading candidate dossier..." />
       ) : (
         <form onSubmit={handleSave} className="flex flex-col gap-6 max-w-4xl">
+          {/* Profile Identity & Google Account Card */}
+          <div className="liquid-glass rounded-2xl p-6 border border-white/8 flex flex-col sm:flex-row items-start sm:items-center gap-6 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+            <UserAvatar
+              user={user}
+              userDoc={userDoc}
+              size="3xl"
+              showGoogleBadge={true}
+              border={true}
+              className="shrink-0"
+            />
+
+            <div className="flex-1 min-w-0 flex flex-col gap-1.5">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h2 className="text-xl font-bold text-white tracking-tight truncate">
+                  {userDoc?.displayName || user?.displayName || (firstName ? `${firstName} ${lastName}`.trim() : 'Candidate Profile')}
+                </h2>
+
+                {isGoogle ? (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/[0.06] border border-white/12 text-xs font-semibold text-white shadow-sm">
+                    <GoogleIcon size={14} />
+                    <span>Google Account Profile</span>
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs font-semibold text-amber-300">
+                    <span>Standard Account</span>
+                  </span>
+                )}
+
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono text-emerald-400">
+                  <CheckCircle2 className="w-3 h-3" />
+                  <span>Active</span>
+                </span>
+              </div>
+
+              <p className="text-xs text-slate-300 truncate">
+                {user?.email || 'No email attached'}
+              </p>
+
+              <div className="text-xs text-slate-400 mt-1 flex items-center gap-1.5">
+                {isGoogle ? (
+                  <>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                    <span>Profile photo automatically synchronized with your Google Account in square rounded corners.</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+                    <span>Candidate profile picture displayed in square rounded corners.</span>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* Basic Info */}
           <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-4">
             <h3 className="text-base font-bold text-white flex items-center gap-2">

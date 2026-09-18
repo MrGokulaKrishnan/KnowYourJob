@@ -35,13 +35,13 @@ export const LandingPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col overflow-x-hidden selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="min-h-screen bg-[#000000] text-slate-100 flex flex-col overflow-x-hidden selection:bg-amber-500/30 selection:text-amber-200">
       {/* Background Ambient Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-amber-500/15 via-yellow-500/5 to-transparent blur-[140px] pointer-events-none rounded-full" />
       <div className="absolute top-1/3 right-10 w-96 h-96 bg-amber-600/10 blur-[130px] pointer-events-none rounded-full" />
 
       {/* Navigation Header */}
-      <header className="relative z-20 border-b border-white/5 bg-[#090d14]/60 backdrop-blur-xl sticky top-0 px-6 py-4">
+      <header className="relative z-20 border-b border-white/5 bg-[#000000]/85 backdrop-blur-xl sticky top-0 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5 group">
             <KYJLogo size={36} glow className="group-hover:scale-105 transition-transform" />
@@ -254,7 +254,7 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* Comprehensive 4-Column Footer */}
-      <footer className="relative z-10 border-t border-white/5 mt-auto pt-12 pb-8 px-6 bg-[#05070a]">
+      <footer className="relative z-10 border-t border-white/5 mt-auto pt-12 pb-8 px-6 bg-[#000000]">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 mb-10 text-xs">
           {/* Col 1 */}
           <div>

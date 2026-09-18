@@ -22,6 +22,7 @@ import {
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../context/ToastContext';
 import { KYJLogo } from '../ui/KYJLogo';
+import { UserAvatar } from '../ui/UserAvatar';
 
 import { isAuthorizedJobPoster } from '../../lib/utils/jobPosterAuth';
 
@@ -64,13 +65,13 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#06080d] text-slate-100 flex flex-col md:flex-row overflow-x-hidden">
+    <div className="min-h-screen bg-[#000000] text-slate-100 flex flex-col md:flex-row overflow-x-hidden">
       {/* Background ambient orbs */}
       <div className="fixed top-0 left-1/4 w-96 h-96 bg-amber-500/8 blur-[120px] pointer-events-none rounded-full" />
       <div className="fixed bottom-0 right-10 w-[500px] h-[500px] bg-amber-600/5 blur-[150px] pointer-events-none rounded-full" />
 
       {/* Sidebar for Desktop */}
-      <aside className="hidden md:flex flex-col w-64 border-r border-white/8 bg-[#090d14]/85 backdrop-blur-2xl shrink-0 sticky top-0 h-screen z-30 shadow-[inset_-1px_0_0_rgba(255,255,255,0.04)]">
+      <aside className="hidden md:flex flex-col w-64 border-r border-white/8 bg-[#040404]/90 backdrop-blur-2xl shrink-0 sticky top-0 h-screen z-30 shadow-[inset_-1px_0_0_rgba(255,255,255,0.04)]">
         {/* Brand */}
         <div className="p-6 border-b border-white/8 flex items-center justify-between">
           <Link to="/dashboard" className="flex items-center gap-2.5 group">
@@ -108,13 +109,23 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
 
         {/* User Card & Logout */}
         <div className="p-4 border-t border-white/8 flex flex-col gap-3">
-          <div className="flex items-center gap-3 p-2.5 rounded-xl bg-gradient-to-b from-white/[0.05] to-white/[0.015] border border-white/8 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-            <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-xs uppercase border border-amber-500/30 shrink-0">
-              {userDoc?.displayName?.[0] || user?.email?.[0] || 'U'}
-            </div>
+          <Link
+            to="/dashboard/profile"
+            className="flex items-center gap-3 p-2.5 rounded-xl bg-gradient-to-b from-white/[0.05] to-white/[0.015] border border-white/8 hover:border-amber-400/30 transition shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] group cursor-pointer"
+            title="View candidate profile"
+          >
+            <UserAvatar
+              user={user}
+              userDoc={userDoc}
+              size="sm"
+              roundedClassName="rounded-lg"
+              showGoogleBadge={true}
+              border={true}
+              className="shrink-0 group-hover:scale-105 transition-transform"
+            />
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5">
-                <p className="text-xs font-semibold text-slate-200 truncate">
+                <p className="text-xs font-semibold text-slate-200 group-hover:text-amber-300 transition-colors truncate">
                   {userDoc?.displayName || user?.displayName || 'Candidate'}
                 </p>
                 {isRecruiter && (
@@ -123,7 +134,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
               </div>
               <p className="text-[10px] text-slate-400 truncate">{user?.email}</p>
             </div>
-          </div>
+          </Link>
 
           <button
             onClick={handleSignOut}
@@ -136,7 +147,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       </aside>
 
       {/* Mobile Top Header */}
-      <header className="md:hidden flex items-center justify-between p-4 border-b border-white/10 bg-[#090d14]/90 backdrop-blur-lg sticky top-0 z-30">
+      <header className="md:hidden flex items-center justify-between p-4 border-b border-white/10 bg-[#040404]/95 backdrop-blur-lg sticky top-0 z-30">
         <Link to="/dashboard" className="flex items-center gap-2">
           <KYJLogo size={28} />
           <span className="font-bold text-sm text-white">
@@ -144,6 +155,15 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           </span>
         </Link>
         <div className="flex items-center gap-2">
+          <Link to="/dashboard/profile" title="Candidate Profile">
+            <UserAvatar
+              user={user}
+              userDoc={userDoc}
+              size="sm"
+              roundedClassName="rounded-lg"
+              showGoogleBadge={true}
+            />
+          </Link>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 rounded-lg bg-white/5 text-slate-300"
@@ -155,8 +175,30 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-[#07090e]/95 backdrop-blur-2xl p-6 flex flex-col justify-between pt-20">
-          <div className="space-y-1">
+        <div className="md:hidden fixed inset-0 z-40 bg-[#000000]/98 backdrop-blur-2xl p-6 flex flex-col justify-between pt-20">
+          <div>
+            {/* User Profile Card in Mobile Drawer */}
+            <Link
+              to="/dashboard/profile"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/10 mb-4"
+            >
+              <UserAvatar
+                user={user}
+                userDoc={userDoc}
+                size="md"
+                roundedClassName="rounded-xl"
+                showGoogleBadge={true}
+              />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-white truncate">
+                  {userDoc?.displayName || user?.displayName || 'Candidate'}
+                </p>
+                <p className="text-xs text-slate-400 truncate">{user?.email}</p>
+              </div>
+            </Link>
+
+            <div className="space-y-1">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
               const Icon = item.icon;
@@ -176,6 +218,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                 </Link>
               );
             })}
+            </div>
           </div>
 
           <button
@@ -191,7 +234,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0 z-10">
         {/* Top bar with Breadcrumbs & Actions */}
-        <div className="hidden md:flex items-center justify-between px-8 py-4 border-b border-white/8 bg-[#090d14]/70 backdrop-blur-xl shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.03)] sticky top-0 z-20">
+        <div className="hidden md:flex items-center justify-between px-8 py-4 border-b border-white/8 bg-[#040404]/80 backdrop-blur-xl shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.03)] sticky top-0 z-20">
           <div>
             <h1 className="text-lg font-bold text-white tracking-tight">{pageTitle}</h1>
             {pageSubtitle && <p className="text-xs text-slate-400 mt-0.5">{pageSubtitle}</p>}
@@ -220,6 +263,23 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
             >
               <Bell className="w-4 h-4" />
             </button>
+
+            {/* Candidate Profile Avatar Link */}
+            <Link
+              to="/dashboard/profile"
+              className="p-1 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-amber-400/30 transition shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] flex items-center justify-center cursor-pointer group"
+              title="Candidate Profile"
+            >
+              <UserAvatar
+                user={user}
+                userDoc={userDoc}
+                size="sm"
+                roundedClassName="rounded-lg"
+                showGoogleBadge={true}
+                border={false}
+                className="group-hover:scale-105 transition-transform"
+              />
+            </Link>
           </div>
         </div>
 

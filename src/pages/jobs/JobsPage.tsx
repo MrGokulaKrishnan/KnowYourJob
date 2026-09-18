@@ -35,7 +35,7 @@ export default function JobsPage() {
     try {
       if (force) {
         setIsRefreshing(true);
-        showToast('Refreshing verified jobs from LinkedIn & Naukri (Apify)…', 'info', 'Apify Sync');
+        showToast('Refreshing verified jobs from multi-channel providers…', 'info', 'Catalog Refresh');
         await jobService.refreshVerifiedCatalog();
       }
       const res = await jobService.searchJobs({
@@ -128,13 +128,13 @@ export default function JobsPage() {
                 24h Auto-Refresh
               </span>
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#0A66C2]/20 text-[#388bfd] border border-[#0A66C2]/40">
-                LinkedIn Scraper Active
+                Multi-Source Active
               </span>
             </div>
             <p className="text-xs text-neutral-400 mt-1">
               {syncStatus?.lastSyncedAt
                 ? `Last synced: ${syncStatus.hoursSinceSync}h ago · Next refresh in ~${syncStatus.hoursUntilNextSync}h`
-                : 'Scraped and verified via Apify across LinkedIn & Naukri'}
+                : 'Verified across LinkedIn, Naukri, Indeed & Direct Employers'}
             </p>
           </div>
         </div>
@@ -161,10 +161,10 @@ export default function JobsPage() {
             onClick={() => fetchJobs(true)}
             disabled={isRefreshing}
             className="btn-glass text-xs py-2 px-4 flex items-center gap-2 disabled:opacity-50 shrink-0"
-            title="Refresh verified job catalog from Apify"
+            title="Refresh verified job catalog from multi-channel providers"
           >
             <span className={`w-3.5 h-3.5 border-2 border-yellow-400 border-t-transparent rounded-full ${isRefreshing ? 'animate-spin' : ''}`} />
-            <span>{isRefreshing ? 'Scraping Apify…' : 'Refresh (24h)'}</span>
+            <span>{isRefreshing ? 'Refreshing…' : 'Refresh Catalog'}</span>
           </button>
         </div>
       </div>

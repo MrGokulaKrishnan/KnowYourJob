@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, ArrowRight, ShieldCheck } from 'lucide-react';
 import { KYJLogo } from '@/components/ui/KYJLogo';
@@ -9,7 +9,7 @@ export const SessionExpiredPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col justify-center items-center px-6 text-center selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="min-h-screen bg-[#000000] text-slate-100 flex flex-col justify-center items-center px-6 text-center selection:bg-amber-500/30 selection:text-amber-200">
       <div className="max-w-md w-full">
         <Link to="/" className="inline-flex items-center gap-2 mb-6">
           <KYJLogo size={40} glow />

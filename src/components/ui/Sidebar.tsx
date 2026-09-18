@@ -1,4 +1,4 @@
-﻿import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import {
   LayoutDashboard,
@@ -19,6 +19,7 @@ import { useAuthStore } from '@/stores/authStore'
 import { signOut } from '@/services/firebase/auth'
 import { toast } from 'react-hot-toast'
 import { KYJLogo } from '@/components/ui/KYJLogo'
+import { UserAvatar } from '@/components/ui/UserAvatar'
 
 const navItems = [
   { to: '/dashboard',    icon: LayoutDashboard, label: 'Dashboard' },
@@ -184,12 +185,14 @@ export function Sidebar() {
           className="flex items-center gap-3 px-3 py-2.5 rounded-xl mt-1"
           style={{ background: 'rgba(255,255,255,0.03)' }}
         >
-          <div
-            className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm"
-            style={{ background: 'linear-gradient(135deg,#FFE45C,#FFD000)', color: '#050505' }}
-          >
-            {user?.displayName?.charAt(0)?.toUpperCase() ?? user?.email?.charAt(0)?.toUpperCase() ?? 'U'}
-          </div>
+          <UserAvatar
+            userDoc={user}
+            size="sm"
+            roundedClassName="rounded-lg"
+            showGoogleBadge={true}
+            border={true}
+            className="flex-shrink-0"
+          />
           {!sidebarCollapsed && (
             <motion.div
               initial={{ opacity: 0 }}

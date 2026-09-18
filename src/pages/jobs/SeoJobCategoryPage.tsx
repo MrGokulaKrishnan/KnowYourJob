@@ -293,7 +293,7 @@ export const SeoJobCategoryPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="min-h-screen bg-[#000000] text-slate-100 flex flex-col selection:bg-amber-500/30 selection:text-amber-200">
       {/* Dynamic Schema Injections */}
       <script
         type="application/ld+json"
@@ -305,7 +305,7 @@ export const SeoJobCategoryPage: React.FC = () => {
       />
 
       {/* Header */}
-      <header className="border-b border-white/5 bg-[#090d14]/70 backdrop-blur-xl sticky top-0 z-30 px-6 py-4">
+      <header className="border-b border-white/5 bg-[#040404]/85 backdrop-blur-xl sticky top-0 z-30 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5">
             <KYJLogo size={32} glow />

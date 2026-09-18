@@ -1,4 +1,4 @@
-﻿import { NormalizedJob } from './normalizedJob';
+import { NormalizedJob } from './normalizedJob';
 
 export type ProviderStatus = 'active' | 'disabled' | 'requires_credentials' | 'rate_limited' | 'degraded';
 
@@ -19,6 +19,7 @@ export interface ProviderSearchParams {
   remoteType?: string;
   employmentType?: string;
   minSalary?: number;
+  portal?: string;
   limit?: number;
   page?: number;
 }

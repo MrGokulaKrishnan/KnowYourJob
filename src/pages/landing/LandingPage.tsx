@@ -699,7 +699,7 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white page-enter selection:bg-[var(--color-primary)] selection:text-black font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#000000] text-white page-enter selection:bg-[var(--color-primary)] selection:text-black font-sans overflow-x-hidden">
       <Navbar />
       <main>
         <Hero />

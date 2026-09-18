@@ -29,7 +29,7 @@ export function getOfficialJobPortalUrl(job: Partial<NormalizedJob> | null | und
 
   // Route to official LinkedIn Job Portal search
   if (portal.includes('linkedin')) {
-    // If we have a numerical jobId from Apify scraper, direct link to view
+    // If we have a numerical jobId from provider adapter, direct link to view
     const jobIdMatch = (job.id || '').match(/li-(\d+)/) || rawUrl.match(/view\/(\d+)/);
     if (jobIdMatch && jobIdMatch[1]) {
       return `https://www.linkedin.com/jobs/view/${jobIdMatch[1]}/`;

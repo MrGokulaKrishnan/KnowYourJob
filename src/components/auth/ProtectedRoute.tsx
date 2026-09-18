@@ -22,7 +22,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   // 1. Auth state loading guard: zero flicker
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#07090e]">
+      <div className="min-h-screen flex items-center justify-center bg-[#000000]">
         <div className="liquid-glass-elevated p-8 rounded-2xl">
           <LoadingSpinner label="Securing authentication session..." />
         </div>

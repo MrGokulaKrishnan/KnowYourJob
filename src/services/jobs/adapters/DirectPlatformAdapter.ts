@@ -1,7 +1,7 @@
-﻿import { BaseJobAdapter } from './BaseJobAdapter';
+import { BaseJobAdapter } from './BaseJobAdapter';
 import { ProviderHealth, ProviderSearchParams, ProviderSearchResult } from '@/types/jobProvider';
 import { NormalizedJob } from '@/types/normalizedJob';
-import { DEMO_JOBS } from '@/lib/services/jobService';
+import { DEMO_JOBS } from '@/lib/services/demoJobs';
 
 export class DirectPlatformAdapter extends BaseJobAdapter {
   constructor() {

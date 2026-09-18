@@ -33,7 +33,7 @@ export const JobsPage: React.FC = () => {
     try {
       if (forceRefresh) {
         setIsRefreshing(true);
-        showToast('Running Apify scraper for LinkedIn & Naukri (Last 24 Hours)…', 'info', 'Apify Sync');
+        showToast('Refreshing verified jobs from multi-channel providers (Last 24 Hours)…', 'info', 'Catalog Refresh');
         await jobService.refreshVerifiedCatalog();
       } else {
         await jobService.seedInitialJobsIfEmpty();
@@ -55,7 +55,7 @@ export const JobsPage: React.FC = () => {
       }
     } catch (err: any) {
       console.warn('Jobs fetch error:', err);
-      showToast(err?.message || 'Could not refresh jobs from Apify.', 'error');
+      showToast(err?.message || 'Could not refresh jobs.', 'error');
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
@@ -103,10 +103,9 @@ export const JobsPage: React.FC = () => {
   return (
     <DashboardLayout
       pageTitle="Verified Job Catalog"
-      pageSubtitle="Real-time verified listings extracted from LinkedIn, Naukri & Indeed via Apify scrapers. Auto-refreshed every 24 hours."
+      pageSubtitle="Real-time verified listings aggregated across LinkedIn, Naukri, Indeed & Direct Platforms. Auto-refreshed every 24 hours."
     >
       <div className="flex flex-col gap-6">
-
         {/* Verified Catalog Status Banner */}
         <div className="liquid-glass-elevated rounded-2xl p-5 border border-amber-500/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-gradient-to-r from-amber-500/5 via-transparent to-yellow-400/5">
           <div className="flex items-center gap-3.5">
@@ -115,12 +114,12 @@ export const JobsPage: React.FC = () => {
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <h2 className="text-base font-bold text-white">Apify Verified Scraper Engine</h2>
+                <h2 className="text-base font-bold text-white">Multi-Source Verified Job Engine</h2>
                 <span className="inline-flex items-center gap-1 text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> 24h Cycle Active
                 </span>
                 <span className="inline-flex items-center gap-1 text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-400 border border-blue-500/30 font-semibold">
-                  LinkedIn & Naukri
+                  Multi-Channel Verified
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1 flex items-center gap-2">
@@ -128,7 +127,7 @@ export const JobsPage: React.FC = () => {
                 <span>
                   {syncStatus?.lastSyncedAt
                     ? `Last synced: ${syncStatus.hoursSinceSync}h ago · Auto-refreshes in ~${syncStatus.hoursUntilNextSync}h`
-                    : 'Auto-refreshes every 24 hours via Apify'}
+                    : 'Auto-refreshed every 24 hours across multi-source providers'}
                 </span>
               </p>
             </div>
@@ -156,10 +155,10 @@ export const JobsPage: React.FC = () => {
               onClick={() => loadJobs(true)}
               disabled={isRefreshing}
               className="btn-glass px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 cursor-pointer disabled:opacity-50 transition border border-white/10 hover:border-amber-400/40 text-slate-200 shrink-0"
-              title="Trigger Apify scraper to refresh catalog"
+              title="Trigger provider sync to refresh catalog"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-amber-400' : ''}`} />
-              <span>{isRefreshing ? 'Scraping Apify…' : 'Refresh Catalog (24h)'}</span>
+              <span>{isRefreshing ? 'Refreshing…' : 'Refresh Catalog (24h)'}</span>
             </button>
           </div>
         </div>
@@ -272,7 +271,7 @@ export const JobsPage: React.FC = () => {
 
         {/* Jobs List */}
         {isLoading ? (
-          <LoadingSpinner label="Extracting verified jobs from Apify & Cloud Firestore..." />
+          <LoadingSpinner label="Aggregating verified jobs from multi-channel providers & Cloud Firestore..." />
         ) : filteredJobs.length === 0 ? (
           <div className="liquid-glass rounded-2xl p-12 text-center text-slate-400 space-y-3">
             <Briefcase className="w-8 h-8 text-amber-400 mx-auto opacity-60" />

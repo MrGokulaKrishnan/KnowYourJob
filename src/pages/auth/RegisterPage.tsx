@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Mail, Lock, User as UserIcon, ArrowRight, AlertCircle } from 'lucide-react';
 import { getAuthErrorMessage } from '../../utils/authErrorMapper';
@@ -108,7 +108,7 @@ export const RegisterPage: React.FC = () => {
             <div className="w-full border-t border-white/10" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-[#0e131d] px-3 text-slate-400 font-mono tracking-wider">
+            <span className="bg-[#08080a] px-3 text-slate-400 font-mono tracking-wider">
               Or register details
             </span>
           </div>

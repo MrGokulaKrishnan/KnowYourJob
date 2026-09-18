@@ -21,6 +21,7 @@ import {
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { LiquidButton } from '../../components/ui/LiquidButton';
+import { UserAvatar } from '../../components/ui/UserAvatar';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../context/ToastContext';
 import { applicationService } from '../../services/firebase/applicationService';
@@ -108,7 +109,7 @@ export const DashboardOverviewPage: React.FC = () => {
     { label: 'Total Tracked', value: applications.length, icon: FileCheck2, change: '+2 this week' },
     { label: 'Avg Match Score', value: '92%', icon: Sparkles, change: 'Top 5% candidate' },
     { label: 'Interviews Pipeline', value: applications.filter(a => a.status === 'interview').length, icon: Briefcase, change: 'Active momentum' },
-    { label: '24h Catalog Engine', value: 'Apify Active', icon: Bot, change: 'LinkedIn & Naukri' },
+    { label: '24h Catalog Engine', value: 'Multi-Source', icon: Bot, change: 'LinkedIn & Naukri' },
   ];
 
   return (
@@ -121,17 +122,30 @@ export const DashboardOverviewPage: React.FC = () => {
         {/* 1. Welcome & Telemetry Header Banner */}
         <div className="relative overflow-hidden rounded-2xl liquid-glass-elevated p-6 sm:p-8 border border-amber-500/20">
           <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-3 shadow-[inset_0_1px_0_rgba(253,230,138,0.2)]">
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                <span>AI Autonomous Matching Active · Apify 24h Sync</span>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+              <Link to="/dashboard/profile" title="View Candidate Profile">
+                <UserAvatar
+                  user={user}
+                  userDoc={userDoc}
+                  size="2xl"
+                  roundedClassName="rounded-2xl"
+                  showGoogleBadge={true}
+                  border={true}
+                  className="hover:scale-105 transition-transform"
+                />
+              </Link>
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-2.5 shadow-[inset_0_1px_0_rgba(253,230,138,0.2)]">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  <span>AI Autonomous Matching Active · Multi-Source 24h Sync</span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                  {getGreeting()}, <span className="text-gradient-gold">{firstName}</span>.
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-300 mt-1.5 max-w-xl leading-relaxed">
+                  KnowYourJob is monitoring live engineering openings, computing ATS compatibility, and prepping verified applications directly linked to official job portals.
+                </p>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                {getGreeting()}, <span className="text-gradient-gold">{firstName}</span>.
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-300 mt-1.5 max-w-2xl leading-relaxed">
-                KnowYourJob is monitoring live engineering openings, computing ATS compatibility, and prepping verified applications directly linked to official job portals.
-              </p>
             </div>
 
             <div className="flex items-center gap-3 shrink-0">
@@ -412,7 +426,7 @@ export const DashboardOverviewPage: React.FC = () => {
                   <Search className="w-4 h-4 text-amber-400" />
                   <span>Live Verified Openings</span>
                 </h3>
-                <p className="text-xs text-slate-400 mt-0.5">Apify scraped & auto-refreshed in the last 24 hours</p>
+                <p className="text-xs text-slate-400 mt-0.5">Multi-source verified & auto-refreshed in the last 24 hours</p>
               </div>
               <Link to="/dashboard/jobs" className="text-xs text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1">
                 <span>Browse All</span>

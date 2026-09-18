@@ -1,9 +1,10 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Bell, Search, Menu } from 'lucide-react'
 import { useAuthStore } from '@/stores/authStore'
 import { useAppStore } from '@/stores/appStore'
 import { KYJLogo } from '@/components/ui/KYJLogo'
+import { UserAvatar } from '@/components/ui/UserAvatar'
 
 export function Topbar() {
   const [searchOpen, setSearchOpen] = useState(false)
@@ -94,11 +95,16 @@ export function Topbar() {
         {/* Avatar */}
         <button
           onClick={() => navigate('/settings')}
-          className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm cursor-pointer flex-shrink-0 hover:opacity-80 transition-opacity"
-          style={{ background: 'linear-gradient(135deg,#FFE45C,#FFD000)', color: '#050505' }}
+          className="cursor-pointer flex-shrink-0 hover:opacity-80 transition-opacity"
           aria-label="Account settings"
         >
-          {user?.displayName?.charAt(0)?.toUpperCase() ?? user?.email?.charAt(0)?.toUpperCase() ?? 'U'}
+          <UserAvatar
+            userDoc={user}
+            size="sm"
+            roundedClassName="rounded-lg"
+            showGoogleBadge={true}
+            border={true}
+          />
         </button>
       </div>
     </header>

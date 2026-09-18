@@ -33,6 +33,17 @@ service cloud.firestore {
       allow update: if isOwner(uid) &&
         !request.resource.data.diff(resource.data).affectedKeys().hasAny(['accountStatus', 'isAdmin', 'roles', 'subscriptionTier']);
       allow delete: if isOwner(uid);
+
+      // Subcollection: private vault (Encrypted credentials, API keys) - ZERO CLIENT ACCESS
+      match /private/{docId} {
+        allow read, write: if false; // Admin SDK / Cloud Functions only
+      }
+
+      // Subcollection: public integration metadata (safe masked status) - READ-ONLY for user
+      match /integrations/{provider} {
+        allow read: if isOwner(uid);
+        allow write: if false; // Only Cloud Functions can connect/disconnect/update status
+      }
     }
 
     // 2. Candidate Profiles: isolated per user
