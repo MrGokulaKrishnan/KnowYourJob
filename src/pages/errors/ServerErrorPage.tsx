@@ -26,11 +26,11 @@ export const ServerErrorPage: React.FC = () => {
             <ServerCrash size={32} />
           </div>
 
-          <span className="text-xs font-mono text-amber-400 tracking-widest uppercase block mb-1 font-bold">
+          <span className="text-xs font-mono text-gradient-sunset tracking-widest uppercase block mb-1 font-bold">
             System Error
           </span>
           <h1 className="text-3xl font-extrabold text-white">
-            500 Internal Error
+            500 <span className="text-gradient-sunset">Internal Error</span>
           </h1>
           <p className="text-xs text-neutral-400 mt-3 leading-relaxed">
             Our cloud application encountered an unexpected runtime fault. Our telemetry has logged the event and our engineers have been alerted.

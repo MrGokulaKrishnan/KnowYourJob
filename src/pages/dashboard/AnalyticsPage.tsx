@@ -22,7 +22,7 @@ export const AnalyticsPage: React.FC = () => {
 
           <div className="liquid-glass-interactive rounded-2xl p-6 border border-white/10 hover:border-amber-500/40 hover:shadow-[0_0_25px_rgba(245,158,11,0.18)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
             <div className="text-xs text-slate-400 uppercase tracking-wider font-medium">Average Match Accuracy</div>
-            <div className="text-3xl font-extrabold text-white mt-2 font-mono">89.2%</div>
+            <div className="text-3xl font-extrabold text-gradient-cyan mt-2 font-mono">89.2%</div>
             <div className="text-[11px] text-amber-400/90 mt-1 font-mono">
               Based on top 35 scraped job specifications
             </div>
@@ -30,7 +30,7 @@ export const AnalyticsPage: React.FC = () => {
 
           <div className="liquid-glass-interactive rounded-2xl p-6 border border-white/10 hover:border-amber-500/40 hover:shadow-[0_0_25px_rgba(245,158,11,0.18)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
             <div className="text-xs text-slate-400 uppercase tracking-wider font-medium">Response Latency</div>
-            <div className="text-3xl font-extrabold text-white mt-2 font-mono">3.8 Days</div>
+            <div className="text-3xl font-extrabold text-gradient-emerald mt-2 font-mono">3.8 Days</div>
             <div className="text-[11px] text-emerald-400 mt-1 font-medium">
               Recruiters contact fastest on remote roles
             </div>
@@ -42,7 +42,7 @@ export const AnalyticsPage: React.FC = () => {
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-amber-400" />
-              <span>Application Pipeline Funnel</span>
+              <span>Application Pipeline <span className="text-gradient-gold">Funnel</span></span>
             </h3>
             <span className="glossy-badge-gold">Live Telemetry</span>
           </div>
@@ -58,7 +58,7 @@ export const AnalyticsPage: React.FC = () => {
               <div key={idx} className="flex flex-col gap-1.5">
                 <div className="flex justify-between text-xs">
                   <span className="font-semibold text-slate-200">{f.stage}</span>
-                  <span className="font-mono text-amber-300 font-bold">{f.count} ({f.percentage}%)</span>
+                  <span className="font-mono text-gradient-gold font-bold">{f.count} ({f.percentage}%)</span>
                 </div>
                 <div className="w-full h-2.5 rounded-full bg-white/5 overflow-hidden border border-white/10">
                   <div className={`h-full ${f.color} rounded-full transition-all duration-700`} style={{ width: `${f.percentage}%` }} />

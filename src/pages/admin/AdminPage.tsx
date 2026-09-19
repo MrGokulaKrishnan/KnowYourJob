@@ -26,7 +26,7 @@ export default function AdminPage() {
             </div>
             <div>
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl sm:text-3xl font-black text-white">Admin Command Center</h1>
+                <h1 className="text-2xl sm:text-3xl font-black text-white">Admin <span className="text-gradient-gold">Command Center</span></h1>
                 <GlassBadge variant="yellow" dot>System Admin</GlassBadge>
               </div>
               <p className="text-neutral-400 text-sm mt-1">Platform operations, AI orchestrators, rate limiting, and integrity monitoring.</p>
@@ -52,6 +52,7 @@ export default function AdminPage() {
             subtext="+384 this week"
             trend={{ direction: 'up', value: '18%' }}
             icon={<Users size={20} className="text-amber-400" />}
+            gradient="gold"
           />
           <GlassMetric
             label="Active AI Job Matches"
@@ -59,6 +60,7 @@ export default function AdminPage() {
             subtext="Across 12 data providers"
             trend={{ direction: 'up', value: '24%' }}
             icon={<Briefcase size={20} className="text-amber-400" />}
+            gradient="cyan"
             highlight
           />
           <GlassMetric
@@ -67,12 +69,15 @@ export default function AdminPage() {
             subtext="Zero CAPTCHA bypasses"
             trend={{ direction: 'up', value: '12%' }}
             icon={<Send size={20} className="text-amber-400" />}
+            gradient="emerald"
           />
           <GlassMetric
             label="AI Token Invocations"
             value="1.42M"
             subtext="Gemini 2.0 Flash backend"
+            trend={{ direction: 'up', value: '31%' }}
             icon={<Bot size={20} className="text-amber-400" />}
+            gradient="purple"
           />
         </div>
 

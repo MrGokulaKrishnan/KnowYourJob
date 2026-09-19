@@ -26,11 +26,11 @@ export const MaintenancePage: React.FC = () => {
             <Wrench size={32} />
           </div>
 
-          <span className="text-xs font-mono text-amber-400 tracking-widest uppercase block mb-1 font-bold">
+          <span className="text-xs font-mono text-gradient-gold tracking-widest uppercase block mb-1 font-bold">
             System Upgrade in Progress
           </span>
           <h1 className="text-3xl font-extrabold text-white">
-            Under Maintenance
+            Under <span className="text-gradient-gold">Maintenance</span>
           </h1>
           <p className="text-xs text-neutral-400 mt-3 leading-relaxed">
             We are currently deploying database indexing optimizations and AI matching engine updates. Service will resume shortly.

@@ -135,7 +135,7 @@ export const SupportPage: React.FC = () => {
           <span>HELP CENTER & TECHNICAL SUPPORT</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-          How can we help you today?
+          How can we <span className="text-gradient-gold">help you</span> today?
         </h1>
         <p className="mt-4 text-sm sm:text-base text-neutral-400">
           Search candidate guides, technical documentation, or submit a direct inquiry to our engineering team.
@@ -187,7 +187,7 @@ export const SupportPage: React.FC = () => {
           <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 mb-4 shadow-[0_0_15px_rgba(244,63,94,0.2)]">
             <Bug size={24} />
           </div>
-          <h2 className="text-xl font-bold text-white">Found a technical bug?</h2>
+          <h2 className="text-xl font-bold text-white">Found a technical <span className="text-gradient-rose">bug</span>?</h2>
           <p className="text-xs text-neutral-400 mt-2 max-w-md leading-relaxed">
             If you've encountered a UI defect, an error, or a security issue, you can send a technical report directly to the developer. Telemetry is auto-attached to help fix it.
           </p>
@@ -205,7 +205,7 @@ export const SupportPage: React.FC = () => {
       <section className="max-w-3xl mx-auto px-6 py-6 w-full relative z-10">
         <div className="liquid-glass-elevated p-8 rounded-3xl border border-white/10 shadow-xl">
           <div className="text-center mb-6">
-            <h2 className="text-xl font-bold text-white">Can't find what you're looking for?</h2>
+            <h2 className="text-xl font-bold text-white">Can't find what you're <span className="text-gradient-cyan">looking for</span>?</h2>
             <p className="text-xs text-neutral-400 mt-1">
               Submit a support ticket and our developer team will get back to you promptly.
             </p>
@@ -214,7 +214,7 @@ export const SupportPage: React.FC = () => {
           {submitted ? (
             <div className="text-center py-8">
               <CheckCircle2 size={40} className="text-emerald-400 mx-auto mb-3" />
-              <h3 className="text-base font-semibold text-white">Ticket Submitted Successfully</h3>
+              <h3 className="text-base font-semibold text-white">Ticket Submitted <span className="text-gradient-emerald">Successfully</span></h3>
               <p className="text-xs text-neutral-400 mt-1">
                 We have received your message and sent a confirmation to {ticketEmail}.
               </p>

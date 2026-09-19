@@ -92,7 +92,7 @@ export const PreferencesPage: React.FC = () => {
           <div className="liquid-glass rounded-2xl p-6 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] flex flex-col gap-5">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <Sliders className="w-5 h-5 text-amber-400" />
-              <span>Target Role Types</span>
+              <span>Target Role <span className="text-gradient-gold">Types</span></span>
             </h3>
 
             <div className="flex gap-2">
@@ -187,7 +187,7 @@ export const PreferencesPage: React.FC = () => {
                   Minimum Expected Salary (INR / LPA)
                 </label>
                 <span className="glossy-badge-gold">
-                  ₹{(Number(minimumSalary) / 100000).toFixed(1)} LPA
+                  <span className="text-gradient-gold font-bold">₹{(Number(minimumSalary) / 100000).toFixed(1)} LPA</span>
                 </span>
               </div>
               <div className="relative">

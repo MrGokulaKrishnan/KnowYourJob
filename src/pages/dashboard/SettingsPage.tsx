@@ -192,7 +192,7 @@ export const SettingsPage: React.FC = () => {
         <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-4">
           <h3 className="text-base font-bold text-white flex items-center gap-2">
             <Bug className="w-5 h-5 text-rose-400" />
-            <span>Support & Developer Contact</span>
+            <span>Support & <span className="text-gradient-rose">Developer Contact</span></span>
           </h3>
 
           <p className="text-xs text-slate-400">
@@ -220,7 +220,7 @@ export const SettingsPage: React.FC = () => {
         <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-4">
           <h3 className="text-base font-bold text-white flex items-center gap-2">
             <KeyRound className="w-5 h-5 text-amber-400" />
-            <span>Password & Authentication Security</span>
+            <span>Password & <span className="text-gradient-gold">Authentication Security</span></span>
           </h3>
 
           <p className="text-xs text-slate-400">

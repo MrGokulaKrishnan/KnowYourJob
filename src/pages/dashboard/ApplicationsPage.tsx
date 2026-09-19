@@ -99,7 +99,7 @@ export const ApplicationsPage: React.FC = () => {
             ))}
           </div>
 
-          <div className="text-xs text-amber-400/90 font-mono font-medium">
+          <div className="text-xs text-gradient-gold font-mono font-bold">
             {applications.length} applications tracked
           </div>
         </div>
@@ -124,7 +124,7 @@ export const ApplicationsPage: React.FC = () => {
                   <div className="flex items-center gap-2.5 flex-wrap">
                     <span className="text-base font-bold text-white tracking-tight">{app.jobTitle}</span>
                     <span className="glossy-badge-gold text-[10px]">
-                      Match: {app.matchScore}%
+                      <span className="text-gradient-gold font-bold">Match: {app.matchScore}%</span>
                     </span>
                   </div>
                   <p className="text-xs text-slate-300 mt-1 font-medium">{app.company} {app.location ? `• ${app.location}` : ''}</p>

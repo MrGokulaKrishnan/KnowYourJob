@@ -362,7 +362,7 @@ export const SeoJobCategoryPage: React.FC = () => {
               <span>VERIFIED AI JOB PORTAL</span>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
-              {config.title}
+              <span className="text-gradient-gold">{config.title}</span>
             </h1>
             <p className="mt-4 text-sm sm:text-base text-neutral-300 leading-relaxed">
               {config.summary}
@@ -372,15 +372,15 @@ export const SeoJobCategoryPage: React.FC = () => {
             <div className="mt-6 liquid-glass px-5 py-3 rounded-2xl border border-white/10 inline-flex flex-wrap gap-6 text-xs text-neutral-300 font-mono shadow-sm">
               <div className="flex items-center gap-2">
                 <TrendingUp size={16} className="text-amber-400" />
-                <span>Benchmark: <strong className="text-white">{config.salaryBenchmarkINR}</strong></span>
+                <span>Benchmark: <strong className="text-gradient-emerald font-bold">{config.salaryBenchmarkINR}</strong></span>
               </div>
               <div className="flex items-center gap-2">
                 <Briefcase size={16} className="text-amber-400" />
-                <span>Exp: <strong className="text-white">{config.experienceLevel}</strong></span>
+                <span>Exp: <strong className="text-gradient-cyan font-bold">{config.experienceLevel}</strong></span>
               </div>
               <div className="flex items-center gap-2">
                 <ShieldCheck size={16} className="text-emerald-400" />
-                <span>Active Roles: <strong className="text-white">{matchedJobs.length} Available</strong></span>
+                <span>Active Roles: <strong className="text-gradient-gold font-bold">{matchedJobs.length} Available</strong></span>
               </div>
             </div>
           </div>
@@ -496,7 +496,7 @@ export const SeoJobCategoryPage: React.FC = () => {
               <span>FREQUENTLY ASKED QUESTIONS</span>
             </div>
             <h3 className="text-2xl font-bold text-white mb-6">
-              Insights & Advice: {config.title.split('(')[0]}
+              Insights & Advice: <span className="text-gradient-gold">{config.title.split('(')[0]}</span>
             </h3>
             <div className="space-y-4">
               {config.faqs.map((faq, index) => (

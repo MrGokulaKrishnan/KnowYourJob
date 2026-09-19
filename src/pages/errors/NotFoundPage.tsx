@@ -26,11 +26,11 @@ export const NotFoundPage: React.FC = () => {
             <Compass size={32} />
           </div>
 
-          <span className="text-xs font-mono text-amber-400 tracking-widest uppercase block mb-1 font-bold">
+          <span className="text-xs font-mono text-gradient-gold tracking-widest uppercase block mb-1 font-bold">
             Error 404
           </span>
           <h1 className="text-3xl font-extrabold text-white">
-            Page Not Found
+            Page <span className="text-gradient-gold">Not Found</span>
           </h1>
           <p className="text-xs text-neutral-400 mt-3 leading-relaxed">
             The page or job listing you are looking for may have expired, been relocated, or never existed.

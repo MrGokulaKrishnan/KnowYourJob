@@ -99,15 +99,16 @@ export const LandingPage: React.FC = () => {
       {/* Hero Section */}
       <section className="relative z-10 px-6 pt-20 pb-16 sm:pt-28 sm:pb-24 max-w-5xl mx-auto text-center flex flex-col items-center">
         {/* Release tag */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-6 shadow-[0_0_20px_rgba(245,158,11,0.15)]">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>AI-POWERED AUTONOMOUS CAREER PLATFORM</span>
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-mono mb-6 shadow-[0_0_20px_rgba(245,158,11,0.15)]">
+          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+          <span className="text-gradient-gold font-bold">AI-POWERED AUTONOMOUS CAREER PLATFORM</span>
         </div>
 
         {/* Hero title */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-[1.1]">
-          Find Smarter. <br />
-          <span className="text-gradient-gold">Apply Faster.</span>
+          <span className="text-gradient-silver">Find Smarter.</span>{' '}
+          <span className="text-gradient-cyan">Match Better.</span>{' '}
+          <span className="text-gradient-gold block">Apply Faster.</span>
         </h1>
 
         <p className="mt-6 text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed">
@@ -154,7 +155,7 @@ export const LandingPage: React.FC = () => {
               <span>MARKET DEMAND IN 2026</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-              Top AI Specializations & Salary Benchmarks
+              Top AI Specializations & <span className="text-gradient-gold">Salary Benchmarks</span>
             </h2>
           </div>
           <Link to="/jobs" className="text-xs text-amber-400 hover:underline flex items-center gap-1">
@@ -174,7 +175,7 @@ export const LandingPage: React.FC = () => {
                   <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
                     {cat.count}
                   </span>
-                  <span className="text-xs font-mono text-emerald-400">
+                  <span className="text-xs font-mono text-gradient-emerald font-bold">
                     {cat.salary}
                   </span>
                 </div>
@@ -195,7 +196,7 @@ export const LandingPage: React.FC = () => {
       <section className="relative z-10 px-6 py-16 max-w-7xl mx-auto w-full">
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Engineered to Accelerate Your Career
+            Engineered to <span className="text-gradient-gold">Accelerate Your Career</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-400 mt-2">
             AI precision matching, real-time ATS optimization, and autonomous application workflows.
@@ -206,15 +207,15 @@ export const LandingPage: React.FC = () => {
           {/* Card 1 */}
           <div className="liquid-glass-elevated rounded-2xl p-7 border border-white/5 flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-5">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-5 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
                 <Sparkles className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white">Instant AI Profile Extraction</h3>
+              <h3 className="text-lg font-bold text-white">Instant <span className="text-gradient-gold">AI Profile Extraction</span></h3>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
                 Upload your resume in PDF or DOCX format. Gemini AI extracts your verified experience, technical skills, and career timeline in seconds.
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-white/5 text-xs text-amber-400 font-mono">
+            <div className="mt-6 pt-4 border-t border-white/5 text-xs text-gradient-gold font-mono font-semibold">
               Gemini 3.6 Flash Powered
             </div>
           </div>
@@ -222,15 +223,15 @@ export const LandingPage: React.FC = () => {
           {/* Card 2 */}
           <div className="liquid-glass-elevated rounded-2xl p-7 border border-white/5 flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-5">
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-5 shadow-[0_0_20px_rgba(6,182,212,0.2)]">
                 <Search className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white">Precision ATS Match Engine</h3>
+              <h3 className="text-lg font-bold text-white">Precision <span className="text-gradient-cyan">ATS Match Engine</span></h3>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
                 Compare your background against verified engineering openings. Identify skill gaps, calculate compatibility scores, and discover high-probability roles.
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-white/5 text-xs text-amber-400 font-mono">
+            <div className="mt-6 pt-4 border-t border-white/5 text-xs text-gradient-cyan font-mono font-semibold">
               Semantic Match Scoring
             </div>
           </div>
@@ -238,15 +239,15 @@ export const LandingPage: React.FC = () => {
           {/* Card 3 */}
           <div className="liquid-glass-elevated rounded-2xl p-7 border border-white/5 flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-5">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-5 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
                 <Bot className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-bold text-white">Autonomous Application Suite</h3>
+              <h3 className="text-lg font-bold text-white">Autonomous <span className="text-gradient-emerald">Application Suite</span></h3>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
                 Tailor applications, generate customized cover letters, and track your pipeline across every stage with complete user oversight and safety.
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-white/5 text-xs text-amber-400 font-mono">
+            <div className="mt-6 pt-4 border-t border-white/5 text-xs text-gradient-emerald font-mono font-semibold">
               User-Controlled Automation
             </div>
           </div>
@@ -272,7 +273,7 @@ export const LandingPage: React.FC = () => {
 
           {/* Col 2 */}
           <div>
-            <h4 className="text-white font-semibold uppercase tracking-wider font-mono mb-3">
+            <h4 className="text-gradient-gold font-bold uppercase tracking-wider font-mono mb-3">
               AI Job Portals
             </h4>
             <ul className="space-y-2 text-slate-400">
@@ -287,7 +288,7 @@ export const LandingPage: React.FC = () => {
 
           {/* Col 3 */}
           <div>
-            <h4 className="text-white font-semibold uppercase tracking-wider font-mono mb-3">
+            <h4 className="text-gradient-cyan font-bold uppercase tracking-wider font-mono mb-3">
               Governance & Legal
             </h4>
             <ul className="space-y-2 text-slate-400">
@@ -303,7 +304,7 @@ export const LandingPage: React.FC = () => {
 
           {/* Col 4 */}
           <div>
-            <h4 className="text-white font-semibold uppercase tracking-wider font-mono mb-3">
+            <h4 className="text-gradient-emerald font-bold uppercase tracking-wider font-mono mb-3">
               Support & Lifecycle
             </h4>
             <ul className="space-y-2 text-slate-400">

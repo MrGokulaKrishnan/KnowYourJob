@@ -384,8 +384,8 @@ export default function JobDetailPage() {
                     <Clock size={16} className="text-neutral-400" /> {new Date(job.postedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </span>
                   {salaryDisplay && (
-                    <span className="flex items-center gap-1.5 glossy-badge-gold font-medium px-3 py-1 rounded-full text-xs">
-                      {salaryDisplay}
+                    <span className="flex items-center gap-1.5 glossy-badge-emerald font-bold px-3 py-1 rounded-full text-xs">
+                      <span className="text-gradient-emerald">{salaryDisplay}</span>
                     </span>
                   )}
                 </div>
@@ -462,7 +462,7 @@ export default function JobDetailPage() {
                   <section className="liquid-glass p-6 rounded-2xl border border-white/10">
                     <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
-                      About the Role
+                      About the <span className="text-gradient-gold">Role</span>
                     </h3>
                     <p className="whitespace-pre-wrap text-neutral-300 text-sm leading-relaxed">{job.description || 'No description provided.'}</p>
                   </section>
@@ -471,7 +471,7 @@ export default function JobDetailPage() {
                     <section className="liquid-glass p-6 rounded-2xl border border-white/10">
                       <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
-                        Responsibilities
+                        Key <span className="text-gradient-cyan">Responsibilities</span>
                       </h3>
                       <ul className="space-y-2.5 text-sm">
                         {job.responsibilities.map((r, i) => (
@@ -487,7 +487,7 @@ export default function JobDetailPage() {
                   <section className="liquid-glass p-6 rounded-2xl border border-white/10">
                     <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
-                      Requirements
+                      Candidate <span className="text-gradient-emerald">Requirements</span>
                     </h3>
                     <ul className="space-y-2.5 text-sm">
                       {job.requirements.map((r, i) => (
@@ -502,7 +502,7 @@ export default function JobDetailPage() {
                   <section className="liquid-glass p-6 rounded-2xl border border-white/10">
                     <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
-                      Required Skills
+                      Technical <span className="text-gradient-gold">Skill Stack</span>
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {job.skills.map((skill, i) => (

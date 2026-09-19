@@ -412,7 +412,7 @@ export const LegalPage: React.FC<{ defaultDoc?: LegalDocType }> = ({ defaultDoc 
                   <span className="text-xs font-mono text-amber-400 uppercase tracking-widest block mb-1 font-bold">
                     {currentDoc.category}
                   </span>
-                  <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+                  <h1 className="text-2xl sm:text-3xl font-extrabold text-white text-gradient-gold">
                     {currentDoc.title}
                   </h1>
                   <span className="text-xs text-neutral-400 mt-1 block">

@@ -109,7 +109,7 @@ export const AutomationPage: React.FC = () => {
           <div className="liquid-glass rounded-2xl p-6 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] flex flex-col gap-6">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <Sliders className="w-5 h-5 text-amber-400" />
-              <span>Safety Controls & Execution Mode</span>
+              <span>Safety Controls & <span className="text-gradient-gold">Execution Mode</span></span>
             </h3>
 
             {/* Mode selection */}
@@ -139,7 +139,7 @@ export const AutomationPage: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex justify-between text-xs font-medium uppercase text-slate-300">
                   <span>Daily Cap Limit</span>
-                  <span className="text-amber-400 font-bold font-mono">{dailyLimit} apps / day</span>
+                  <span className="text-gradient-emerald font-bold font-mono">{dailyLimit} apps / day</span>
                 </div>
                 <input
                   type="range"
@@ -155,7 +155,7 @@ export const AutomationPage: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex justify-between text-xs font-medium uppercase text-slate-300">
                   <span>Minimum Match Threshold</span>
-                  <span className="text-amber-400 font-bold font-mono">{minimumMatchScore}% match</span>
+                  <span className="text-gradient-cyan font-bold font-mono">{minimumMatchScore}% match</span>
                 </div>
                 <input
                   type="range"

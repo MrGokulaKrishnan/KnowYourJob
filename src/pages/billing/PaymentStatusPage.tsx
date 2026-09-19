@@ -28,7 +28,7 @@ export const PaymentStatusPage: React.FC = () => {
           {status === 'success' && (
             <div>
               <CheckCircle2 size={52} className="text-emerald-400 mx-auto mb-4 drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]" />
-              <h1 className="text-2xl font-bold text-white">Payment Confirmed!</h1>
+              <h1 className="text-2xl font-bold text-white">Payment <span className="text-gradient-emerald">Confirmed!</span></h1>
               <p className="text-xs text-neutral-400 mt-2 leading-relaxed">
                 Thank you for upgrading your KnowYourJob account. Your Pro quota has been activated and your invoice has been sent to your registered email.
               </p>
@@ -44,7 +44,7 @@ export const PaymentStatusPage: React.FC = () => {
           {status === 'failed' && (
             <div>
               <XCircle size={52} className="text-rose-400 mx-auto mb-4 drop-shadow-[0_0_15px_rgba(244,63,94,0.4)]" />
-              <h1 className="text-2xl font-bold text-white">Payment Incomplete</h1>
+              <h1 className="text-2xl font-bold text-white">Payment <span className="text-gradient-rose">Incomplete</span></h1>
               <p className="text-xs text-neutral-400 mt-2 leading-relaxed">
                 Your bank or payment gateway did not complete the transaction. No funds were debited. You may retry with another card or UPI option.
               </p>
@@ -68,7 +68,7 @@ export const PaymentStatusPage: React.FC = () => {
           {status === 'pending' && (
             <div>
               <Clock size={52} className="text-amber-400 mx-auto mb-4 animate-pulse drop-shadow-[0_0_15px_rgba(245,158,11,0.4)]" />
-              <h1 className="text-2xl font-bold text-white">Payment Processing</h1>
+              <h1 className="text-2xl font-bold text-white">Payment <span className="text-gradient-gold">Processing</span></h1>
               <p className="text-xs text-neutral-400 mt-2 leading-relaxed">
                 Your payment is currently being confirmed by your banking institution. Once confirmed, your subscription will update automatically.
               </p>

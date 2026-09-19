@@ -321,21 +321,90 @@
 
   .text-gradient,
   .text-gradient-gold {
-    background: linear-gradient(135deg, #ffffff 0%, #fde68a 35%, #fbbf24 70%, #f59e0b 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #fde68a 30%, #fbbf24 65%, #f59e0b 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
   }
 
-  .text-gradient-silver {
-    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 60%, #94a3b8 100%);
+  .text-gradient-amber {
+    background: linear-gradient(135deg, #fffbeb 0%, #fcd34d 35%, #f59e0b 70%, #d97706 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
   }
 
-  .text-gradient-cyan {
-    background: linear-gradient(135deg, #f0f9ff 0%, #7dd3fc 45%, #38bdf8 80%, #0284c7 100%);
+  .text-gradient-sunset {
+    background: linear-gradient(135deg, #ffffff 0%, #fed7aa 25%, #fb923c 55%, #f97316 75%, #e11d48 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-emerald,
+  .text-gradient-green {
+    background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 30%, #34d399 65%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-cyan,
+  .text-gradient-blue,
+  .text-gradient-sky {
+    background: linear-gradient(135deg, #ffffff 0%, #bae6fd 30%, #38bdf8 65%, #0284c7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-purple,
+  .text-gradient-violet {
+    background: linear-gradient(135deg, #ffffff 0%, #f3e8ff 25%, #c084fc 60%, #9333ea 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-rose,
+  .text-gradient-pink {
+    background: linear-gradient(135deg, #ffffff 0%, #ffe4e6 25%, #fb7185 60%, #e11d48 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-silver,
+  .text-gradient-chrome {
+    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 35%, #cbd5e1 65%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-aurora,
+  .text-gradient-rainbow {
+    background: linear-gradient(135deg, #34d399 0%, #38bdf8 35%, #a855f7 70%, #fbbf24 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-fire {
+    background: linear-gradient(135deg, #ffffff 0%, #fef08a 25%, #f59e0b 55%, #ef4444 85%, #dc2626 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
   }
 
   /* ── 6. Iconic Containers & Ambient Presets ─────────────────────── */

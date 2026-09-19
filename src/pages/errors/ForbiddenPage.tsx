@@ -26,11 +26,11 @@ export const ForbiddenPage: React.FC = () => {
             <ShieldAlert size={32} />
           </div>
 
-          <span className="text-xs font-mono text-rose-400 tracking-widest uppercase block mb-1 font-bold">
+          <span className="text-xs font-mono text-gradient-rose tracking-widest uppercase block mb-1 font-bold">
             Access Denied
           </span>
           <h1 className="text-3xl font-extrabold text-white">
-            403 Forbidden
+            403 <span className="text-gradient-rose">Forbidden</span>
           </h1>
           <p className="text-xs text-neutral-400 mt-3 leading-relaxed">
             You do not possess the required administrator privileges or role permissions to access this protected area.

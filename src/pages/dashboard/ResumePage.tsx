@@ -139,7 +139,7 @@ export const ResumePage: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-base font-bold text-white">Upload Your Resume</h3>
+            <h3 className="text-base font-bold text-white">Upload Your <span className="text-gradient-gold">Resume</span></h3>
             <p className="text-xs text-slate-400 mt-1 max-w-sm">
               Supports PDF, DOCX (Max 10MB). AI extracts skills and calculates ATS compatibility score.
             </p>
@@ -225,8 +225,8 @@ export const ResumePage: React.FC = () => {
                       <div className="text-right mr-2">
                         <div className="text-[10px] text-slate-400">ATS</div>
                         <div className={`text-base font-bold font-mono ${
-                          res.atsScore >= 80 ? 'text-emerald-400' :
-                          res.atsScore >= 60 ? 'text-amber-400' : 'text-red-400'
+                          res.atsScore >= 80 ? 'text-gradient-emerald' :
+                          res.atsScore >= 60 ? 'text-gradient-gold' : 'text-gradient-sunset'
                         }`}>
                           {res.atsScore}%
                         </div>

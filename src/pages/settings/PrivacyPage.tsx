@@ -70,7 +70,7 @@ export default function PrivacyPage() {
             <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
               <Lock size={20} />
             </div>
-            <h3 className="font-bold text-white text-base">Private Document Vault</h3>
+            <h3 className="font-bold text-white text-base">Private Document <span className="text-gradient-gold">Vault</span></h3>
             <p className="text-xs text-neutral-400 leading-relaxed">
               Your resume files are stored in user-isolated Firebase Storage paths with strict token authentication. No other user or unauthorized process can ever read your uploaded documents.
             </p>
@@ -80,7 +80,7 @@ export default function PrivacyPage() {
             <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
               <Bot size={20} />
             </div>
-            <h3 className="font-bold text-white text-base">Zero AI Retention Model</h3>
+            <h3 className="font-bold text-white text-base">Zero AI Retention <span className="text-gradient-cyan">Model</span></h3>
             <p className="text-xs text-neutral-400 leading-relaxed">
               Resume text sent to Google Gemini Cloud Functions is processed strictly in-memory. Your personal information is never used to train public foundation models.
             </p>
@@ -90,7 +90,7 @@ export default function PrivacyPage() {
             <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
               <EyeOff size={20} />
             </div>
-            <h3 className="font-bold text-white text-base">Full User Ownership</h3>
+            <h3 className="font-bold text-white text-base">Full User <span className="text-gradient-emerald">Ownership</span></h3>
             <p className="text-xs text-neutral-400 leading-relaxed">
               You own every piece of your data. You can export your full profile, download all versions of your tailored resumes, or trigger complete data erasure with a single click.
             </p>
@@ -101,7 +101,7 @@ export default function PrivacyPage() {
         <div className="liquid-glass p-6 sm:p-8 rounded-3xl border border-white/10 backdrop-blur-xl shadow-xl space-y-6">
           <h3 className="text-lg font-bold text-white flex items-center gap-2">
             <Shield className="w-5 h-5 text-amber-400" />
-            <span>How We Secure Your Job Search</span>
+            <span>How We <span className="text-gradient-gold">Secure Your Job Search</span></span>
           </h3>
           
           <div className="space-y-4">

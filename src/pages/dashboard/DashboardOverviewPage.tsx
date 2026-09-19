@@ -256,6 +256,13 @@ export const DashboardOverviewPage: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((s, idx) => {
             const Icon = s.icon;
+            const gradientColors = [
+              'text-gradient-gold',
+              'text-gradient-cyan',
+              'text-gradient-emerald',
+              'text-gradient-purple'
+            ];
+            const textGradient = gradientColors[idx % gradientColors.length];
             return (
               <div key={idx} className="liquid-glass-interactive rounded-2xl p-5 border border-white/10 hover:border-amber-500/40 hover:shadow-[0_0_25px_rgba(245,158,11,0.18)] flex flex-col justify-between">
                 <div className="flex items-center justify-between">
@@ -265,7 +272,7 @@ export const DashboardOverviewPage: React.FC = () => {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <div className="text-2xl font-bold text-white tracking-tight">{s.value}</div>
+                  <div className={`text-2xl font-bold font-mono tracking-tight ${textGradient}`}>{s.value}</div>
                   <div className="text-[11px] text-amber-400/90 mt-1 font-mono flex items-center gap-1">
                     <span>{s.change}</span>
                   </div>
@@ -283,7 +290,7 @@ export const DashboardOverviewPage: React.FC = () => {
               <div>
                 <h3 className="text-base font-bold text-white flex items-center gap-2">
                   <TrendingUp className="w-4 h-4 text-amber-400" />
-                  <span>Application & Discovery Velocity</span>
+                  <span>Application & Discovery <span className="text-gradient-gold">Velocity</span></span>
                 </h3>
                 <p className="text-xs text-slate-400 mt-0.5">Scraped listings aligned with your verified skillset this week</p>
               </div>

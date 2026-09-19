@@ -1,4 +1,4 @@
-﻿import { clsx } from 'clsx'
+import { clsx } from 'clsx'
 import type { ReactNode } from 'react'
 
 interface GlassMetricProps {
@@ -8,10 +8,17 @@ interface GlassMetricProps {
   icon?: ReactNode
   trend?: { direction: 'up' | 'down' | 'neutral'; value: string }
   highlight?: boolean
+  gradient?: 'gold' | 'cyan' | 'emerald' | 'purple' | 'sunset' | 'silver'
   className?: string
 }
 
-export function GlassMetric({ label, value, subtext, icon, trend, highlight, className }: GlassMetricProps) {
+export function GlassMetric({ label, value, subtext, icon, trend, highlight, gradient, className }: GlassMetricProps) {
+  const gradientClass = gradient
+    ? `text-gradient-${gradient}`
+    : highlight
+      ? 'text-gradient-gold'
+      : 'text-gradient-gold';
+
   return (
     <div
       className={clsx(
@@ -21,14 +28,14 @@ export function GlassMetric({ label, value, subtext, icon, trend, highlight, cla
       )}
     >
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#777' }}>{label}</span>
+        <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">{label}</span>
         {icon && <span className="opacity-60">{icon}</span>}
       </div>
       <div className="flex items-end gap-2">
         <span
           className={clsx(
-            'text-3xl font-black leading-none',
-            highlight ? 'text-gradient' : 'text-white'
+            'text-3xl font-black leading-none font-mono',
+            gradientClass
           )}
         >
           {value}
