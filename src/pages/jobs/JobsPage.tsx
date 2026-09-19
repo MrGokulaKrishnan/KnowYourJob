@@ -116,18 +116,19 @@ export default function JobsPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 h-full flex flex-col gap-6">
 
       {/* Verified Catalog Status Banner */}
-      <div className="glass p-5 rounded-2xl border border-yellow-400/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center text-yellow-400 shrink-0">
+      <div className="liquid-glass-elevated p-5 rounded-2xl border border-amber-500/30 backdrop-blur-2xl shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="flex items-center gap-3 relative z-10">
+          <div className="w-12 h-12 rounded-xl bg-amber-400/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 shadow-lg shadow-amber-500/10">
             <Sparkles size={24} />
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-lg font-bold text-white">Verified Job Catalog</h1>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+              <h1 className="text-lg font-bold text-white text-gradient-gold">Verified Job Catalog</h1>
+              <span className="glossy-badge-emerald text-[10px] font-bold">
                 24h Auto-Refresh
               </span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#0A66C2]/20 text-[#388bfd] border border-[#0A66C2]/40">
+              <span className="glossy-badge-blue text-[10px] font-bold">
                 Multi-Source Active
               </span>
             </div>
@@ -139,12 +140,12 @@ export default function JobsPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2.5 w-full md:w-auto justify-end">
+        <div className="flex items-center gap-2.5 w-full md:w-auto justify-end relative z-10">
           <button
             onClick={() => setIsPostModalOpen(true)}
             className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-lg transition active:scale-95 shrink-0 ${
               isAuthorizedJobPoster(user?.email, (user as any)?.role)
-                ? 'bg-amber-400 text-black hover:bg-amber-300 shadow-amber-400/20'
+                ? 'btn-yellow-gradient shadow-amber-400/20'
                 : 'bg-white/10 text-amber-300 hover:bg-white/15 border border-amber-500/30'
             }`}
             title={isAuthorizedJobPoster(user?.email, (user as any)?.role) ? "Post a verified job vacancy" : "Official recruiter email required"}
@@ -160,10 +161,10 @@ export default function JobsPage() {
           <button
             onClick={() => fetchJobs(true)}
             disabled={isRefreshing}
-            className="btn-glass text-xs py-2 px-4 flex items-center gap-2 disabled:opacity-50 shrink-0"
+            className="btn-glass text-xs py-2 px-4 flex items-center gap-2 disabled:opacity-50 shrink-0 border border-white/10 hover:border-amber-500/30 transition-all cursor-pointer"
             title="Refresh verified job catalog from multi-channel providers"
           >
-            <span className={`w-3.5 h-3.5 border-2 border-yellow-400 border-t-transparent rounded-full ${isRefreshing ? 'animate-spin' : ''}`} />
+            <span className={`w-3.5 h-3.5 border-2 border-amber-400 border-t-transparent rounded-full ${isRefreshing ? 'animate-spin' : ''}`} />
             <span>{isRefreshing ? 'Refreshing…' : 'Refresh Catalog'}</span>
           </button>
         </div>

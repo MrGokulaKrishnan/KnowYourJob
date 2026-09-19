@@ -76,8 +76,8 @@ export const LandingPage: React.FC = () => {
             ) : (
               <>
                 <Link to="/jobs" className="hidden sm:inline-block">
-                  <LiquidButton variant="glass" className="text-xs py-2 px-3.5">
-                    Browse Jobs
+                  <LiquidButton variant="glass" className="text-xs py-2 px-3.5 flex items-center gap-1.5" leftIcon={<Search size={13} className="text-amber-400" />}>
+                    All Jobs
                   </LiquidButton>
                 </Link>
                 <Link to="/auth/login">
@@ -86,7 +86,7 @@ export const LandingPage: React.FC = () => {
                   </LiquidButton>
                 </Link>
                 <Link to="/auth/register" className="hidden sm:inline-block">
-                  <LiquidButton variant="yellow" className="text-xs py-2 px-3.5" rightIcon={<ChevronRight className="w-4 h-4" />}>
+                  <LiquidButton variant="yellow" className="text-xs py-2 px-3.5 font-bold shadow-[0_0_20px_rgba(245,158,11,0.35)]" rightIcon={<ChevronRight className="w-4 h-4" />}>
                     Get Started
                   </LiquidButton>
                 </Link>

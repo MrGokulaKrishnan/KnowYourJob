@@ -120,7 +120,7 @@ export const DashboardOverviewPage: React.FC = () => {
       <div className="flex flex-col gap-6">
 
         {/* 1. Welcome & Telemetry Header Banner */}
-        <div className="relative overflow-hidden rounded-2xl liquid-glass-elevated p-6 sm:p-8 border border-amber-500/20">
+        <div className="relative overflow-hidden rounded-2xl liquid-glass-elevated p-6 sm:p-8 border border-amber-500/30 shadow-[0_0_35px_rgba(245,158,11,0.14),inset_0_1px_1px_rgba(255,255,255,0.22)]">
           <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
               <Link to="/dashboard/profile" title="View Candidate Profile">
@@ -135,7 +135,7 @@ export const DashboardOverviewPage: React.FC = () => {
                 />
               </Link>
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono mb-2.5 shadow-[inset_0_1px_0_rgba(253,230,138,0.2)]">
+                <div className="glossy-badge-gold mb-2.5">
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                   <span>AI Autonomous Matching Active · Multi-Source 24h Sync</span>
                 </div>
@@ -175,7 +175,7 @@ export const DashboardOverviewPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Step 1 */}
-            <div className="liquid-glass-interactive rounded-2xl p-5 border border-white/8 flex flex-col justify-between group">
+            <div className="liquid-glass-interactive rounded-2xl p-5 border border-white/10 hover:border-amber-500/40 hover:shadow-[0_0_25px_rgba(245,158,11,0.18)] flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-300 border border-amber-500/30">
@@ -199,13 +199,13 @@ export const DashboardOverviewPage: React.FC = () => {
             </div>
 
             {/* Step 2 */}
-            <div className="liquid-glass-interactive rounded-2xl p-5 border border-white/8 flex flex-col justify-between group">
+            <div className="liquid-glass-interactive rounded-2xl p-5 border border-white/10 hover:border-amber-500/40 hover:shadow-[0_0_25px_rgba(245,158,11,0.18)] flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-300 border border-amber-500/30">
                     Step 02
                   </span>
-                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                  <span className="glossy-badge-emerald text-[10px]">
                     Role Targeting
                   </span>
                 </div>
@@ -225,13 +225,13 @@ export const DashboardOverviewPage: React.FC = () => {
             </div>
 
             {/* Step 3 */}
-            <div className="liquid-glass-interactive rounded-2xl p-5 border border-white/8 flex flex-col justify-between group">
+            <div className="liquid-glass-interactive rounded-2xl p-5 border border-white/10 hover:border-amber-500/40 hover:shadow-[0_0_25px_rgba(245,158,11,0.18)] flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-300 border border-amber-500/30">
                     Step 03
                   </span>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20">
+                  <span className="glossy-badge-blue text-[10px]">
                     <Check className="w-2.5 h-2.5" /> 24h Verified
                   </span>
                 </div>
@@ -257,10 +257,10 @@ export const DashboardOverviewPage: React.FC = () => {
           {stats.map((s, idx) => {
             const Icon = s.icon;
             return (
-              <div key={idx} className="liquid-glass-interactive rounded-2xl p-5 border border-white/8 flex flex-col justify-between">
+              <div key={idx} className="liquid-glass-interactive rounded-2xl p-5 border border-white/10 hover:border-amber-500/40 hover:shadow-[0_0_25px_rgba(245,158,11,0.18)] flex flex-col justify-between">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-400 uppercase tracking-wider font-medium">{s.label}</span>
-                  <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-[inset_0_1px_0_rgba(253,230,138,0.2)]">
+                  <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 shadow-[inset_0_1px_0_rgba(253,230,138,0.25),0_0_15px_rgba(245,158,11,0.15)]">
                     <Icon className="w-4 h-4" />
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
 import { Plus, Building, MapPin, DollarSign, Calendar, MoreVertical } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -35,13 +35,18 @@ export default function ApplicationsPage() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-[#050505] text-white">
-      <div className="flex items-center justify-between p-6 shrink-0 border-b border-white/5">
+    <div className="h-screen flex flex-col bg-[#000000] text-white relative overflow-hidden selection:bg-amber-400 selection:text-black">
+      {/* Ambient Glow Orbs matching Homepage */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[850px] h-[360px] bg-gradient-to-b from-amber-500/15 via-yellow-500/5 to-transparent blur-[140px] pointer-events-none z-0" />
+      <div className="fixed top-1/3 -right-48 w-96 h-96 bg-amber-600/10 blur-[130px] pointer-events-none z-0" />
+      <div className="fixed bottom-10 -left-48 w-96 h-96 bg-yellow-500/10 blur-[140px] pointer-events-none z-0" />
+
+      <div className="flex items-center justify-between p-6 shrink-0 border-b border-white/10 relative z-10 bg-[#000000]/60 backdrop-blur-xl">
         <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-bold text-gradient">Applications</h1>
-          <span className="bg-yellow-400/10 text-yellow-400 px-3 py-1 rounded-full text-sm font-bold border border-yellow-400/20">{applications.length}</span>
+          <h1 className="text-2xl font-bold text-gradient-gold">Applications</h1>
+          <span className="glossy-badge-gold text-xs font-mono">{applications.length}</span>
         </div>
-        <button className="btn-primary flex items-center gap-2 px-4 py-2 text-sm">
+        <button className="btn-yellow-gradient flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-xl shadow-md shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all cursor-pointer">
           <Plus className="w-4 h-4" /> Add Application
         </button>
       </div>

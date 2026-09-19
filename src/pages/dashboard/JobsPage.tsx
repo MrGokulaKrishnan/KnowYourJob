@@ -173,8 +173,8 @@ export const JobsPage: React.FC = () => {
                 onClick={() => setPortalFilter(portal)}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer shrink-0 ${
                   portalFilter === portal
-                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-[0_0_15px_rgba(255,208,0,0.15)]'
-                    : 'bg-white/5 text-slate-400 hover:text-white border border-white/5'
+                    ? 'bg-gradient-to-r from-amber-500/25 to-yellow-500/15 text-amber-300 border border-amber-500/50 shadow-[0_0_20px_rgba(245,158,11,0.25)]'
+                    : 'bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 border border-white/10'
                 }`}
               >
                 {portal === 'all' ? 'All Portals' : portal}
@@ -297,7 +297,7 @@ export const JobsPage: React.FC = () => {
               return (
                 <div
                   key={job.id}
-                  className="liquid-glass-interactive rounded-2xl p-6 border border-white/8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition hover:border-amber-500/35 shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.1)]"
+                  className="liquid-glass-interactive rounded-2xl p-6 border border-white/10 hover:border-amber-500/40 hover:shadow-[0_0_30px_rgba(245,158,11,0.18)] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.15)]"
                 >
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -357,7 +357,7 @@ export const JobsPage: React.FC = () => {
 
                       {/* Salary */}
                       {job.salary && (
-                        <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400">
+                        <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                           {job.salary.currency === 'INR'
                             ? `₹${Math.round(job.salary.min / 100000)}L – ₹${Math.round(job.salary.max / 100000)}L / yr`
                             : `$${Math.round(job.salary.min / 1000)}k – $${Math.round(job.salary.max / 1000)}k / yr`}
@@ -371,7 +371,7 @@ export const JobsPage: React.FC = () => {
 
                     <div className="flex flex-wrap gap-1.5 mt-3">
                       {job.skills.map((skill) => (
-                        <span key={skill} className="px-2 py-0.5 rounded bg-white/5 text-[11px] text-slate-300">
+                        <span key={skill} className="px-2.5 py-0.5 rounded-lg bg-amber-500/10 text-amber-300/90 border border-amber-500/20 text-[11px] font-medium">
                           {skill}
                         </span>
                       ))}

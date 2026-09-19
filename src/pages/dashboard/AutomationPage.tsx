@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bot, Shield, Sliders, AlertTriangle, CheckCircle2, Clock, History } from 'lucide-react';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { LiquidButton } from '../../components/ui/LiquidButton';
@@ -75,14 +75,15 @@ export const AutomationPage: React.FC = () => {
       ) : (
         <div className="flex flex-col gap-6 max-w-4xl">
           {/* Main Toggle Banner */}
-          <div className="liquid-glass-elevated rounded-2xl p-6 border border-amber-500/30 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="liquid-glass-elevated rounded-2xl p-6 border border-amber-500/40 shadow-[0_0_35px_rgba(245,158,11,0.18),inset_0_1px_1px_rgba(255,255,255,0.2)] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div className="flex items-center gap-4">
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${enabled ? 'bg-amber-500 text-slate-950' : 'bg-slate-800 text-slate-400'}`}>
+              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg ${enabled ? 'bg-gradient-to-br from-amber-400 to-yellow-500 text-slate-950 shadow-amber-500/30' : 'bg-slate-800/80 border border-white/10 text-slate-400'}`}>
                 <Bot className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white">
-                  Autonomous Engine: <span className={enabled ? 'text-amber-400' : 'text-slate-400'}>{enabled ? 'ACTIVE' : 'DISABLED'}</span>
+                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <span>Autonomous Engine:</span>
+                  <span className={enabled ? 'text-gradient-gold' : 'text-slate-400'}>{enabled ? 'ACTIVE' : 'DISABLED'}</span>
                 </h3>
                 <p className="text-xs text-slate-400 mt-0.5">
                   {enabled
@@ -94,7 +95,7 @@ export const AutomationPage: React.FC = () => {
 
             <button
               onClick={() => setEnabled(!enabled)}
-              className={`px-5 py-2.5 rounded-xl font-semibold text-xs tracking-wider uppercase transition-all shadow-lg ${
+              className={`px-5 py-2.5 rounded-xl font-bold text-xs tracking-wider uppercase transition-all shadow-lg cursor-pointer ${
                 enabled
                   ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30'
                   : 'btn-yellow-gradient text-slate-950'
@@ -105,7 +106,7 @@ export const AutomationPage: React.FC = () => {
           </div>
 
           {/* Mode & Rate Limits */}
-          <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-6">
+          <div className="liquid-glass rounded-2xl p-6 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] flex flex-col gap-6">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <Sliders className="w-5 h-5 text-amber-400" />
               <span>Safety Controls & Execution Mode</span>
@@ -123,22 +124,22 @@ export const AutomationPage: React.FC = () => {
                   onClick={() => setMode(m.id as any)}
                   className={`p-4 rounded-xl cursor-pointer border transition-all ${
                     mode === m.id
-                      ? 'bg-amber-500/15 border-amber-400/80 text-amber-300'
-                      : 'bg-white/[0.02] border-white/5 text-slate-400 hover:border-white/15'
+                      ? 'bg-gradient-to-br from-amber-500/20 to-yellow-500/10 border-amber-400/80 text-amber-300 shadow-[0_0_20px_rgba(245,158,11,0.2)]'
+                      : 'bg-white/[0.03] border-white/10 text-slate-400 hover:border-amber-400/30 hover:bg-white/[0.06]'
                   }`}
                 >
-                  <div className="font-semibold text-sm text-white">{m.title}</div>
+                  <div className="font-bold text-sm text-white">{m.title}</div>
                   <div className="text-xs text-slate-400 mt-1 leading-snug">{m.desc}</div>
                 </div>
               ))}
             </div>
 
             {/* Sliders */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-white/5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-white/10">
               <div className="flex flex-col gap-2">
                 <div className="flex justify-between text-xs font-medium uppercase text-slate-300">
                   <span>Daily Cap Limit</span>
-                  <span className="text-amber-400 font-bold">{dailyLimit} apps / day</span>
+                  <span className="text-amber-400 font-bold font-mono">{dailyLimit} apps / day</span>
                 </div>
                 <input
                   type="range"
@@ -154,7 +155,7 @@ export const AutomationPage: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex justify-between text-xs font-medium uppercase text-slate-300">
                   <span>Minimum Match Threshold</span>
-                  <span className="text-amber-400 font-bold">{minimumMatchScore}% match</span>
+                  <span className="text-amber-400 font-bold font-mono">{minimumMatchScore}% match</span>
                 </div>
                 <input
                   type="range"
@@ -176,7 +177,7 @@ export const AutomationPage: React.FC = () => {
           </div>
 
           {/* Audit Logs */}
-          <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-4">
+          <div className="liquid-glass rounded-2xl p-6 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <h3 className="text-base font-bold text-white flex items-center gap-2">
                 <History className="w-5 h-5 text-amber-400" />

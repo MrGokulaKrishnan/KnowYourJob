@@ -13,7 +13,8 @@ import {
   Scale, 
   UserCheck,
   ChevronRight,
-  Printer
+  Printer,
+  Search
 } from 'lucide-react';
 import { KYJLogo } from '@/components/ui/KYJLogo';
 
@@ -317,9 +318,14 @@ export const LegalPage: React.FC<{ defaultDoc?: LegalDocType }> = ({ defaultDoc 
   }, [currentDoc]);
 
   return (
-    <div className="min-h-screen bg-[#000000] text-slate-100 flex flex-col selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="min-h-screen bg-[#000000] text-slate-100 flex flex-col relative overflow-x-hidden selection:bg-amber-400 selection:text-black">
+      {/* Ambient background glow orbs matching Homepage */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[850px] h-[360px] bg-gradient-to-b from-amber-500/15 via-yellow-500/5 to-transparent blur-[140px] rounded-full pointer-events-none z-0" />
+      <div className="fixed top-1/3 right-[-10%] w-96 h-96 bg-amber-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
+      <div className="fixed bottom-10 left-[-10%] w-96 h-96 bg-yellow-500/10 blur-[140px] rounded-full pointer-events-none z-0" />
+
       {/* Header */}
-      <header className="border-b border-white/5 bg-[#040404]/85 backdrop-blur-xl sticky top-0 z-30 px-6 py-4">
+      <header className="border-b border-white/10 bg-[#000000]/70 backdrop-blur-2xl sticky top-0 z-30 px-6 py-4 relative">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5">
             <KYJLogo size={32} glow />
@@ -327,33 +333,47 @@ export const LegalPage: React.FC<{ defaultDoc?: LegalDocType }> = ({ defaultDoc 
               KnowYour<span className="text-gradient-gold">Job</span>
             </span>
           </Link>
-          <div className="flex items-center gap-3">
-            <Link to="/jobs" className="text-xs text-slate-300 hover:text-amber-400 transition">
-              Find Jobs
+          <div className="flex items-center gap-2.5">
+            <Link
+              to="/jobs"
+              className="btn-glass px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-white/15 hover:border-amber-400/40 hover:text-amber-300 transition-all hover:scale-105 active:scale-95 shadow-md flex items-center gap-1.5 cursor-pointer"
+            >
+              <Search size={13} className="text-amber-400" />
+              <span>All Jobs</span>
             </Link>
-            <Link to="/auth/login" className="px-3.5 py-1.5 rounded-lg border border-white/10 text-xs font-medium hover:bg-white/5 transition">
+            <Link
+              to="/auth/login"
+              className="btn-glass px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-white/15 hover:border-amber-400/40 hover:text-amber-300 transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer"
+            >
               Sign In
+            </Link>
+            <Link
+              to="/auth/register"
+              className="btn-yellow-gradient px-4 py-1.5 rounded-xl text-black text-xs font-bold shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:scale-105 active:scale-95 transition-all flex items-center gap-1 cursor-pointer"
+            >
+              <span>Get Started</span>
+              <ChevronRight size={13} className="stroke-[3]" />
             </Link>
           </div>
         </div>
       </header>
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-6 py-10 w-full flex-1">
+      <div className="max-w-7xl mx-auto px-6 py-10 w-full flex-1 relative z-10">
         {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="text-xs text-slate-500 flex items-center gap-2 mb-6">
+        <nav aria-label="Breadcrumb" className="text-xs text-neutral-400 flex items-center gap-2 mb-6 font-medium">
           <Link to="/" className="hover:text-amber-400 transition">Home</Link>
           <ChevronRight size={12} />
-          <span className="text-slate-400">Legal & Compliance</span>
+          <span className="text-neutral-400">Legal & Compliance</span>
           <ChevronRight size={12} />
-          <span className="text-amber-400 font-medium">{currentDoc.title}</span>
+          <span className="text-amber-400 font-semibold">{currentDoc.title}</span>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar Navigation */}
           <div className="lg:col-span-1 space-y-6">
-            <div className="liquid-glass-elevated p-4 rounded-2xl border border-white/5 sticky top-24">
-              <h3 className="text-xs font-mono uppercase text-slate-400 tracking-wider mb-3 px-2">
+            <div className="liquid-glass-elevated p-4 rounded-3xl border border-white/10 sticky top-24 shadow-xl">
+              <h3 className="text-xs font-mono uppercase text-neutral-400 tracking-wider mb-3 px-2 font-bold">
                 Legal & Governance
               </h3>
               <div className="space-y-1">
@@ -366,11 +386,11 @@ export const LegalPage: React.FC<{ defaultDoc?: LegalDocType }> = ({ defaultDoc 
                       onClick={() => setActiveDoc(d.id)}
                       className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition text-left ${
                         isActive
-                          ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30'
-                          : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
+                          ? 'liquid-glass-interactive text-amber-300 border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)] font-semibold'
+                          : 'text-neutral-400 hover:text-white hover:bg-white/5 border border-transparent'
                       }`}
                     >
-                      <Icon size={14} className={isActive ? 'text-amber-400' : 'text-slate-500'} />
+                      <Icon size={14} className={isActive ? 'text-amber-400' : 'text-neutral-500'} />
                       <span className="truncate">{d.title}</span>
                     </button>
                   );
@@ -378,7 +398,7 @@ export const LegalPage: React.FC<{ defaultDoc?: LegalDocType }> = ({ defaultDoc 
               </div>
 
               {/* Note on Shipping / Returns (Section 8 PDF compliance) */}
-              <div className="mt-6 pt-4 border-t border-white/5 px-2 text-[11px] text-slate-500">
+              <div className="mt-6 pt-4 border-t border-white/10 px-2 text-[11px] text-neutral-500 leading-relaxed">
                 <p><strong>Commerce Notice:</strong> KnowYourJob provides digital SaaS software and AI career tools. Physical Shipping and Product Return/Exchange policies are non-applicable.</p>
               </div>
             </div>
@@ -386,22 +406,22 @@ export const LegalPage: React.FC<{ defaultDoc?: LegalDocType }> = ({ defaultDoc 
 
           {/* Main Document Content */}
           <div className="lg:col-span-3">
-            <div className="liquid-glass-elevated p-8 sm:p-10 rounded-2xl border border-white/10">
-              <div className="flex items-center justify-between border-b border-white/5 pb-6 mb-8">
+            <div className="liquid-glass-elevated p-8 sm:p-10 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden">
+              <div className="flex items-center justify-between border-b border-white/10 pb-6 mb-8">
                 <div>
-                  <span className="text-xs font-mono text-amber-400 uppercase tracking-widest block mb-1">
+                  <span className="text-xs font-mono text-amber-400 uppercase tracking-widest block mb-1 font-bold">
                     {currentDoc.category}
                   </span>
                   <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
                     {currentDoc.title}
                   </h1>
-                  <span className="text-xs text-slate-500 mt-1 block">
+                  <span className="text-xs text-neutral-400 mt-1 block">
                     Last Revised: {currentDoc.lastUpdated}
                   </span>
                 </div>
                 <button
                   onClick={() => window.print()}
-                  className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 text-xs text-slate-400 hover:text-white hover:bg-white/5 transition"
+                  className="hidden sm:flex items-center gap-1.5 btn-glass px-3.5 py-1.5 rounded-xl text-xs text-neutral-300 hover:text-white transition font-medium"
                 >
                   <Printer size={14} />
                   <span>Print Document</span>
@@ -409,7 +429,7 @@ export const LegalPage: React.FC<{ defaultDoc?: LegalDocType }> = ({ defaultDoc 
               </div>
 
               {/* Document Text Body */}
-              <div className="prose prose-invert max-w-none">
+              <div className="prose prose-invert max-w-none text-neutral-300 leading-relaxed text-sm">
                 {currentDoc.content}
               </div>
             </div>
@@ -418,7 +438,7 @@ export const LegalPage: React.FC<{ defaultDoc?: LegalDocType }> = ({ defaultDoc 
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 py-8 px-6 text-xs text-slate-500 text-center">
+      <footer className="border-t border-white/10 py-8 px-6 text-xs text-neutral-500 text-center relative z-10">
         <p>© {new Date().getFullYear()} KnowYourJob. All rights reserved.</p>
       </footer>
     </div>

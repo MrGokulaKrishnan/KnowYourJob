@@ -69,13 +69,13 @@ export const SettingsPage: React.FC = () => {
     >
       <div className="flex flex-col gap-6 max-w-3xl">
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 p-1.5 rounded-2xl liquid-glass border border-white/5 w-fit">
+        <div className="flex items-center gap-2 p-1.5 rounded-2xl liquid-glass border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] w-fit">
           <button
             onClick={() => setActiveTab('profile')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
               activeTab === 'profile'
-                ? 'bg-amber-400/15 text-amber-300 border border-amber-400/30 shadow-[0_0_15px_rgba(255,208,0,0.1)]'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                ? 'bg-gradient-to-r from-amber-500/25 to-yellow-500/15 text-amber-300 border border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.2)]'
+                : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
             }`}
           >
             <User className="w-3.5 h-3.5" />
@@ -84,10 +84,10 @@ export const SettingsPage: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('security')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
               activeTab === 'security'
-                ? 'bg-amber-400/15 text-amber-300 border border-amber-400/30 shadow-[0_0_15px_rgba(255,208,0,0.1)]'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                ? 'bg-gradient-to-r from-amber-500/25 to-yellow-500/15 text-amber-300 border border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.2)]'
+                : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
             }`}
           >
             <KeyRound className="w-3.5 h-3.5" />

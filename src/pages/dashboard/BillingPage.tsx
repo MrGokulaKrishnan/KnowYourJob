@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { CreditCard, Check, Sparkles, Zap } from 'lucide-react';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { LiquidButton } from '../../components/ui/LiquidButton';
@@ -11,6 +11,7 @@ export const BillingPage: React.FC = () => {
     {
       name: 'Starter Candidate',
       price: 'Free',
+      subPrice: '₹0 forever',
       description: 'Standard discovery and manual tracking.',
       features: [
         '5 manual applications / day',
@@ -22,7 +23,8 @@ export const BillingPage: React.FC = () => {
     },
     {
       name: 'Pro Autonomous',
-      price: '$29 / month',
+      price: '₹2,499',
+      subPrice: '/ month ($29)',
       description: 'AI auto-tailoring and assisted autonomous job applications.',
       features: [
         'Up to 30 assisted applications / day',
@@ -36,7 +38,8 @@ export const BillingPage: React.FC = () => {
     },
     {
       name: 'Executive Elite',
-      price: '$79 / month',
+      price: '₹6,499',
+      subPrice: '/ month ($79)',
       description: 'Complete hands-off career executive suite.',
       features: [
         'Unlimited autonomous submissions',
@@ -58,27 +61,32 @@ export const BillingPage: React.FC = () => {
           {plans.map((p, idx) => (
             <div
               key={idx}
-              className={`rounded-2xl p-6 flex flex-col justify-between ${
+              className={`rounded-2xl p-7 flex flex-col justify-between transition-all ${
                 p.featured
-                  ? 'liquid-glass-elevated border-2 border-amber-500/40 shadow-gold-glow'
-                  : 'liquid-glass border border-white/5'
+                  ? 'liquid-glass-elevated border-2 border-amber-500/50 shadow-[0_0_40px_rgba(245,158,11,0.22),inset_0_1px_1px_rgba(255,255,255,0.25)] scale-[1.02]'
+                  : 'liquid-glass border border-white/10 hover:border-amber-500/30 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]'
               }`}
             >
               <div>
                 {p.featured && (
-                  <span className="inline-flex items-center gap-1 text-[10px] uppercase font-mono px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 mb-3">
-                    <Sparkles className="w-3 h-3" />
-                    <span>Most Popular</span>
+                  <span className="glossy-badge-gold mb-3">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Most Popular Choice</span>
                   </span>
                 )}
-                <h3 className="text-lg font-bold text-white">{p.name}</h3>
-                <div className="text-2xl font-bold text-amber-400 font-mono mt-2">{p.price}</div>
-                <p className="text-xs text-slate-400 mt-1">{p.description}</p>
+                <h3 className="text-xl font-bold text-white tracking-tight">{p.name}</h3>
+                <div className="flex items-baseline gap-1.5 mt-2">
+                  <span className="text-3xl font-extrabold text-gradient-gold font-mono">{p.price}</span>
+                  <span className="text-xs text-slate-400 font-mono">{p.subPrice}</span>
+                </div>
+                <p className="text-xs text-slate-300 mt-2 leading-relaxed">{p.description}</p>
 
-                <div className="mt-6 space-y-2.5 border-t border-white/5 pt-4">
+                <div className="mt-6 space-y-3 border-t border-white/10 pt-5">
                   {p.features.map((feat, fIdx) => (
-                    <div key={fIdx} className="flex items-center gap-2 text-xs text-slate-300">
-                      <Check className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <div key={fIdx} className="flex items-center gap-2.5 text-xs text-slate-200">
+                      <div className="w-4 h-4 rounded-full bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0">
+                        <Check className="w-2.5 h-2.5 text-amber-400" />
+                      </div>
                       <span>{feat}</span>
                     </div>
                   ))}
@@ -89,14 +97,14 @@ export const BillingPage: React.FC = () => {
                 {p.current ? (
                   <button
                     disabled
-                    className="w-full py-2.5 rounded-xl text-xs font-semibold text-slate-400 bg-white/5 border border-white/10 cursor-default"
+                    className="w-full py-2.5 rounded-xl text-xs font-semibold text-slate-400 bg-white/5 border border-white/10 cursor-default shadow-inner"
                   >
                     Current Active Tier
                   </button>
                 ) : (
                   <LiquidButton
                     variant={p.featured ? 'yellow' : 'glass'}
-                    className="w-full text-xs"
+                    className="w-full text-xs font-bold"
                     onClick={() => showToast('Subscription gateway ready.', 'info')}
                   >
                     Upgrade Plan

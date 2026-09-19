@@ -129,8 +129,8 @@ export const ResumePage: React.FC = () => {
       <div className="flex flex-col gap-6">
 
         {/* Upload Box */}
-        <div className="liquid-glass-elevated rounded-2xl p-8 border-dashed border-2 border-amber-500/30 text-center flex flex-col items-center justify-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+        <div className="liquid-glass-elevated rounded-2xl p-8 border-dashed border-2 border-amber-500/40 hover:border-amber-400 hover:shadow-[0_0_35px_rgba(245,158,11,0.18)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.18)] text-center flex flex-col items-center justify-center gap-4 transition-all">
+          <div className="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/35 flex items-center justify-center text-amber-400 shadow-[0_0_25px_rgba(245,158,11,0.2)]">
             {isUploading ? (
               <Loader2 className="w-7 h-7 animate-spin" />
             ) : (
@@ -188,7 +188,7 @@ export const ResumePage: React.FC = () => {
           {isLoading ? (
             <LoadingSpinner label="Fetching resume documents..." />
           ) : resumes.length === 0 ? (
-            <div className="liquid-glass rounded-2xl p-8 text-center text-xs text-slate-400">
+            <div className="liquid-glass-elevated rounded-2xl p-8 text-center text-xs text-slate-400 border border-white/10">
               No resumes uploaded yet. Upload one above to unlock AI analysis.
             </div>
           ) : (
@@ -196,10 +196,10 @@ export const ResumePage: React.FC = () => {
               {resumes.map(res => (
                 <div
                   key={res.id}
-                  className="liquid-glass-interactive rounded-2xl p-5 border border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+                  className="liquid-glass-interactive rounded-2xl p-5 border border-white/10 hover:border-amber-500/40 hover:shadow-[0_0_25px_rgba(245,158,11,0.15)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition"
                 >
                   <div className="flex items-center gap-3.5 flex-1 min-w-0">
-                    <div className="p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
+                    <div className="p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 shadow-[inset_0_1px_0_rgba(253,230,138,0.2)] shrink-0">
                       <FileText className="w-6 h-6" />
                     </div>
                     <div className="min-w-0">

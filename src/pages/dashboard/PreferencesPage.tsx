@@ -89,7 +89,7 @@ export const PreferencesPage: React.FC = () => {
         <LoadingSpinner label="Loading preferences..." />
       ) : (
         <form onSubmit={handleSave} className="flex flex-col gap-6 max-w-3xl">
-          <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-5">
+          <div className="liquid-glass rounded-2xl p-6 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] flex flex-col gap-5">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <Sliders className="w-5 h-5 text-amber-400" />
               <span>Target Role Types</span>
@@ -102,7 +102,7 @@ export const PreferencesPage: React.FC = () => {
                 onChange={(e) => setNewRole(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddRole())}
                 placeholder="e.g. Staff Full-Stack Engineer"
-                className="flex-1 rounded-xl bg-slate-900/60 border border-white/10 px-4 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                className="flex-1 rounded-xl bg-slate-900/60 border border-white/10 px-4 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-500/20"
               />
               <LiquidButton type="button" variant="glass" onClick={handleAddRole} leftIcon={<Plus className="w-4 h-4" />}>
                 Add
@@ -113,7 +113,7 @@ export const PreferencesPage: React.FC = () => {
               {roles.map((r) => (
                 <span
                   key={r}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-xs font-medium text-amber-300"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/15 to-yellow-500/10 border border-amber-500/35 text-xs font-semibold text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.1)]"
                 >
                   {r}
                   <button type="button" onClick={() => setRoles(roles.filter((x) => x !== r))} className="hover:text-amber-100">
@@ -124,8 +124,11 @@ export const PreferencesPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-5">
-            <h3 className="text-base font-bold text-white">Work Location & Flexibility</h3>
+          <div className="liquid-glass rounded-2xl p-6 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] flex flex-col gap-5">
+            <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <Sliders className="w-5 h-5 text-amber-400" />
+              <span>Work Location & Flexibility</span>
+            </h3>
 
             <div className="flex flex-col gap-2">
               <label className="text-xs font-medium uppercase text-slate-300">Remote Setting</label>
@@ -135,10 +138,10 @@ export const PreferencesPage: React.FC = () => {
                     key={mode}
                     type="button"
                     onClick={() => setRemoteType(mode)}
-                    className={`px-3 py-2 rounded-xl text-xs font-medium uppercase tracking-wider border transition-all ${
+                    className={`px-3 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider border transition-all cursor-pointer ${
                       remoteType === mode
-                        ? 'bg-amber-500/20 border-amber-400 text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.25)]'
-                        : 'bg-white/5 border-white/10 text-slate-400 hover:text-slate-200'
+                        ? 'bg-gradient-to-r from-amber-500/25 to-yellow-500/15 border-amber-400/60 text-amber-300 shadow-[0_0_20px_rgba(245,158,11,0.25)]'
+                        : 'bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10'
                     }`}
                   >
                     {mode}
@@ -155,8 +158,8 @@ export const PreferencesPage: React.FC = () => {
                   value={newLocation}
                   onChange={(e) => setNewLocation(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddLocation())}
-                  placeholder="e.g. Seattle, WA"
-                  className="flex-1 rounded-xl bg-slate-900/60 border border-white/10 px-4 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                  placeholder="e.g. Seattle, WA or Bengaluru, India"
+                  className="flex-1 rounded-xl bg-slate-900/60 border border-white/10 px-4 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-500/20"
                 />
                 <LiquidButton type="button" variant="glass" onClick={handleAddLocation} leftIcon={<Plus className="w-4 h-4" />}>
                   Add
@@ -167,7 +170,7 @@ export const PreferencesPage: React.FC = () => {
                 {locations.map((loc) => (
                   <span
                     key={loc}
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-medium text-slate-300"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/15 text-xs font-medium text-slate-200 shadow-sm"
                   >
                     {loc}
                     <button type="button" onClick={() => setLocations(locations.filter((x) => x !== loc))} className="hover:text-rose-400">
@@ -183,7 +186,7 @@ export const PreferencesPage: React.FC = () => {
                 <label className="text-xs font-medium uppercase text-slate-300">
                   Minimum Expected Salary (INR / LPA)
                 </label>
-                <span className="text-xs text-amber-400 font-mono font-bold">
+                <span className="glossy-badge-gold">
                   ₹{(Number(minimumSalary) / 100000).toFixed(1)} LPA
                 </span>
               </div>
@@ -211,10 +214,10 @@ export const PreferencesPage: React.FC = () => {
                     key={preset.label}
                     type="button"
                     onClick={() => setMinimumSalary(preset.val)}
-                    className={`px-2.5 py-1 rounded-md text-xs font-mono border transition ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-semibold border transition cursor-pointer ${
                       Number(minimumSalary) === preset.val
-                        ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                        : 'bg-white/5 text-slate-400 border-white/10 hover:border-white/20'
+                        ? 'bg-amber-500/25 text-amber-300 border-amber-500/50 shadow-[0_0_12px_rgba(245,158,11,0.2)]'
+                        : 'bg-white/5 text-slate-400 border-white/10 hover:border-white/20 hover:text-white'
                     }`}
                   >
                     {preset.label}

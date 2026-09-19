@@ -17,7 +17,8 @@ import {
   Bell,
   Menu,
   X,
-  ShieldAlert
+  ShieldAlert,
+  ChevronRight
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../context/ToastContext';
@@ -69,18 +70,19 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] text-slate-100 flex flex-col md:flex-row overflow-x-hidden">
-      {/* Background ambient orbs */}
-      <div className="fixed top-0 left-1/4 w-96 h-96 bg-amber-500/8 blur-[120px] pointer-events-none rounded-full" />
-      <div className="fixed bottom-0 right-10 w-[500px] h-[500px] bg-amber-600/5 blur-[150px] pointer-events-none rounded-full" />
+    <div className="min-h-screen bg-[#000000] text-slate-100 flex flex-col md:flex-row overflow-x-hidden relative selection:bg-amber-500/30 selection:text-amber-200">
+      {/* Background Ambient Glows (Identical to Homepage) */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-b from-amber-500/15 via-yellow-500/5 to-transparent blur-[140px] pointer-events-none rounded-full z-0" />
+      <div className="fixed top-1/3 right-10 w-[500px] h-[500px] bg-amber-600/10 blur-[150px] pointer-events-none rounded-full z-0" />
+      <div className="fixed bottom-10 left-10 w-[450px] h-[450px] bg-yellow-500/8 blur-[130px] pointer-events-none rounded-full z-0" />
 
       {/* Sidebar for Desktop */}
-      <aside className="hidden md:flex flex-col w-64 border-r border-white/8 bg-[#040404]/90 backdrop-blur-2xl shrink-0 sticky top-0 h-screen z-30 shadow-[inset_-1px_0_0_rgba(255,255,255,0.04)]">
+      <aside className="hidden md:flex flex-col w-64 border-r border-white/10 bg-[#030304]/90 backdrop-blur-2xl shrink-0 sticky top-0 h-screen z-30 shadow-[inset_-1px_0_0_rgba(255,255,255,0.05),0_0_40px_rgba(0,0,0,0.8)]">
         {/* Brand */}
-        <div className="p-6 border-b border-white/8 flex items-center justify-between">
+        <div className="p-6 border-b border-white/10 flex items-center justify-between">
           <Link to="/dashboard" className="flex items-center gap-2.5 group">
-            <KYJLogo size={34} glow className="group-hover:scale-105 transition-transform" />
-            <span className="font-bold tracking-tight text-white flex items-center">
+            <KYJLogo size={36} glow className="group-hover:scale-105 transition-transform" />
+            <span className="font-bold tracking-tight text-white flex items-center text-lg">
               KnowYour<span className="text-gradient-gold">Job</span>
             </span>
           </Link>
@@ -97,88 +99,117 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                 to={item.path}
                 className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all ${
                   isActive
-                    ? 'bg-gradient-to-r from-amber-500/15 via-amber-500/10 to-transparent text-amber-300 border border-amber-500/30 shadow-[inset_0_1px_0_0_rgba(253,230,138,0.25),0_0_15px_rgba(245,158,11,0.12)]'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                    ? 'bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent text-amber-300 border border-amber-500/35 shadow-[inset_0_1px_0_0_rgba(253,230,138,0.3),0_0_20px_rgba(245,158,11,0.15)] font-semibold'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'
                 }`}
               >
                 <Icon className={`w-4 h-4 ${isActive ? 'text-amber-400' : 'text-slate-400'}`} />
                 <span>{item.label}</span>
                 {isActive && (
-                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(245,158,11,0.8)]" />
+                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.9)]" />
                 )}
               </Link>
             );
           })}
         </nav>
 
-        {/* User Card & Logout */}
-        <div className="p-4 border-t border-white/8 flex flex-col gap-3">
-          <Link
-            to="/dashboard/profile"
-            className="flex items-center gap-3 p-2.5 rounded-xl bg-gradient-to-b from-white/[0.05] to-white/[0.015] border border-white/8 hover:border-amber-400/30 transition shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] group cursor-pointer"
-            title="View candidate profile"
-          >
-            <UserAvatar
-              user={user}
-              userDoc={userDoc}
-              size="sm"
-              roundedClassName="rounded-lg"
-              showGoogleBadge={true}
-              border={true}
-              className="shrink-0 group-hover:scale-105 transition-transform"
-            />
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-1.5">
-                <p className="text-xs font-semibold text-slate-200 group-hover:text-amber-300 transition-colors truncate">
-                  {userDoc?.displayName || user?.displayName || 'Candidate'}
-                </p>
-                {isRecruiter && (
-                  <span className="badge-ai text-[9px] px-1.5 py-0">Recruiter</span>
-                )}
+        {/* User Card & Logout or Auth CTA */}
+        {user ? (
+          <div className="p-4 border-t border-white/10 flex flex-col gap-3">
+            <Link
+              to="/dashboard/profile"
+              className="flex items-center gap-3 p-2.5 rounded-xl liquid-glass border border-white/10 hover:border-amber-400/40 transition shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] group cursor-pointer"
+              title="View candidate profile"
+            >
+              <UserAvatar
+                user={user}
+                userDoc={userDoc}
+                size="sm"
+                roundedClassName="rounded-lg"
+                showGoogleBadge={true}
+                border={true}
+                className="shrink-0 group-hover:scale-105 transition-transform"
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <p className="text-xs font-semibold text-slate-200 group-hover:text-amber-300 transition-colors truncate">
+                    {userDoc?.displayName || user?.displayName || 'Candidate'}
+                  </p>
+                  {isRecruiter && (
+                    <span className="badge-ai text-[9px] px-1.5 py-0">Recruiter</span>
+                  )}
+                </div>
+                <p className="text-[10px] text-slate-400 truncate">{user?.email}</p>
               </div>
-              <p className="text-[10px] text-slate-400 truncate">{user?.email}</p>
-            </div>
-          </Link>
+            </Link>
 
-          <button
-            onClick={() => setIsBugModalOpen(true)}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 transition cursor-pointer"
-          >
-            <Bug className="w-3.5 h-3.5" />
-            <span>Report a Bug</span>
-          </button>
-          
-          <button
-            onClick={handleSignOut}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 transition cursor-pointer"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            <span>Sign Out</span>
-          </button>
-        </div>
+            <button
+              onClick={() => setIsBugModalOpen(true)}
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 transition cursor-pointer"
+            >
+              <Bug className="w-3.5 h-3.5" />
+              <span>Report a Bug</span>
+            </button>
+            
+            <button
+              onClick={handleSignOut}
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 transition cursor-pointer"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Sign Out</span>
+            </button>
+          </div>
+        ) : (
+          <div className="p-4 border-t border-white/10 flex flex-col gap-2.5">
+            <Link
+              to="/auth/login"
+              className="w-full btn-glass py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 text-white border border-white/15 hover:border-amber-400/40 hover:text-amber-300 transition shadow-md cursor-pointer"
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/auth/register"
+              className="w-full btn-yellow-gradient py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 text-black shadow-[0_0_15px_rgba(245,158,11,0.3)] hover:scale-[1.02] transition cursor-pointer"
+            >
+              <span>Get Started</span>
+              <ChevronRight className="w-4 h-4 stroke-[3]" />
+            </Link>
+          </div>
+        )}
       </aside>
 
       {/* Mobile Top Header */}
       <header className="md:hidden flex items-center justify-between p-4 border-b border-white/10 bg-[#040404]/95 backdrop-blur-lg sticky top-0 z-30">
-        <Link to="/dashboard" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <KYJLogo size={28} />
           <span className="font-bold text-sm text-white">
             KnowYour<span className="text-amber-400">Job</span>
           </span>
         </Link>
         <div className="flex items-center gap-2">
-          <Link to="/dashboard/profile" title="Candidate Profile">
-            <UserAvatar
-              user={user}
-              userDoc={userDoc}
-              size="sm"
-              roundedClassName="rounded-lg"
-              showGoogleBadge={true}
-            />
-          </Link>
+          {!user ? (
+            <div className="flex items-center gap-1.5">
+              <Link to="/auth/login" className="btn-glass px-2.5 py-1 rounded-lg text-xs font-semibold">
+                Sign In
+              </Link>
+              <Link to="/auth/register" className="btn-yellow-gradient px-3 py-1 rounded-lg text-xs font-bold text-black shadow-sm">
+                Get Started
+              </Link>
+            </div>
+          ) : (
+            <Link to="/dashboard/profile" title="Candidate Profile">
+              <UserAvatar
+                user={user}
+                userDoc={userDoc}
+                size="sm"
+                roundedClassName="rounded-lg"
+                showGoogleBadge={true}
+              />
+            </Link>
+          )}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg bg-white/5 text-slate-300"
+            className="p-2 rounded-lg bg-white/5 text-slate-300 cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -258,52 +289,81 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0 z-10">
         {/* Top bar with Breadcrumbs & Actions */}
-        <div className="hidden md:flex items-center justify-between px-8 py-4 border-b border-white/8 bg-[#040404]/80 backdrop-blur-xl shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.03)] sticky top-0 z-20">
+        <div className="hidden md:flex items-center justify-between px-8 py-4 border-b border-white/10 bg-[#020202]/85 backdrop-blur-2xl shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.06),0_10px_30px_rgba(0,0,0,0.6)] sticky top-0 z-20">
           <div>
-            <h1 className="text-lg font-bold text-white tracking-tight">{pageTitle}</h1>
+            <h1 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+              <span>{pageTitle}</span>
+            </h1>
             {pageSubtitle && <p className="text-xs text-slate-400 mt-0.5">{pageSubtitle}</p>}
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Live Firestore Connection Status */}
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-[11px] text-emerald-400 font-mono shadow-[inset_0_1px_0_rgba(52,211,153,0.15)]">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Firebase Cloud Live</span>
-            </div>
-
-            {/* Recruiter Indicator if authorized */}
-            {isRecruiter && (
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-300 font-mono shadow-[inset_0_1px_0_rgba(253,230,138,0.2)]">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                <span>Recruiter Privileges Active</span>
+            {!user ? (
+              <div className="flex items-center gap-2.5">
+                <Link
+                  to="/jobs"
+                  className="btn-glass px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-white/15 hover:border-amber-400/40 hover:text-amber-300 transition-all hover:scale-105 active:scale-95 shadow-md flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Search size={13} className="text-amber-400" />
+                  <span>All Jobs</span>
+                </Link>
+                <Link
+                  to="/auth/login"
+                  className="btn-glass px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-white/15 hover:border-amber-400/40 hover:text-amber-300 transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/auth/register"
+                  className="btn-yellow-gradient px-4 py-1.5 rounded-xl text-black text-xs font-bold shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:scale-105 active:scale-95 transition-all flex items-center gap-1 cursor-pointer"
+                >
+                  <span>Get Started</span>
+                  <ChevronRight size={13} className="stroke-[3]" />
+                </Link>
               </div>
+            ) : (
+              <>
+                {/* Live Firestore Connection Status */}
+                <div className="glossy-badge-emerald shadow-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Firebase Cloud Live</span>
+                </div>
+
+                {/* Recruiter Indicator if authorized */}
+                {isRecruiter && (
+                  <div className="glossy-badge-gold shadow-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    <span>Recruiter Privileges Active</span>
+                  </div>
+                )}
+
+                {/* Notifications quick button */}
+                <button
+                  onClick={() => showToast('All notifications are up to date.', 'info')}
+                  className="p-2.5 rounded-xl liquid-glass border border-white/10 text-slate-300 hover:text-amber-400 hover:border-amber-400/40 transition cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
+                  title="Notifications"
+                >
+                  <Bell className="w-4 h-4" />
+                </button>
+
+                {/* Candidate Profile Avatar Link */}
+                <Link
+                  to="/dashboard/profile"
+                  className="p-1 rounded-xl liquid-glass border border-white/10 hover:border-amber-400/40 transition shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] flex items-center justify-center cursor-pointer group"
+                  title="Candidate Profile"
+                >
+                  <UserAvatar
+                    user={user}
+                    userDoc={userDoc}
+                    size="sm"
+                    roundedClassName="rounded-lg"
+                    showGoogleBadge={true}
+                    border={false}
+                    className="group-hover:scale-105 transition-transform"
+                  />
+                </Link>
+              </>
             )}
-
-            {/* Notifications quick button */}
-            <button
-              onClick={() => showToast('All notifications are up to date.', 'info')}
-              className="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-slate-300 hover:text-amber-400 transition cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
-              title="Notifications"
-            >
-              <Bell className="w-4 h-4" />
-            </button>
-
-            {/* Candidate Profile Avatar Link */}
-            <Link
-              to="/dashboard/profile"
-              className="p-1 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-amber-400/30 transition shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] flex items-center justify-center cursor-pointer group"
-              title="Candidate Profile"
-            >
-              <UserAvatar
-                user={user}
-                userDoc={userDoc}
-                size="sm"
-                roundedClassName="rounded-lg"
-                showGoogleBadge={true}
-                border={false}
-                className="group-hover:scale-105 transition-transform"
-              />
-            </Link>
           </div>
         </div>
 

@@ -25,13 +25,13 @@ export const LiquidButton: React.FC<LiquidButtonProps> = ({
 
   const variants = {
     yellow:
-      'btn-yellow-gradient font-semibold tracking-wide active:scale-[0.99]',
+      'btn-yellow-gradient font-bold tracking-wide shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:scale-[1.02] active:scale-[0.98]',
     glass:
-      'btn-glass-secondary active:scale-[0.99]',
+      'btn-glass-secondary font-semibold hover:scale-[1.02] active:scale-[0.98]',
     danger:
-      'bg-rose-500/15 text-rose-300 border border-rose-500/30 hover:bg-rose-500/25 hover:border-rose-500/50 hover:text-rose-200',
+      'bg-rose-500/15 text-rose-300 border border-rose-500/30 hover:bg-rose-500/25 hover:border-rose-500/50 hover:text-rose-200 hover:scale-[1.02] active:scale-[0.98]',
     subtle:
-      'text-slate-400 hover:text-slate-100 hover:bg-white/5',
+      'text-slate-400 hover:text-slate-100 hover:bg-white/5 hover:scale-[1.02] active:scale-[0.98]',
   };
 
   return (

@@ -293,7 +293,12 @@ export const SeoJobCategoryPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] text-slate-100 flex flex-col selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="min-h-screen bg-[#000000] text-slate-100 flex flex-col relative overflow-x-hidden selection:bg-amber-400 selection:text-black">
+      {/* Ambient background glow orbs matching Homepage */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[850px] h-[360px] bg-gradient-to-b from-amber-500/15 via-yellow-500/5 to-transparent blur-[140px] rounded-full pointer-events-none z-0" />
+      <div className="fixed top-1/3 right-[-10%] w-96 h-96 bg-amber-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
+      <div className="fixed bottom-10 left-[-10%] w-96 h-96 bg-yellow-500/10 blur-[140px] rounded-full pointer-events-none z-0" />
+
       {/* Dynamic Schema Injections */}
       <script
         type="application/ld+json"
@@ -305,7 +310,7 @@ export const SeoJobCategoryPage: React.FC = () => {
       />
 
       {/* Header */}
-      <header className="border-b border-white/5 bg-[#040404]/85 backdrop-blur-xl sticky top-0 z-30 px-6 py-4">
+      <header className="border-b border-white/10 bg-[#000000]/70 backdrop-blur-2xl sticky top-0 z-30 px-6 py-4 relative">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5">
             <KYJLogo size={32} glow />
@@ -314,46 +319,57 @@ export const SeoJobCategoryPage: React.FC = () => {
             </span>
           </Link>
 
-          <div className="flex items-center gap-3">
-            <Link to="/jobs" className="text-xs text-slate-300 hover:text-amber-400 transition">
-              All Jobs
+          <div className="flex items-center gap-2.5">
+            <Link
+              to="/jobs"
+              className="btn-glass px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-white/15 hover:border-amber-400/40 hover:text-amber-300 transition-all hover:scale-105 active:scale-95 shadow-md flex items-center gap-1.5 cursor-pointer"
+            >
+              <Search size={13} className="text-amber-400" />
+              <span>All Jobs</span>
             </Link>
-            <Link to="/auth/login" className="px-3.5 py-1.5 rounded-lg border border-white/10 text-xs font-medium hover:bg-white/5 transition">
+            <Link
+              to="/auth/login"
+              className="btn-glass px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-white/15 hover:border-amber-400/40 hover:text-amber-300 transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer"
+            >
               Sign In
             </Link>
-            <Link to="/auth/register" className="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-semibold transition">
-              Get Started
+            <Link
+              to="/auth/register"
+              className="btn-yellow-gradient px-4 py-1.5 rounded-xl text-black text-xs font-bold shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:scale-105 active:scale-95 transition-all flex items-center gap-1 cursor-pointer"
+            >
+              <span>Get Started</span>
+              <ChevronRight size={13} className="stroke-[3]" />
             </Link>
           </div>
         </div>
       </header>
 
       {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" className="max-w-7xl mx-auto px-6 pt-6 w-full text-xs text-slate-500 flex items-center gap-2">
+      <nav aria-label="Breadcrumb" className="max-w-7xl mx-auto px-6 pt-6 w-full text-xs text-neutral-400 flex items-center gap-2 relative z-10 font-medium">
         <Link to="/" className="hover:text-amber-400 transition">Home</Link>
         <ChevronRight size={12} />
         <Link to="/jobs" className="hover:text-amber-400 transition">Jobs</Link>
         <ChevronRight size={12} />
-        <span className="text-amber-400 font-medium truncate">{config.title}</span>
+        <span className="text-amber-400 font-semibold truncate">{config.title}</span>
       </nav>
 
       {/* Hero Category Overview */}
-      <section className="max-w-7xl mx-auto px-6 py-10 w-full">
+      <section className="max-w-7xl mx-auto px-6 py-10 w-full relative z-10">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-mono mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glossy-badge-gold text-xs font-mono mb-4">
               <Sparkles size={12} />
               <span>VERIFIED AI JOB PORTAL</span>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
               {config.title}
             </h1>
-            <p className="mt-4 text-sm sm:text-base text-slate-400 leading-relaxed">
+            <p className="mt-4 text-sm sm:text-base text-neutral-300 leading-relaxed">
               {config.summary}
             </p>
 
             {/* Quick Metrics Bar */}
-            <div className="mt-6 flex flex-wrap gap-6 text-xs text-slate-300 font-mono">
+            <div className="mt-6 liquid-glass px-5 py-3 rounded-2xl border border-white/10 inline-flex flex-wrap gap-6 text-xs text-neutral-300 font-mono shadow-sm">
               <div className="flex items-center gap-2">
                 <TrendingUp size={16} className="text-amber-400" />
                 <span>Benchmark: <strong className="text-white">{config.salaryBenchmarkINR}</strong></span>
@@ -370,30 +386,30 @@ export const SeoJobCategoryPage: React.FC = () => {
           </div>
 
           {/* Search within category */}
-          <div className="w-full lg:w-96 liquid-glass-elevated p-5 rounded-2xl border border-white/10">
-            <label className="text-xs font-semibold text-slate-300 block mb-2">
+          <div className="w-full lg:w-96 liquid-glass-elevated p-6 rounded-3xl border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.5)]">
+            <label className="text-xs font-semibold text-white block mb-2">
               Filter Within Category
             </label>
             <div className="relative">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" size={16} />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search skills, companies, keywords..."
-                className="w-full pl-10 pr-4 py-2.5 bg-black/40 border border-white/10 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                className="w-full pl-10 pr-4 py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-500/50 shadow-inner"
               />
             </div>
 
             {/* Top Skills Tags */}
             <div className="mt-4">
-              <span className="text-[11px] text-slate-500 block mb-2 font-mono uppercase">Top Category Skills</span>
+              <span className="text-[11px] text-neutral-400 block mb-2 font-mono uppercase tracking-wider font-semibold">Top Category Skills</span>
               <div className="flex flex-wrap gap-1.5">
                 {config.topSkills.map((skill) => (
                   <button
                     key={skill}
                     onClick={() => setSearchTerm(skill)}
-                    className="text-[11px] px-2.5 py-1 rounded-md bg-white/5 hover:bg-amber-500/10 hover:text-amber-300 text-slate-300 border border-white/5 transition"
+                    className="text-[11px] px-2.5 py-1 rounded-lg liquid-glass border border-white/10 hover:border-amber-400/40 hover:text-amber-300 text-neutral-300 font-medium transition"
                   >
                     {skill}
                   </button>
@@ -405,13 +421,17 @@ export const SeoJobCategoryPage: React.FC = () => {
       </section>
 
       {/* Job Listings Grid */}
-      <section className="max-w-7xl mx-auto px-6 py-8 w-full">
+      <section className="max-w-7xl mx-auto px-6 py-8 w-full relative z-10">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <span>Openings ({matchedJobs.length})</span>
           </h2>
-          <Link to="/jobs" className="text-xs text-amber-400 hover:underline flex items-center gap-1">
-            Browse All Jobs <ArrowRight size={12} />
+          <Link
+            to="/jobs"
+            className="btn-glass px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-white/15 hover:border-amber-400/40 hover:text-amber-300 transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95 shadow-md"
+          >
+            <span>Browse All Jobs</span>
+            <ArrowRight size={12} className="text-amber-400" />
           </Link>
         </div>
 
@@ -426,16 +446,16 @@ export const SeoJobCategoryPage: React.FC = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 liquid-glass-elevated rounded-2xl border border-white/5">
-            <Layers className="mx-auto w-12 h-12 text-slate-600 mb-3" />
+          <div className="text-center py-16 liquid-glass-elevated rounded-3xl border border-white/10">
+            <Layers className="mx-auto w-12 h-12 text-neutral-600 mb-3" />
             <h3 className="text-base font-semibold text-white">No matching roles found</h3>
-            <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+            <p className="text-xs text-neutral-400 mt-1 max-w-sm mx-auto">
               Try clearing your search keyword or explore other AI categories.
             </p>
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
-                className="mt-4 px-4 py-2 rounded-lg bg-amber-500/10 text-amber-400 text-xs font-semibold hover:bg-amber-500/20 transition"
+                className="mt-4 px-4 py-2 rounded-xl btn-yellow-gradient text-black text-xs font-bold transition shadow-[0_0_15px_rgba(245,158,11,0.3)]"
               >
                 Clear Search Filter
               </button>
@@ -445,8 +465,8 @@ export const SeoJobCategoryPage: React.FC = () => {
       </section>
 
       {/* Related AI Categories (Cross-linking for SEO Crawler Equity) */}
-      <section className="max-w-7xl mx-auto px-6 py-12 w-full border-t border-white/5">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 font-mono mb-4">
+      <section className="max-w-7xl mx-auto px-6 py-12 w-full border-t border-white/10 relative z-10">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-400 font-mono mb-4">
           Related AI Job Categories
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
@@ -454,14 +474,14 @@ export const SeoJobCategoryPage: React.FC = () => {
             <Link
               key={slug}
               to={`/jobs/${slug}`}
-              className={`p-3 rounded-xl border text-xs transition flex flex-col justify-between ${
+              className={`p-3.5 rounded-2xl border text-xs transition flex flex-col justify-between ${
                 slug === category.toLowerCase()
-                  ? 'bg-amber-500/10 border-amber-500/40 text-amber-300 font-semibold'
-                  : 'liquid-glass-elevated border-white/5 text-slate-300 hover:border-amber-500/20 hover:text-white'
+                  ? 'liquid-glass-interactive border-amber-500/50 text-amber-300 font-bold shadow-[0_0_15px_rgba(245,158,11,0.2)]'
+                  : 'liquid-glass-elevated border-white/10 text-neutral-300 hover:border-amber-500/30 hover:text-white'
               }`}
             >
-              <span className="truncate">{cat.title.split('—')[0].split('(')[0]}</span>
-              <span className="text-[10px] text-slate-500 mt-1">Explore →</span>
+              <span className="truncate font-semibold">{cat.title.split('—')[0].split('(')[0]}</span>
+              <span className="text-[10px] text-amber-400/80 mt-1 font-mono">Explore →</span>
             </Link>
           ))}
         </div>
@@ -469,7 +489,7 @@ export const SeoJobCategoryPage: React.FC = () => {
 
       {/* Frequently Asked Questions (FAQ Section) */}
       {config.faqs.length > 0 && (
-        <section className="max-w-7xl mx-auto px-6 py-12 w-full border-t border-white/5">
+        <section className="max-w-7xl mx-auto px-6 py-12 w-full border-t border-white/10 relative z-10">
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 text-amber-400 text-xs font-mono mb-2">
               <HelpCircle size={14} />
@@ -480,9 +500,9 @@ export const SeoJobCategoryPage: React.FC = () => {
             </h3>
             <div className="space-y-4">
               {config.faqs.map((faq, index) => (
-                <div key={index} className="liquid-glass-elevated p-5 rounded-2xl border border-white/5">
+                <div key={index} className="liquid-glass-elevated p-6 rounded-3xl border border-white/10 hover:border-amber-500/30 transition">
                   <h4 className="text-sm font-semibold text-white mb-2">{faq.q}</h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">{faq.a}</p>
+                  <p className="text-xs text-neutral-400 leading-relaxed">{faq.a}</p>
                 </div>
               ))}
             </div>
@@ -491,14 +511,14 @@ export const SeoJobCategoryPage: React.FC = () => {
       )}
 
       {/* Footer */}
-      <footer className="border-t border-white/5 mt-auto py-8 px-6 text-xs text-slate-500 text-center">
+      <footer className="border-t border-white/10 mt-auto py-8 px-6 text-xs text-neutral-500 text-center relative z-10">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <KYJLogo size={20} />
-            <span className="text-slate-300 font-semibold">KnowYourJob</span>
+            <span className="text-neutral-300 font-semibold">KnowYourJob</span>
             <span>— AI Job Discovery Engine</span>
           </div>
-          <div className="flex flex-wrap gap-4 text-slate-400">
+          <div className="flex flex-wrap gap-4 text-neutral-400 font-medium">
             <Link to="/privacy" className="hover:text-amber-400 transition">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-amber-400 transition">Terms of Service</Link>
             <Link to="/security-policy" className="hover:text-amber-400 transition">Security Policy</Link>

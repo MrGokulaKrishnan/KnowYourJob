@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, Search } from 'lucide-react';
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -10,10 +10,21 @@ interface AuthLayoutProps {
 
 export const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitle }) => {
   return (
-    <div className="relative min-h-screen flex flex-col justify-center items-center px-4 py-12 sm:px-6 lg:px-8 overflow-hidden">
+    <div className="relative min-h-screen bg-[#000000] text-slate-100 flex flex-col justify-center items-center px-4 py-12 sm:px-6 lg:px-8 overflow-hidden selection:bg-amber-500/30 selection:text-amber-200">
       {/* Ambient background glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-gradient-to-tr from-amber-500/15 via-yellow-400/10 to-transparent blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-600/10 blur-[100px] pointer-events-none rounded-full" />
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-amber-500/15 via-yellow-500/5 to-transparent blur-[140px] pointer-events-none rounded-full" />
+      <div className="fixed bottom-10 right-10 w-96 h-96 bg-amber-600/10 blur-[130px] pointer-events-none rounded-full" />
+
+      {/* Top right quick navigation */}
+      <div className="absolute top-6 right-6 z-20 flex items-center gap-3">
+        <Link
+          to="/jobs"
+          className="btn-glass px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-white/15 hover:border-amber-400/40 hover:text-amber-300 transition-all hover:scale-105 active:scale-95 shadow-md flex items-center gap-1.5 cursor-pointer"
+        >
+          <Search size={13} className="text-amber-400" />
+          <span>All Jobs</span>
+        </Link>
+      </div>
 
       {/* Brand Header */}
       <div className="mb-6 text-center z-10 flex flex-col items-center">

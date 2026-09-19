@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Link } from 'react-router-dom';
@@ -10,23 +10,23 @@ import clsx from 'clsx';
 
 // Assuming GlassMetric exists, otherwise implementing inline for dashboard
 const GlassMetric = ({ title, value, icon: Icon, trend }: any) => (
-  <div className="glass p-6 rounded-xl relative overflow-hidden group">
-    <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/5 rounded-full -mr-16 -mt-16 blur-2xl transition-all duration-500 group-hover:bg-yellow-500/10" />
+  <div className="liquid-glass p-6 rounded-2xl relative overflow-hidden group border border-white/10 hover:border-amber-500/30 transition-all duration-300 shadow-lg">
+    <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full -mr-16 -mt-16 blur-2xl transition-all duration-500 group-hover:bg-amber-500/15 pointer-events-none" />
     <div className="flex items-start justify-between relative z-10">
       <div>
-        <p className="text-secondary text-sm font-medium mb-1">{title}</p>
-        <h3 className="text-3xl font-bold text-white">{value}</h3>
+        <p className="text-neutral-400 text-sm font-medium mb-1">{title}</p>
+        <h3 className="text-3xl font-bold text-white tracking-tight">{value}</h3>
       </div>
-      <div className="p-3 glass-subtle rounded-lg text-primary">
+      <div className="p-3 rounded-xl bg-amber-400/10 border border-amber-500/20 text-amber-400 shadow-md">
         <Icon size={24} />
       </div>
     </div>
     {trend && (
       <div className="mt-4 flex items-center text-sm relative z-10">
-        <span className={clsx("font-medium", trend > 0 ? "text-green-400" : "text-red-400")}>
+        <span className={clsx("font-semibold text-xs px-2 py-0.5 rounded-full", trend > 0 ? "glossy-badge-emerald" : "glossy-badge-rose")}>
           {trend > 0 ? '+' : ''}{trend}%
         </span>
-        <span className="text-muted ml-2">vs last month</span>
+        <span className="text-neutral-400 text-xs ml-2">vs last month</span>
       </div>
     )}
   </div>
@@ -84,21 +84,21 @@ export default function DashboardPage() {
       {/* Page Header */}
       <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Good evening, Alex</h1>
-          <p className="text-secondary flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+          <h1 className="text-3xl font-bold text-white mb-2">Good evening, <span className="text-gradient-gold">Alex</span></h1>
+          <p className="text-neutral-400 flex items-center gap-2 text-sm">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             Your job search is active.
           </p>
         </div>
-        <div className="glass-strong p-4 rounded-xl flex items-center gap-6 border border-yellow-500/20">
+        <div className="liquid-glass-elevated p-4 rounded-2xl flex items-center gap-6 border border-amber-500/30 shadow-xl backdrop-blur-xl">
           <div>
-            <p className="text-xs text-muted uppercase tracking-wider mb-1">AI Match Health</p>
+            <p className="text-xs text-neutral-400 uppercase tracking-wider mb-1 font-mono">AI Match Health</p>
             <div className="flex items-end gap-2">
-              <span className="text-3xl font-bold text-primary text-shadow-glow">92%</span>
-              <span className="text-sm text-green-400 font-medium mb-1">Excellent</span>
+              <span className="text-3xl font-black text-amber-400">92%</span>
+              <span className="text-xs font-semibold text-emerald-400 glossy-badge-emerald mb-1">Excellent</span>
             </div>
           </div>
-          <Activity size={32} className="text-primary opacity-50" />
+          <Activity size={32} className="text-amber-400 opacity-70" />
         </div>
       </motion.div>
 
@@ -113,7 +113,7 @@ export default function DashboardPage() {
       {/* Charts Section */}
       <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Area Chart */}
-        <div className="lg:col-span-2 glass p-6 rounded-xl">
+        <div className="lg:col-span-2 liquid-glass p-6 rounded-2xl border border-white/10 backdrop-blur-xl shadow-xl">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold text-white">Application Activity</h3>
             <select className="glass-input text-sm py-1 px-3 border-none bg-transparent">

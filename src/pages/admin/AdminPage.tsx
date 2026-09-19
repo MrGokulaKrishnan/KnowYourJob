@@ -11,12 +11,17 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<'overview' | 'jobs' | 'ai' | 'errors'>('overview');
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[#000000] text-white p-4 sm:p-6 lg:p-8 relative overflow-x-hidden selection:bg-amber-400 selection:text-black">
+      {/* Ambient background glow orbs matching Homepage */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[850px] h-[360px] bg-gradient-to-b from-amber-500/15 via-yellow-500/5 to-transparent blur-[140px] rounded-full pointer-events-none z-0" />
+      <div className="fixed top-1/3 right-[-10%] w-96 h-96 bg-amber-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
+      <div className="fixed bottom-10 left-[-10%] w-96 h-96 bg-yellow-500/10 blur-[140px] rounded-full pointer-events-none z-0" />
+
+      <div className="max-w-7xl mx-auto space-y-8 relative z-10">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 glass-strong p-6 rounded-3xl border border-[rgba(255,215,0,0.25)]">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 liquid-glass-elevated p-6 rounded-3xl border border-amber-500/30 shadow-[0_15px_35px_rgba(0,0,0,0.5)]">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-400/20 to-amber-500/10 border border-yellow-400/40 flex items-center justify-center text-yellow-400 shadow-[0_0_30px_rgba(255,208,0,0.2)]">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500/20 via-neutral-900 to-black border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-[0_0_25px_rgba(245,158,11,0.25)] flex-shrink-0">
               <Shield size={30} />
             </div>
             <div>
@@ -46,14 +51,14 @@ export default function AdminPage() {
             value="14,892"
             subtext="+384 this week"
             trend={{ direction: 'up', value: '18%' }}
-            icon={<Users size={20} className="text-yellow-400" />}
+            icon={<Users size={20} className="text-amber-400" />}
           />
           <GlassMetric
             label="Active AI Job Matches"
             value="128,450"
             subtext="Across 12 data providers"
             trend={{ direction: 'up', value: '24%' }}
-            icon={<Briefcase size={20} className="text-yellow-400" />}
+            icon={<Briefcase size={20} className="text-amber-400" />}
             highlight
           />
           <GlassMetric
@@ -61,26 +66,26 @@ export default function AdminPage() {
             value="32,610"
             subtext="Zero CAPTCHA bypasses"
             trend={{ direction: 'up', value: '12%' }}
-            icon={<Send size={20} className="text-yellow-400" />}
+            icon={<Send size={20} className="text-amber-400" />}
           />
           <GlassMetric
             label="AI Token Invocations"
             value="1.42M"
             subtext="Gemini 2.0 Flash backend"
-            icon={<Bot size={20} className="text-yellow-400" />}
+            icon={<Bot size={20} className="text-amber-400" />}
           />
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-2 border-b border-white/10 pb-2">
+        <div className="flex items-center gap-2 border-b border-white/10 pb-3">
           {(['overview', 'jobs', 'ai', 'errors'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-5 py-2.5 rounded-xl text-sm font-semibold capitalize transition-all cursor-pointer ${
                 activeTab === tab
-                  ? 'bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 shadow-[0_0_15px_rgba(255,208,0,0.15)]'
-                  : 'text-neutral-400 hover:text-white hover:bg-white/5'
+                  ? 'liquid-glass-interactive text-amber-300 border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)]'
+                  : 'text-neutral-400 hover:text-white hover:bg-white/5 border border-transparent'
               }`}
             >
               {tab}

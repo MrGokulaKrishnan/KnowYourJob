@@ -81,22 +81,22 @@ export const RecommendedJobsPage: React.FC = () => {
               return (
                 <div
                   key={job.id}
-                  className="liquid-glass-elevated rounded-2xl p-6 border border-amber-500/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+                  className="liquid-glass-elevated rounded-2xl p-6 border border-amber-500/30 hover:border-amber-500/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.18)] transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
                 >
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">
+                      <span className="glossy-badge-gold">
                         <Sparkles className="w-3 h-3" />
                         <span>{score}% Compatibility</span>
                       </span>
-                      <span className="text-xs text-slate-400">{job.remoteType}</span>
+                      <span className="text-xs text-slate-400 capitalize">{job.remoteType}</span>
                     </div>
 
                     <h3 className="text-lg font-bold text-white tracking-tight">{job.title}</h3>
                     <p className="text-xs text-slate-300 font-medium">{job.company} • {job.location}</p>
 
                     <div className="mt-3 flex items-center gap-2 text-xs text-emerald-400">
-                      <span>✓ Top 3 skills match your profile:</span>
+                      <span>✓ Top skills match:</span>
                       <span className="font-mono text-slate-300">{job.skills.slice(0, 3).join(', ')}</span>
                     </div>
                   </div>

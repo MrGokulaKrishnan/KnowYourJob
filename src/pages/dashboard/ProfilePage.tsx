@@ -105,7 +105,7 @@ export const ProfilePage: React.FC = () => {
       ) : (
         <form onSubmit={handleSave} className="flex flex-col gap-6 max-w-4xl">
           {/* Profile Identity & Google Account Card */}
-          <div className="liquid-glass rounded-2xl p-6 border border-white/8 flex flex-col sm:flex-row items-start sm:items-center gap-6 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
+          <div className="liquid-glass-elevated rounded-2xl p-6 border border-amber-500/25 flex flex-col sm:flex-row items-start sm:items-center gap-6 shadow-[inset_0_1px_1px_rgba(255,255,255,0.18),0_10px_35px_rgba(0,0,0,0.6)]">
             <UserAvatar
               user={user}
               userDoc={userDoc}
@@ -127,12 +127,12 @@ export const ProfilePage: React.FC = () => {
                     <span>Google Account Profile</span>
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs font-semibold text-amber-300">
+                  <span className="glossy-badge-gold">
                     <span>Standard Account</span>
                   </span>
                 )}
 
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono text-emerald-400">
+                <span className="glossy-badge-emerald">
                   <CheckCircle2 className="w-3 h-3" />
                   <span>Active</span>
                 </span>
@@ -159,7 +159,7 @@ export const ProfilePage: React.FC = () => {
           </div>
 
           {/* Basic Info */}
-          <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-4">
+          <div className="liquid-glass rounded-2xl p-6 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] flex flex-col gap-4">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <UserCircle2 className="w-5 h-5 text-amber-400" />
               <span>Personal Details</span>
@@ -194,7 +194,7 @@ export const ProfilePage: React.FC = () => {
           </div>
 
           {/* Professional Overview */}
-          <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-4">
+          <div className="liquid-glass rounded-2xl p-6 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] flex flex-col gap-4">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-amber-400" />
               <span>Professional Summary</span>
@@ -236,8 +236,11 @@ export const ProfilePage: React.FC = () => {
           </div>
 
           {/* Skills Section */}
-          <div className="liquid-glass rounded-2xl p-6 border border-white/5 flex flex-col gap-4">
-            <h3 className="text-base font-bold text-white">Skills Matrix</h3>
+          <div className="liquid-glass rounded-2xl p-6 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] flex flex-col gap-4">
+            <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-amber-400" />
+              <span>Skills Matrix</span>
+            </h3>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -256,7 +259,7 @@ export const ProfilePage: React.FC = () => {
               {skills.map((skill) => (
                 <span
                   key={skill}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-xs font-medium text-amber-300"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/15 to-yellow-500/10 border border-amber-500/35 text-xs font-semibold text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.1)]"
                 >
                   {skill}
                   <button type="button" onClick={() => handleRemoveSkill(skill)} className="hover:text-amber-100">

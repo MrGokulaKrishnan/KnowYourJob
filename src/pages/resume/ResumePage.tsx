@@ -1,4 +1,4 @@
-﻿import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import { FileText, Upload, Star, Eye, BarChart, Download, Trash2, CheckCircle2 } from 'lucide-react';
@@ -22,12 +22,17 @@ export default function ResumePage() {
   });
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white p-6 md:p-12">
-      <div className="max-w-5xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[#000000] text-white p-6 md:p-12 relative overflow-x-hidden selection:bg-amber-400 selection:text-black">
+      {/* Ambient Glow Orbs matching Homepage */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[850px] h-[360px] bg-gradient-to-b from-amber-500/15 via-yellow-500/5 to-transparent blur-[140px] pointer-events-none z-0" />
+      <div className="fixed top-1/3 -right-48 w-96 h-96 bg-amber-600/10 blur-[130px] pointer-events-none z-0" />
+      <div className="fixed bottom-10 -left-48 w-96 h-96 bg-yellow-500/10 blur-[140px] pointer-events-none z-0" />
+
+      <div className="relative z-10 max-w-5xl mx-auto space-y-8">
         
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gradient">My Resumes</h1>
-          <button {...getRootProps()} className="btn-primary flex items-center gap-2 px-4 py-2">
+          <h1 className="text-3xl font-bold text-gradient-gold">My Resumes</h1>
+          <button {...getRootProps()} className="btn-yellow-gradient flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all cursor-pointer">
             <Upload className="w-4 h-4" />
             Upload New
             <input {...getInputProps()} />

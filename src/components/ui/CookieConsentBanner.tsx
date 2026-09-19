@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Cookie, Check, X } from 'lucide-react';
 
@@ -24,32 +24,33 @@ export const CookieConsentBanner: React.FC = () => {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 sm:right-6 max-w-md z-50 p-5 rounded-2xl liquid-glass-elevated border border-white/15 shadow-2xl backdrop-blur-2xl animate-fade-in text-slate-100">
-      <div className="flex items-start gap-3">
-        <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/25 text-amber-400 flex-shrink-0">
+    <div className="fixed bottom-4 right-4 sm:right-6 max-w-md z-50 p-5 rounded-2xl liquid-glass-elevated border border-amber-500/30 shadow-2xl backdrop-blur-2xl animate-fade-in text-slate-100">
+      <div className="flex items-start gap-3.5">
+        <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex-shrink-0 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
           <Cookie size={20} />
         </div>
         <div className="flex-1">
-          <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
-            Cookie & Data Privacy
+          <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
+            <span>Cookie & Data Privacy</span>
           </h4>
-          <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+          <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
             We use essential cookies to maintain secure authenticated sessions and improve your AI candidate experience. View our{' '}
-            <Link to="/cookies" className="text-amber-400 hover:underline">
+            <Link to="/cookies" className="text-amber-400 hover:underline font-medium">
               Cookie Policy
             </Link>.
           </p>
 
-          <div className="mt-4 flex flex-wrap items-center gap-2">
+          <div className="mt-4 flex flex-wrap items-center gap-2.5">
             <button
               onClick={() => handleChoice('all')}
-              className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition flex items-center gap-1"
+              className="btn-yellow-gradient px-4 py-2 rounded-xl text-black text-xs font-bold shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <Check size={12} /> Accept All
+              <Check size={13} className="stroke-[3]" />
+              <span>Accept All</span>
             </button>
             <button
               onClick={() => handleChoice('essential')}
-              className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-white text-xs font-medium transition"
+              className="btn-glass px-4 py-2 rounded-xl text-xs font-semibold text-slate-200 border border-white/15 hover:border-amber-500/40 hover:text-amber-300 transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-md"
             >
               Essential Only
             </button>
